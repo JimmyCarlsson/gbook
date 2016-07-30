@@ -48,3 +48,5 @@ group :development do
 end
 
 gem 'ember-cli-rails'
+
+gem 'rails_12factor', group: [:staging, :production]
