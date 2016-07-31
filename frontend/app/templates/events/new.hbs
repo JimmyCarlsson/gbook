@@ -1,0 +1,14 @@
+<h2>Skapa ett nytt event</h2>
+<div class="form-group">
+  <label for="inputEventName">Namn</label>
+  {{input value=model.name class='form-control'}}
+</div>
+<div class="form-group">
+  <label for="inputEventDescription">Beskrivning av eventet</label>
+  {{textarea value=model.description class='form-control'}}
+</div>
+<div class="form-group">
+  <label for="inputEventDate">Datum och tid</label>
+  {{bs-datetimepicker date=model.date format='YYYY-MM-DD HH:mm' locale='sv'}}
+</div>
+<button {{action 'save' model}} class="btn btn-primary">Skapa event!</button>
