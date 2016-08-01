@@ -1,14 +1,53 @@
 <h2>Skapa ett nytt event</h2>
-<div class="form-group">
-  <label for="inputEventName">Namn</label>
-  {{input value=model.name class='form-control'}}
+<div class="form-horizontal">
+  <div class="form-group {{if model.errors.name 'has-error'}}">
+    <label for="inputEventName" class="col-sm-2 control-label">Namn</label>
+    <div class="col-sm-10">
+      {{input id="inputEventName" value=model.name class="form-control" aria-describedby="helpBlockName"}}
+      {{#each model.errors.name as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.description 'has-error'}}">
+    <label for="inputEventDescription" class="col-sm-2 control-label">Beskrivning av eventet</label>
+    <div class="col-sm-10">
+      {{textarea value=model.description class='form-control'}}
+      {{#each model.errors.description as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.date 'has-error'}} ">
+    <label for="inputEventDate" class="col-sm-2 control-label">Datum och tid</label>
+    <div class="col-sm-10">
+      {{bs-datetimepicker date=model.date format='YYYY-MM-DD HH:mm' locale='sv'}}
+      {{#each model.errors.date as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.price 'has-error'}}">
+    <label for="inputEventPrice" class="col-sm-2 control-label">Pris</label>
+    <div class="col-sm-10">
+      {{input value=model.price type='number'}}
+      {{#each model.errors.price as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.seats 'has-error'}}">
+    <label for="inputEventSeats" class="col-sm-2 control-label">Antal platser</label>
+    <div class="col-sm-10">
+      {{input value=model.seats type='number' min='0'}}
+      {{#each model.errors.seats as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button {{action 'save' model}} class="btn btn-primary">Skapa event!</button>
+    </div>
+  </div>
 </div>
-<div class="form-group">
-  <label for="inputEventDescription">Beskrivning av eventet</label>
-  {{textarea value=model.description class='form-control'}}
-</div>
-<div class="form-group">
-  <label for="inputEventDate">Datum och tid</label>
-  {{bs-datetimepicker date=model.date format='YYYY-MM-DD HH:mm' locale='sv'}}
-</div>
-<button {{action 'save' model}} class="btn btn-primary">Skapa event!</button>
