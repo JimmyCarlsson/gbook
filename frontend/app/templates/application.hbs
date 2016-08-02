@@ -1,4 +1,20 @@
-<h1>GBook</h1>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      {{#link-to 'index' class="navbar-brand"}}GreBook{{/link-to}}
+    </div>
+        <ul class="nav navbar-nav">
+          <li>{{#link-to 'events'}}Event{{/link-to}}</li>
+        </ul>
+        <p class="navbar-text navbar-right">
+        {{#if session.isAuthenticated}}
+          <a class="navbar-link" href="javascript.void();" {{action 'invalidateSession'}}>Logga ut</a>
+        {{else}}
+          {{#link-to 'login' class="navbar-link"}}Logga in{{/link-to}}
+        {{/if}}
+        </p>
+  </div>
+</nav>
 <div class="container">
   {{outlet}}
 </div>
