@@ -56,6 +56,7 @@ gem 'rails_12factor', group: [:staging, :production]
 
 gem 'jsonapi-resources'
 gem 'jsonapi-utils', '~> 0.4.6'
+gem 'devise'
 
 group :test do
     gem 'shoulda-matchers', '~> 3.1'
