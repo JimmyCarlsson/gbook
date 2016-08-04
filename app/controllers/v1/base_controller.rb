@@ -6,14 +6,13 @@ class V1::BaseController < JSONAPI::ResourceController
   private
 
   def authenticate_admin_from_token!
-    admin_email = params[:admin_email].presence
-    admin       = admin_email && Admin.find_by_email(admin_email)
+    authenticate_with_http_token do |token, options|
+      admin_email = options[:email].presence
+      admin = admin_email && Admin.find_by_email(admin_email)
 
-    # Notice how we use Devise.secure_compare to compare the token
-    # in the database with the token given in the params, mitigating
-    # timing attacks.
-    if admin && Devise.secure_compare(admin.authentication_token, params[:user_token])
-      sign_in admin, store: false
+      if admin && Devise.secure_compare(admin.authentication_token, token)
+        sign_in admin, store: false
+      end
     end
   end
 end
