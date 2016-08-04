@@ -1,15 +1,13 @@
 class SessionsController < Devise::SessionsController
-  respond_to :html, :json
+  respond_to :json
 
   def create
     super do |admin|
-      if request.format.json?
-        data = {
-          token: admin.authentication_token,
-          email: admin.email
-        }
-        render json: data, status: 201 and return
-      end
+      data = {
+        token: admin.authentication_token,
+        email: admin.email
+      }
+      render json: data, status: 201 and return
     end
   end
 end
