@@ -5,8 +5,10 @@
     </div>
     <div class="col-xs-9">
       <div class="pull-right">
+        {{#if session.isAuthenticated}}
           <button class="btn btn-danger" {{action 'delete' model}}>Radera</button>
           {{#link-to 'events.show.edit' class="btn btn-default"}}Redigera{{/link-to}}
+        {{/if}}
       </div>
     </div>
   </div>

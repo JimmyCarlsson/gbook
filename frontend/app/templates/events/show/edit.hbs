@@ -3,4 +3,4 @@
     {{#link-to 'events.show' model}}{{fa-icon 'chevron-left'}} Tillbaka till visningssidan{{/link-to}}
   </div>
 </div>
-Edit{{model.name}}
+{{events/edit-form model=model save=(action 'save')}}

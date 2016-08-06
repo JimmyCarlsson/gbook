@@ -10,3 +10,6 @@
   {{/link-to}}
 {{/each}}
 </div>
+{{#if session.isAuthenticated}}
+  {{#link-to 'events.new' class="btn btn-primary"}}Skapa nytt event{{/link-to}}
+{{/if}}
