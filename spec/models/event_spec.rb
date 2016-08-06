@@ -24,4 +24,10 @@ RSpec.describe Event, type: :model do
     it {should validate_numericality_of(:seats).is_greater_than_or_equal_to(0).with_message("Antal platser måste vara ett heltal")}
   end
 
+  describe "destroy" do
+    it "should set deleted_at flag" do
+
+    end
+  end
+
 end
