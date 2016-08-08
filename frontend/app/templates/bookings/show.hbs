@@ -1,0 +1,21 @@
+<h2>Bokningsinformation</h2>
+<div class="form-horizontal">
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Event</label>
+    <div class="col-sm-9">
+      <p class="form-control-static">{{model.event.name}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Datum</label>
+    <div class="col-sm-9">
+      <p class="form-control-static">{{moment-format model.event.date 'LL'}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Antal biljetter</label>
+    <div class="col-sm-9">
+      <p class="form-control-static">{{model.tickets}}</p>
+    </div>
+  </div>
+</div>

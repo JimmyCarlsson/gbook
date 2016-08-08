@@ -13,6 +13,11 @@ Router.map(function() {
     });
   });
   this.route('login');
+
+  this.route('bookings', function() {
+    this.route('new');
+    this.route('show', {path: '/:token'});
+  });
 });
 
 export default Router;

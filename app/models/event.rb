@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
   # Scopes
   default_scope { where(deleted_at: nil)}
+  # Relations
+  has_many :bookings
   # Validations
   validates :name, presence: {message: "Ett namn måste anges"}
   validates :date, presence: {message: "Ett datum och klockslag måste anges"}

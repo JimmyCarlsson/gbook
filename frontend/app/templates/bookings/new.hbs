@@ -1,0 +1,97 @@
+<h2>Köp biljetter</h2>
+<div class="form-horizontal">
+  <div class="form-group">
+    <label class="control-label col-sm-3">Event</label>
+    <div class="col-sm-9">
+      <p class="form-control-static">{{model.event.name}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-3">Datum</label>
+    <div class="col-sm-9">
+      <p class="form-control-static">{{moment-format model.event.date 'LLLL'}}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-3">Pris</label>
+    <div class="col-sm-9">
+      <p class="form-control-static">{{model.event.price}}</p>
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.bookingType 'has-error'}}">
+    <label class="control-label col-sm-3">Bokas som</label>
+    <div class="radio col-sm-9">
+      {{#radio-button
+        value='business'
+        groupValue=model.bookingType
+        required=true}}
+        Företag
+      {{/radio-button}}
+      {{#radio-button
+        value='private'
+        groupValue=model.bookingType
+        required=true}}
+        Privatperson
+      {{/radio-button}}
+    </div>
+  </div>
+  {{#if typeIsSet}}
+    <div class="form-group {{if model.errors.name 'has-error'}}">
+      <label class="control-label col-sm-3">{{if isPrivate 'Namn'}}{{if isBusiness 'Företagsnamn'}}</label>
+      <div class="col-sm-9">
+        {{input value=model.name class="form-control"}}
+      </div>
+    </div>
+    {{#if isBusiness}}
+      <div class="form-group {{if model.errors.contact_person 'has-error'}}">
+        <label class="col-sm-3 control-label">Kontaktperson</label>
+        <div class="col-sm-9">
+          {{input value=model.contact_person class="form-control"}}
+        </div>
+      </div>
+    {{/if}}
+    <div class="form-group {{if model.errors.email 'has-error'}}">
+      <label class="control-label col-sm-3">E-post</label>
+      <div class="col-sm-9">
+        {{input value=model.email class="form-control" name="email"}}
+      </div>
+    </div>
+    <div class="form-group {{if showEmailDiffersMessage 'has-error'}}">
+      <label class="control-label col-sm-3">Bekräfta E-post</label>
+      <div class="col-sm-9">
+        {{input value=confirmEmail class="form-control" autocomplete="off"}}
+        {{#if showEmailDiffersMessage}}{{fa-icon 'exclamation-triangle' title='E-post adresserna matchar inte' class="text-danger"}}{{/if}}
+      </div>
+    </div>
+    <div class="form-group {{if model.errors.phone_nr 'has-error'}}">
+      <label class="control-label col-sm-3">Telefon</label>
+      <div class="col-sm-9">
+        {{input value=model.phone_nr class="form-control" name="phone_nr"}}
+      </div>
+    </div>
+    <div class="form-group {{if model.errors.tickets 'has-error'}}">
+      <label class="control-label col-sm-3">Antal biljetter</label>
+      <div class="col-sm-9">
+        {{input type="number" value=model.tickets class="form-control"}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-3">Totalkostnad</label>
+      <div class="col-sm-9">
+        {{#if model.tickets}}<p class="form-control-static">{{model.totalPrice}}</p>{{/if}} 
+      </div>
+    </div>
+    {{#if model.errors}}
+      <div class="alert alert-danger">
+        {{#each model.errors as |error|}}
+          {{error.message}}<br/>
+        {{/each}}
+      </div>
+    {{/if}}
+    <div class="form-group">
+      <div class="col-sm-offset-3">
+        <button {{action 'save' model}} class="btn btn-primary">Skicka bokning</button>
+      </div>
+    </div>
+  {{/if}}
+</div>
