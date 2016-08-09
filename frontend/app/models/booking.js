@@ -14,6 +14,9 @@ export default DS.Model.extend({
 
   totalPrice: Ember.computed('event.price', 'tickets', function(){
     return this.get('event.price') * this.get('tickets');
-  })
+  }),
+
+  isBusiness: Ember.computed.equal('bookingType', 'business'),
+  isPrivate: Ember.computed.equal('bookingType', 'private')
 
 });

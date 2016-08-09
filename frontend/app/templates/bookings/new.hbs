@@ -37,7 +37,7 @@
   </div>
   {{#if typeIsSet}}
     <div class="form-group {{if model.errors.name 'has-error'}}">
-      <label class="control-label col-sm-3">{{if isPrivate 'Namn'}}{{if isBusiness 'Företagsnamn'}}</label>
+      <label class="control-label col-sm-3">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
       <div class="col-sm-9">
         {{input value=model.name class="form-control"}}
       </div>

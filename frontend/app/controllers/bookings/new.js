@@ -2,9 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-  isBusiness: Ember.computed.equal('model.bookingType', 'business'),
-  isPrivate: Ember.computed.equal('model.bookingType', 'private'),
-  typeIsSet: Ember.computed.or('isPrivate', 'isBusiness'),
+  typeIsSet: Ember.computed.or('model.isPrivate', 'model.isBusiness'),
 
   emailConfirmed: Ember.computed('model.email', 'confirmEmail', function(){
     return (this.get('model.email') === this.get('confirmEmail')) && (!!this.get('confirmEmail'));
