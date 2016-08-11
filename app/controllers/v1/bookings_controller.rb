@@ -1,10 +1,8 @@
 class V1::BookingsController < V1::BaseController
-  #before_action :authenticate_admin_from_token!, except: [:index]
-  #before_action :authenticate_admin!, except: [:index]
-  #def index
-  #  jsonapi_render json: Event.all
-  #end
+  before_action :authenticate_admin_from_token!, except: [:create, :show]
+  before_action :authenticate_admin!, except: [:create, :show]
   def show
+
     token = params[:id]
     booking = Booking.where(token: token).first
     if booking

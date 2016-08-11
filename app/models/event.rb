@@ -12,4 +12,29 @@ class Event < ActiveRecord::Base
   def destroy
     self.update_attribute('deleted_at', DateTime.now)
   end
+
+  def booked_seats
+    booked_seats = 0
+    bookings.each do |booking|
+      booked_seats += booking.tickets
+    end
+    return booked_seats
+  end
+
+  def seats_left
+    self.seats - booked_seats
+  end
+
+  def availability_string
+    i = seats_left
+    if i > 50
+      return "plenty"
+    elsif i > 20
+      return "some"
+    elsif i > 0
+      return "few"
+    elsif i == 0
+      return "none"
+    end
+  end
 end

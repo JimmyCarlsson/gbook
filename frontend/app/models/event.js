@@ -8,5 +8,14 @@ export default Model.extend({
   date: attr('date', {defaultValue: null}),
   price: attr('number'),
   seats: attr('number'),
-  bookings: hasMany('booking')
+  bookings: hasMany('booking'),
+  availabilityString: attr('string'),
+
+  ticketsArray: Ember.computed.mapBy('bookings', 'tickets'),
+  totalTickets: Ember.computed.sum('ticketsArray'),
+  availabilityPlenty: Ember.computed.equal('availabilityString', 'none'),
+  availabilitySome: Ember.computed.equal('availabilityString', 'some'),
+  availabilityFew: Ember.computed.equal('availabilityString', 'few'),
+  availabilityNone: Ember.computed.equal('availabilityString', 'none'),
+
 });

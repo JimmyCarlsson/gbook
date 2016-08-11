@@ -3,7 +3,7 @@
   {{#each model as |event|}}
     {{#link-to 'events.show' event class="list-group-item"}}
     <h4 class="list-group-item-heading">
-      {{event.name}} <small>{{moment-format event.date 'LLLL'}}</small>
+      {{event.name}} <small>{{moment-format event.date 'LLLL'}}</small> {{fa-icon 'stop' class=event.availabilityString}}
     </h4>
     <p>{{event.description}}</p>
     <strong>Biljettpris:</strong> {{event.price}}:-

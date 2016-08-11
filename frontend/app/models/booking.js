@@ -11,6 +11,7 @@ export default DS.Model.extend({
   tickets: attr('number'),
   event: belongsTo('event'),
   token: attr('string'),
+  createdAt: attr('date'),
 
   totalPrice: Ember.computed('event.price', 'tickets', function(){
     return this.get('event.price') * this.get('tickets');

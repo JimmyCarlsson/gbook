@@ -2,17 +2,47 @@
 <div class="row">
   <div class="col-xs-3">
     {{#link-to 'events.index'}}{{fa-icon 'chevron-left'}} Tillbaka till listan{{/link-to}}
-    </div>
-    <div class="col-xs-9">
-      <div class="pull-right">
-        {{#if session.isAuthenticated}}
-          <button class="btn btn-danger" {{action 'delete' model}}>Radera</button>
-          {{#link-to 'events.show.edit' class="btn btn-default"}}Redigera{{/link-to}}
-        {{/if}}
-      </div>
+  </div>
+  <div class="col-xs-9">
+    <div class="pull-right">
+      {{#if session.isAuthenticated}}
+        <button class="btn btn-danger" {{action 'delete' model}}>Radera</button>
+        {{#link-to 'events.show.edit' class="btn btn-default"}}Redigera{{/link-to}}
+      {{/if}}
     </div>
   </div>
-  <h1>{{model.name}}</h1>
-  <p>{{model.description}}</p>
+</div>
+<h1>{{model.name}}</h1>
+<strong>Biljetter kvar: </strong> {{fa-icon 'stop' class=model.availabilityString}}
+<p>{{model.description}}</p>
 
-{{#link-to 'bookings.new' class="btn btn-primary"}}Boka biljetter{{/link-to}}
+  {{#unless model.availabilityNone}}
+    {{#link-to 'bookings.new' class="btn btn-primary"}}Boka biljetter{{/link-to}}
+  {{/unless}}
+
+  {{#if session.isAuthenticated}}
+    <h2>Bokningar</h2>
+    <strong>Totalt sålda biljetter: </strong> {{model.totalTickets}} / {{model.seats}}
+<table class="table">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Namn/Företag</th>
+      <th>E-post</th>
+      <th>Antal</th>
+      <th>Bokades</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each model.bookings as |booking|}}
+    <tr>
+      <td>{{#link-to 'bookings.show' booking.token}}{{booking.id}}{{/link-to}}</td>
+        <td>{{booking.name}}</td>
+        <td>{{booking.email}}</td>
+      <td>{{booking.tickets}}</td>
+      <td>{{moment-format booking.createdAt 'LL'}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+{{/if}}
