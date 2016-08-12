@@ -64,3 +64,5 @@ gem 'rack-cors', :require => 'rack/cors'
 group :test do
     gem 'shoulda-matchers', '~> 3.1'
 end
+
+gem 'prawn'
