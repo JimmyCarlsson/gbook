@@ -21,7 +21,7 @@ export default DS.Model.extend({
   isPrivate: Ember.computed.equal('bookingType', 'private'),
 
   invoiceLink: Ember.computed('token', function(){
-    return document.location.host + "/v1/invoices/" + this.get('token') + ".pdf";
+    return "/v1/invoices/" + this.get('token') + ".pdf";
   })
 
 });
