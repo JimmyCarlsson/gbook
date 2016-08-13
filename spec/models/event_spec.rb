@@ -88,7 +88,7 @@ RSpec.describe Event, type: :model do
     it "should return the tax sum for tax25" do
       event = build(:event, tax25: 40)
 
-      expect(event.tax25_sum).to eq 10
+      expect(event.tax25_sum).to eq 8 
     end
   end
 
@@ -96,7 +96,7 @@ RSpec.describe Event, type: :model do
     it "should return the tax sum for tax12" do
       event = build(:event, tax12: 40)
 
-      expect(event.tax12_sum).to eq 4.8
+      expect(event.tax12_sum).to eq 4.29
     end
   end
 
@@ -104,7 +104,7 @@ RSpec.describe Event, type: :model do
     it "should return the tax sum for tax6" do
       event = build(:event, tax6: 40)
 
-      expect(event.tax6_sum).to eq 2.4
+      expect(event.tax6_sum).to eq 2.26
     end
   end
 
@@ -112,7 +112,7 @@ RSpec.describe Event, type: :model do
     it "should return the full tax sum" do
       event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
 
-      expect(event.total_tax).to eq 18.6
+      expect(event.total_tax).to eq 15.27
     end
   end
 
@@ -120,7 +120,7 @@ RSpec.describe Event, type: :model do
     it "should return the price excluding taxes" do
       event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
 
-      expect(event.net_price).to eq 81.4
+      expect(event.net_price).to eq 84.73
     end
   end
 end

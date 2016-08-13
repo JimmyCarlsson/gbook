@@ -17,7 +17,12 @@ class InvoicePdf < Prawn::Document
     info_table
     @y -= 50
     invoice_table
-    to_pay_box
+    bounding_box [350, 300], width: 200 do
+      taxes_box
+    end
+    bounding_box [330,190], width: 200 do
+      to_pay_box
+    end
     bounding_box [30,120], width: 500 do
       payment_instructions
     end
@@ -120,17 +125,50 @@ class InvoicePdf < Prawn::Document
 
   def invoice_rows
     [
-      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.event.price, "", @booking.total_price]
+      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, format_number(@booking.event.net_price), "", format_number(@booking.total_net_price)]
     ]
   end
 
+  def taxes_box
+    font_size 10
+    table taxes_data, cell_style: {inline_format: true}do
+      columns(0).align = :right
+      columns(1).align = :right
+      cells.borders = []
+    end
+  end
+
+  def taxes_data
+    array = []
+    if @booking.event.tax25 > 0
+      array << ["Momspl belopp 25%", format_number(@booking.total_tax25_net)]
+      array << ["Moms kr 25%", @booking.total_tax25_sum]
+    end
+
+    if @booking.event.tax12 > 0
+      array << ["Momspl belopp 12%", format_number(@booking.total_tax12_net)]
+      array << ["Moms kr 12%", @booking.total_tax12_sum]
+    end
+
+    if @booking.event.tax6 > 0
+      array << ["Momspl belopp 6%", format_number(@booking.total_tax6_net)]
+      array <<["Moms kr 6%", @booking.total_tax6_sum]
+    end
+    array << ["<b>Moms kr totalt</b>", "<b>" + format_number(@booking.total_tax) + "</b>"]
+    return array
+  end
+
   def to_pay_box
-    draw_text "ATT BETALA", at: [430, @y+40]
-    draw_text @booking.total_price_string, at: [460, @y+20]
+    font_size 12
+    table [["Netto", format_number(@booking.total_net_price)],["<font size='15'><b>ATT BETALA</b></font>", "<font size='15'><b>" + format_number(@booking.total_price) + "</b></font>"]], cell_style: {inline_format: true} do
+      columns(0).align = :right
+      columns(1).align = :right
+      cells.borders = []
+    end
   end
 
   def payment_instructions
-    text "Betalningsanvisning: För över #{@booking.total_price}:- till BankGiro 759-5416 , ange 'Fakturanr: #{@booking.id}' i meddelandefältet.", style: :bold
+    text "Betalningsanvisning: För över #{format_number(@booking.total_price)}:- till BankGiro 759-5416 , ange 'Fakturanr: #{@booking.id}' i meddelandefältet.", style: :bold
   end
 
   def address
@@ -154,6 +192,10 @@ class InvoicePdf < Prawn::Document
     text "Momsreg.nr", size: 10
     text "SE556987072701"
     text "Godkänd för F-skatt"
+  end
+
+  def format_number(number)
+    return ('%.2f' % number).gsub('.', ',')
   end
 
 end

@@ -49,16 +49,29 @@ class Event < ActiveRecord::Base
     end
   end
 
+  # Returns the actual takes in money
   def tax25_sum
-    (self.tax25 * 0.25).round(2)
+    (self.tax25 - self.tax25 / 1.25).round(2)
   end
 
   def tax12_sum
-    (self.tax12 * 0.12).round(2)
+    (self.tax12 - self.tax12 / 1.12).round(2)
   end
 
   def tax6_sum
-    (self.tax6 * 0.06).round(2)
+    (self.tax6 - self.tax6 / 1.06).round(2)
+  end
+
+  def tax25_net
+    self.tax25 / 1.25
+  end
+
+  def tax12_net
+    self.tax12 / 1.12
+  end
+
+  def tax6_net
+    self.tax6 / 1.06
   end
 
   def total_tax

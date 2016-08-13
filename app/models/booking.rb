@@ -53,16 +53,36 @@ class Booking < ActiveRecord::Base
     return (self.tickets * event.price).round(2)
   end
 
-  def total_price_string
-    return ('%.2f' % self.total_price).gsub('.', ',')
-  end
-
   def total_net_price
     return (event.net_price * tickets).round(2)
   end
 
   def total_tax
     return (event.total_tax * tickets).round(2)
+  end
+
+  def total_tax25_net
+    return (event.tax25_net * tickets).round(2)
+  end
+
+  def total_tax12_net
+    return (event.tax12_net * tickets).round(2)
+  end
+
+  def total_tax6_net
+    return (event.tax6_net * tickets).round(2)
+  end
+
+  def total_tax25_sum
+    return (event.tax25_sum * tickets).round(2)
+  end
+
+  def total_tax12_sum
+    return (event.tax12_sum * tickets).round(2)
+  end
+
+  def total_tax6_sum
+    return (event.tax6_sum * tickets).round(2)
   end
 
 end
