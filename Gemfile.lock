@@ -110,6 +110,8 @@ GEM
     prawn (2.1.0)
       pdf-core (~> 0.6.1)
       ttfunk (~> 1.4.0)
+    prawn-table (0.2.2)
+      prawn (>= 1.3.0, < 3.0.0)
     puma (3.4.0)
     rack (1.6.4)
     rack-cors (0.4.0)
@@ -220,6 +222,7 @@ DEPENDENCIES
   jsonapi-utils (~> 0.4.6)
   pg
   prawn
+  prawn-table
   puma
   rack-cors
   rails (= 4.2.6)

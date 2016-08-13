@@ -1,5 +1,7 @@
 class Booking < ActiveRecord::Base
 
+  DUE_DATE_DAYS = 10.days
+
   # Relations
   belongs_to :event
   validates :event, presence: true
@@ -33,6 +35,26 @@ class Booking < ActiveRecord::Base
 
   def is_private
     self.booking_type == 'private'
+  end
+
+  def reference
+    if is_business
+      return self.contact_person
+    else
+      return name
+    end
+  end
+
+  def due_date
+    self.created_at + DUE_DATE_DAYS
+  end
+
+  def total_price
+    return self.tickets * event.price
+  end
+
+  def total_price_string
+    return ('%.2f' % self.total_price).gsub('.', ',')
   end
 
 end
