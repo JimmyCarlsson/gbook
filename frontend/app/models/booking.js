@@ -10,8 +10,8 @@ export default DS.Model.extend({
   phone_nr: attr('string'),
   tickets: attr('number'),
   event: belongsTo('event'),
-  token: attr('string'),
-  createdAt: attr('date'),
+  token: attr('string', {readOnly: true}),
+  createdAt: attr('date', {readOnly: true}),
 
   totalPrice: Ember.computed('event.price', 'tickets', function(){
     return this.get('event.price') * this.get('tickets');
