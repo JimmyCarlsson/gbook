@@ -66,4 +66,4 @@ group :test do
 end
 
 gem 'prawn'
-gem 'prawn-table'
+gem 'prawn-table', require: 'prawn'

@@ -15,7 +15,6 @@ export default Ember.Controller.extend({
   actions: {
     save(model) {
       model.save().then((response) =>{
-        console.log(response);
         this.transitionToRoute('bookings.show', response);
       });
     }

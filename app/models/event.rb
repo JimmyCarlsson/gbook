@@ -8,6 +8,17 @@ class Event < ActiveRecord::Base
   validates :date, presence: {message: "Ett datum och klockslag måste anges"}
   validates :price, presence: {message: "Ett pris måste anges" }, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
   validates :seats, presence: {message: "Antal platser måste anges"}, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Antal platser måste vara ett heltal"}
+  validates :tax25, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
+  validates :tax12, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
+  validates :tax6, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
+  validate :sum_of_taxvalues_equals_price
+
+  def sum_of_taxvalues_equals_price
+    taxvalues_sum = tax25 + tax12 + tax6
+    if taxvalues_sum != price
+      errors.add(:price, "Totalvärdet för skattesatserna(#{taxvalues_sum}) matchar inte priset(#{price})")
+    end
+  end
 
   def destroy
     self.update_attribute('deleted_at', DateTime.now)
@@ -36,5 +47,25 @@ class Event < ActiveRecord::Base
     elsif i == 0
       return "none"
     end
+  end
+
+  def tax25_sum
+    (self.tax25 * 0.25).round(2)
+  end
+
+  def tax12_sum
+    (self.tax12 * 0.12).round(2)
+  end
+
+  def tax6_sum
+    (self.tax6 * 0.06).round(2)
+  end
+
+  def total_tax
+    (tax25_sum + tax12_sum + tax6_sum).round(2)
+  end
+
+  def net_price
+    price - total_tax
   end
 end

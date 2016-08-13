@@ -49,4 +49,120 @@ RSpec.describe Booking, type: :model do
   end
 
   # Methods
+  describe "ensure_token" do
+    context "when no token exists" do
+      it "should generate a token" do
+        booking = build(:booking, token: nil)
+
+        booking.ensure_token
+
+        expect(booking.token).to_not be nil
+      end
+    end
+    context "with a token already set" do
+      it "should keep that token" do
+        booking = build(:booking, token: 'abcdefg')
+
+        booking.ensure_token
+
+        expect(booking.token).to eq 'abcdefg'
+      end
+    end
+  end
+
+  describe "generate token" do
+    it "should return a string" do
+      booking = build(:booking)
+
+      token = booking.generate_token
+
+      expect(token).to be_a String
+    end
+  end
+
+  describe "is_business" do
+    context "For a business type object" do
+      it "should return true" do
+        booking = build(:booking, booking_type: 'business')
+
+        expect(booking.is_business).to eq true
+      end
+    end
+    context "for a private type object" do
+      it "should return false" do
+        booking = build(:booking, booking_type: 'private')
+
+        expect(booking.is_business).to eq false
+      end
+    end
+  end
+
+  describe "is_private" do
+    context "For a private type object" do
+      it "should return true" do
+        booking = build(:booking, booking_type: 'private')
+
+        expect(booking.is_private).to eq true
+      end
+    end
+    context "For a business type object" do
+      it "should return false" do
+        booking = build(:booking, booking_type: 'business')
+
+        expect(booking.is_private).to eq false
+      end
+    end
+  end
+
+  describe "reference" do
+    context "for a private type object" do
+      it "should return the name" do
+        booking = build(:booking, booking_type: 'private', name: 'name', contact_person: 'contact_person')
+
+        expect(booking.reference).to eq 'name'
+      end
+    end
+    context "for a business type object" do
+      it "should return the contact person" do
+        booking = build(:booking, booking_type: 'business', name: 'name', contact_person: 'contact_person')
+
+        expect(booking.reference).to eq 'contact_person'
+      end
+    end
+  end
+
+  describe "due_date" do
+    it "should return a date" do
+      booking = build(:booking, created_at: DateTime.now)
+
+      #expect(booking.due_date).to be_a TimeWithZone
+    end
+  end
+
+  describe "total_price" do
+    it "should return the total price including tax" do
+      event = build(:event, price: 123)
+      booking = build(:booking, event: event, tickets: 3)
+
+      expect(booking.total_price).to eq 369
+    end
+  end
+
+  describe "total_net_price" do
+    it "should return the total price excluding tax" do
+      event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
+      booking = build(:booking, event: event, tickets: 3)
+
+      expect(booking.total_net_price).to eq 244.2 
+    end
+  end
+
+  describe "total_tax" do
+    it "should return the total tax" do
+      event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
+      booking = build(:booking, event: event, tickets: 3)
+
+      expect(booking.total_tax).to eq 55.8
+    end
+  end
 end

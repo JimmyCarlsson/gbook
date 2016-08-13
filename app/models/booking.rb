@@ -1,6 +1,6 @@
 class Booking < ActiveRecord::Base
 
-  DUE_DATE_DAYS = 10.days
+  DUE_DATE_DAYS = 10
 
   # Relations
   belongs_to :event
@@ -50,11 +50,19 @@ class Booking < ActiveRecord::Base
   end
 
   def total_price
-    return self.tickets * event.price
+    return (self.tickets * event.price).round(2)
   end
 
   def total_price_string
     return ('%.2f' % self.total_price).gsub('.', ',')
+  end
+
+  def total_net_price
+    return (event.net_price * tickets).round(2)
+  end
+
+  def total_tax
+    return (event.total_tax * tickets).round(2)
   end
 
 end
