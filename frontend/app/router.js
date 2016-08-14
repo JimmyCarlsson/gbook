@@ -16,7 +16,9 @@ Router.map(function() {
 
   this.route('bookings', function() {
     this.route('new');
-    this.route('show', {path: '/:token'});
+    this.route('show', {path: '/:token'}, function() {
+      this.route('edit');
+    });
   });
 });
 

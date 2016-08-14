@@ -38,7 +38,7 @@
   <tbody>
   {{#each model.bookings as |booking|}}
     <tr>
-      <td>{{#link-to 'bookings.show' booking.token}}{{booking.id}}{{/link-to}}</td>
+      <td>{{#link-to 'bookings.show.index' booking.token}}{{booking.id}}{{/link-to}}</td>
         <td>{{booking.name}}</td>
         <td>{{booking.email}}</td>
       <td>{{booking.tickets}}</td>

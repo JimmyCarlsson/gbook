@@ -153,7 +153,7 @@ RSpec.describe Booking, type: :model do
       event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
       booking = build(:booking, event: event, tickets: 3)
 
-      expect(booking.total_net_price).to eq 244.2 
+      expect(booking.total_net_price.round(1)).to eq 254.2 
     end
   end
 
@@ -162,7 +162,21 @@ RSpec.describe Booking, type: :model do
       event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
       booking = build(:booking, event: event, tickets: 3)
 
-      expect(booking.total_tax).to eq 55.8
+      expect(booking.total_tax.round(1)).to eq 45.8
+    end
+  end
+
+  describe "destroy" do
+    it "should set deleted_at flag and keep object in database" do
+      booking = create(:booking)
+
+      booking.destroy
+
+      expect(booking.deleted_at).to_not be nil
+
+      booking2 = Booking.unscoped.find(booking.id)
+
+      expect(booking2).to_not be nil
     end
   end
 end

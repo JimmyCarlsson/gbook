@@ -1,4 +1,6 @@
 class Booking < ActiveRecord::Base
+  # Scopes
+  default_scope { where(deleted_at: nil)}
 
   # Relations
   belongs_to :event
@@ -41,6 +43,10 @@ class Booking < ActiveRecord::Base
     else
       return name
     end
+  end
+
+  def destroy
+    self.update_attribute('deleted_at', DateTime.now)
   end
 
   # Date when invoice is due

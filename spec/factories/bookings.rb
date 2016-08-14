@@ -5,6 +5,7 @@ FactoryGirl.define do
     email 'test@test.test'
     phone_nr 123456
     name "name namesson"
+    association :event, factory: :event
     
   end
 end
