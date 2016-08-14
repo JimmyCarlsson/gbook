@@ -33,6 +33,7 @@
       <th>E-post</th>
       <th>Antal</th>
       <th>Bokades</th>
+      <th>Betalad</th>
     </tr>
   </thead>
   <tbody>
@@ -43,6 +44,7 @@
         <td>{{booking.email}}</td>
       <td>{{booking.tickets}}</td>
       <td>{{moment-format booking.createdAt 'LL'}}</td>
+      <td>{{if booking.paid 'Ja' 'Nej'}}</td>
     </tr>
   {{/each}}
   </tbody>

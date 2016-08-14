@@ -58,15 +58,22 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-sm-3">Antal biljetter</label>
+      <label class="control-label col-sm-3">Meddelande</label>
       <div class="col-sm-9">
-        <p class="form-control-static">{{model.tickets}}</p>
+        <p class="form-control-static">{{model.message}}</p>
       </div>
     </div>
     <div class="form-group">
       <label class="control-label col-sm-3">Totalkostnad</label>
       <div class="col-sm-9">
         <p class="form-control-static">{{model.totalPrice}}</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-3">Betalning verifierad</label>
+      <div class="col-sm-9">
+        <p class="form-control-static">{{if model.paid 'Ja' 'Nej'}}</p>
       </div>
     </div>
 

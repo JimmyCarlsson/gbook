@@ -6,6 +6,10 @@ export default DS.JSONAPISerializer.extend({
     if (attribute.options && attribute.options.readOnly) {
       return;
     }
+    // Do no serialize updateOnly attributes if there is no ID
+    if (attribute.options && attribute.options.updateOnly && snapshot.id == null) {
+      return;
+    }
     this._super(...arguments);
   },
 });

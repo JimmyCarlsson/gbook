@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  session: Ember.inject.service(),
   typeIsSet: Ember.computed.or('model.isPrivate', 'model.isBusiness'),
 
   emailConfirmed: Ember.computed('model.email', 'confirmEmail', function(){
@@ -9,6 +10,10 @@ export default Ember.Component.extend({
 
   showEmailDiffersMessage: Ember.computed('emailConfirmed', 'confirmEmail', function(){
     return (!this.get('emailConfirmed') && (this.get('confirmEmail')));
+  }),
+
+  showAdminFields: Ember.computed('model.id', 'session.isAuthenticated', function(){
+    return this.get('session.isAuthenticated') && this.get('model.id');
   }),
   actions: {
     save() {

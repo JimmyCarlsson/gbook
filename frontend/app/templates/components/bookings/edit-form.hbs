@@ -75,6 +75,38 @@
         {{input type="number" value=model.tickets class="form-control"}}
       </div>
     </div>
+    <div class="form-group {{if model.errors.message 'has-error'}}">
+      <label class="control-label col-sm-3">Meddelande</label>
+      <div class="col-sm-9">
+        {{textarea value=model.message class="form-control"}}
+      </div>
+    </div>
+    {{#if showAdminFields}}
+    <div class="form-group {{if model.errors.discount 'has-error'}}">
+      <label class="control-label col-sm-3">Rabatt (kr) - Ej implementerad ännu</label>
+      <div class="col-sm-9">
+        {{input type="number" value=model.discount class="form-control"}}
+      </div>
+    </div>
+    <div class="form-group {{if model.errors.discount_message 'has-error'}}">
+      <label class="control-label col-sm-3">Rabattmeddelande</label>
+      <div class="col-sm-9">
+        {{input value=model.discount_message class="form-control" name="phone_nr"}}
+      </div>
+    </div>
+    <div class="form-group {{if model.errors.memo 'has-error'}}">
+      <label class="control-label col-sm-3">Notering (admin)</label>
+      <div class="col-sm-9">
+        {{textarea value=model.memo class="form-control"}}
+      </div>
+    </div>
+    <div class="form-group {{if model.errors.paid 'has-error'}}">
+      <label class="control-label col-sm-3">Betalning verifierad</label>
+      <div class="col-sm-9">
+        {{input type="checkbox" checked=model.paid class="form-control"}}
+      </div>
+    </div>
+    {{/if}}
     <div class="form-group">
       <label class="control-label col-sm-3">Totalkostnad</label>
       <div class="col-sm-9">
