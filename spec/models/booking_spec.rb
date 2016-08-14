@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Booking, type: :model do
 
+  subject {build(:booking)}
   # Fields
   describe "booking_type" do
     it {should validate_inclusion_of(:booking_type).in_array(['private', 'business'])}
@@ -38,8 +39,32 @@ RSpec.describe Booking, type: :model do
   end
 
   describe "tickets" do
+    subject {build(:booking)}
     it {should validate_presence_of(:tickets).with_message("Du måste ange antal biljetter")}
     it {should validate_numericality_of(:tickets).with_message("Antal biljetter måste vara större än 0")}
+
+    context "when available seats are less than tickets" do
+      it "should give an error message" do
+        event = build(:event, seats: 10)
+        event.bookings << build(:booking, event: event, tickets: 6)
+
+        booking = build(:booking, event: event, tickets: 5)
+
+        expect(booking.valid?).to be false
+        expect(booking.errors.messages[:tickets]).to include("Det finns inte tillräckligt många platser kvar.")
+      end
+    end
+
+    context "when available seats are equal to tickets" do
+      it "should not give an error message" do
+        event = build(:event, seats: 10)
+        event.bookings << build(:booking, event: event, tickets: 6)
+
+        booking = build(:booking, event: event, tickets: 4)
+
+        expect(booking.valid?).to be true
+      end
+    end
   end
 
   # Relations

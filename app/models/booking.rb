@@ -15,10 +15,17 @@ class Booking < ActiveRecord::Base
   validates :tickets, presence: {message: "Du måste ange antal biljetter"}, numericality: {only_integer: true, greater_than: 0, message: "Antal biljetter måste vara större än 0", allow_nil: true} 
   validates :token, presence: true
   before_validation :ensure_token
+  validate :enough_tickets_available
 
   def ensure_token
     if self.token.blank?
       self.token = generate_token
+    end
+  end
+
+  def enough_tickets_available
+    if event.present? && tickets.present? && event.seats_left < tickets
+      errors.add(:tickets, "Det finns inte tillräckligt många platser kvar.")
     end
   end
 
@@ -36,8 +43,7 @@ class Booking < ActiveRecord::Base
   def is_private
     self.booking_type == 'private'
   end
-
-  def reference
+def reference
     if is_business
       return self.contact_person
     else
