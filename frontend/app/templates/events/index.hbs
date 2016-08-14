@@ -6,7 +6,7 @@
       {{event.name}} <small>{{moment-format event.date 'LLLL'}}</small> {{fa-icon 'stop' class=event.availabilityString}}
     </h4>
     <p>{{event.description}}</p>
-    <strong>Biljettpris:</strong> {{event.price}}:-
+    <strong>Biljettpris:</strong> {{event.price}}:- <span style="font-size: 10px">({{event.netPrice}}:- ex. moms)</span>
   {{/link-to}}
 {{/each}}
 </div>

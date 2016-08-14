@@ -7,9 +7,9 @@ export default Model.extend({
   description: attr('string'),
   date: attr('date', {defaultValue: null}),
   price: attr('number'),
-  tax25: attr('number'),
-  tax12: attr('number'),
-  tax6: attr('number'),
+  tax25: attr('number', {defaultValue: 0}),
+  tax12: attr('number', {defaultValue: 0}),
+  tax6: attr('number', {defaultValue: 0}),
   seats: attr('number'),
   bookings: hasMany('booking'),
   availabilityString: attr('string', {readOnly: true}),
@@ -18,10 +18,27 @@ export default Model.extend({
 
   ticketsArray: Ember.computed.mapBy('bookings', 'tickets'),
   totalTickets: Ember.computed.sum('ticketsArray'),
-  availabilityPlenty: Ember.computed.equal('availabilityString', 'none'),
+  availabilityPlenty: Ember.computed.equal('availabilityString', 'plenty'),
   availabilitySome: Ember.computed.equal('availabilityString', 'some'),
   availabilityFew: Ember.computed.equal('availabilityString', 'few'),
   availabilityNone: Ember.computed.equal('availabilityString', 'none'),
+
+  availabilityTranslation: Ember.computed('availabilityString', function() {
+    switch(this.get('availabilityString')) {
+      case 'plenty':
+        return "Många";
+        break;
+      case 'some':
+        return "Måttligt";
+        break;
+      case 'few':
+        return "Fåtal";
+        break;
+      case 'none':
+        return "Fullbokat";
+        break;
+    }
+  }),
 
   taxSumValid: Ember.computed('price', 'tax25', 'tax12', 'tax6', () => {
     return (this.get('tax25') + this.get('tax12') + this.get('tax6')) === this.get('price');

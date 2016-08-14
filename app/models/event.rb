@@ -12,6 +12,24 @@ class Event < ActiveRecord::Base
   validates :tax12, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
   validates :tax6, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
   validate :sum_of_taxvalues_equals_price
+  validate :date_cannot_be_in_the_past
+  validate :price_cannot_be_changed, if: :has_bookings, on: :update
+
+  def date_cannot_be_in_the_past
+    if date.present? && date < Date.today
+      errors.add(:date, "Datum kan inte anges bakåt i tiden")
+    end
+  end
+
+  def has_bookings
+    bookings.present?
+  end
+
+  def price_cannot_be_changed
+    if price_changed? && self.persisted? && bookings.present?
+      errors.add(:price, "Priset kan inte uppdateras eftersom det finns bokningar (#{bookings.count}st)")
+    end
+  end
 
   def sum_of_taxvalues_equals_price
     taxvalues_sum = tax25 + tax12 + tax6

@@ -13,7 +13,9 @@
   </div>
 </div>
 <h1>{{model.name}}</h1>
-<strong>Biljetter kvar: </strong> {{fa-icon 'stop' class=model.availabilityString}}
+<strong>Biljetter kvar: </strong> {{fa-icon 'stop' class=model.availabilityString}} {{model.availabilityTranslation}}
+<br/>
+<strong>Biljettpris:</strong> {{model.price}}:- <span style="font-size: 10px">({{model.netPrice}}:- ex. moms)</span>
 <p>{{model.description}}</p>
 
   {{#unless model.availabilityNone}}

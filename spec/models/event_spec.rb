@@ -14,6 +14,8 @@ RSpec.describe Event, type: :model do
 
   describe "date" do
     it {should validate_presence_of(:date).with_message("Ett datum och klockslag måste anges")}
+    it {should_not allow_value(DateTime.now - 1).for(:date)}
+    it {should allow_value(DateTime.now).for(:date)}
   end
 
   describe "price" do
@@ -24,6 +26,29 @@ RSpec.describe Event, type: :model do
 
       expect(event.valid?).to be false
       expect(event.errors.messages[:price]).to include("Totalvärdet för skattesatserna(60) matchar inte priset(100)")
+    end
+    context "event is saved and has no bookings" do
+      it "should allow price to be changed" do
+        event = create(:event, price: 10, tax25: 10)
+
+        event.price = 20
+        event.tax25 = 20
+
+        expect(event.valid?).to be true
+      end
+    end
+
+    context "event is saved and has bookings" do
+      it "should not allow price to be changed" do
+        event = create(:event, price: 10, tax25: 10)
+        event.bookings << create(:booking, event: event)
+
+        event.price = 20
+        event.tax25 = 20
+
+        expect(event.valid?).to be false
+        expect(event.errors.messages[:price]).to include("Priset kan inte uppdateras eftersom det finns bokningar (1st)")
+      end
     end
   end
   
