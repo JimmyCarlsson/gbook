@@ -135,7 +135,7 @@ RSpec.describe Booking, type: :model do
     it "should return a date" do
       booking = build(:booking, created_at: DateTime.now)
 
-      #expect(booking.due_date).to be_a TimeWithZone
+      expect(booking.due_date).to be_a DateTime
     end
   end
 

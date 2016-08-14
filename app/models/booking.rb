@@ -1,7 +1,5 @@
 class Booking < ActiveRecord::Base
 
-  DUE_DATE_DAYS = 10
-
   # Relations
   belongs_to :event
   validates :event, presence: true
@@ -45,8 +43,18 @@ class Booking < ActiveRecord::Base
     end
   end
 
+  # Date when invoice is due
   def due_date
-    self.created_at + DUE_DATE_DAYS
+    DateTime.parse(self.created_at.to_s) + invoice_days
+  end
+
+  # Number of days crom booking creation until invoice has to be paid
+  def invoice_days
+    if is_business
+      return 20
+    else
+      return 10
+    end
   end
 
   def total_price

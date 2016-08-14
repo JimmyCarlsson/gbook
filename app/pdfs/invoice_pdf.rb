@@ -17,7 +17,7 @@ class InvoicePdf < Prawn::Document
     info_table
     @y -= 50
     invoice_table
-    bounding_box [350, 300], width: 200 do
+    bounding_box [375, 270], width: 200 do
       taxes_box
     end
     bounding_box [330,190], width: 200 do
@@ -90,7 +90,7 @@ class InvoicePdf < Prawn::Document
   def info_table_rows
     [
       ["Er referens", @booking.reference, "Vår referens", "Tomas Rockenstierna"], 
-      ["Betalningsvillkor", "10 dagar netto", "Förfallodatum", @booking.due_date.strftime('%F')],
+      ["Betalningsvillkor", "#{@booking.invoice_days} dagar netto", "Förfallodatum", @booking.due_date.strftime('%F')],
       ["Leveransdatum", @booking.created_at.strftime('%F'), "Dröjsmålsränta", "8%"]
     ]
   end
@@ -103,7 +103,7 @@ class InvoicePdf < Prawn::Document
       stroke_rounded_rectangle [0,0], width, height, @corners
     end
     bounding_box [@x+20,@y-5], width: 450 do
-      table [["Benämning", "Lev ant", "á-pris", "Rabatt", "Summa"]],column_widths: [225, 50, 50, 50], width: 450 do
+      table [["Benämning", "Lev ant", "á-pris", "Rabatt", "Summa"]],column_widths: [200, 50, 75, 50], width: 450 do
         cells.borders = []
         columns(4).align = :right
       end
@@ -113,7 +113,7 @@ class InvoicePdf < Prawn::Document
       stroke_rounded_rectangle [0,0], width, height2, @corners
     end
     bounding_box [@x+20, @y-20], width: 450 do
-      table invoice_rows, column_widths: [225, 50, 50, 50], width: 450 do
+      table invoice_rows, column_widths: [200, 50, 75, 50], cell_style: {inline_format: true}, width: 450 do
         cells.borders = []
         columns(4).align = :right
       end
@@ -125,8 +125,22 @@ class InvoicePdf < Prawn::Document
 
   def invoice_rows
     [
-      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, format_number(@booking.event.net_price), "", format_number(@booking.total_net_price)]
+      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(food_sum: @booking.event.tax12_sum, show_sum: @booking.event.tax6_sum) : format_number(@booking.event.price), "", @booking.is_business ? business_price_info(food_sum: @booking.total_tax12_sum, show_sum: @booking.total_tax6_sum) : format_number(@booking.total_price)]
     ]
+  end
+
+  def business_price_info(food_sum:, show_sum:)
+    str = "#{format_number(@booking.event.net_price)}"
+    if @booking.event.tax12 + @booking.event.tax6 > 0
+      str += "<br/><font size='10'>Varav:<br/>"
+      if @booking.event.tax12 > 0
+        str += "Mat: #{format_number(food_sum)}"
+      end
+      if @booking.event.tax6 > 0
+      str += "<br/>Show: #{format_number(show_sum)}"
+      end
+    end
+    return str
   end
 
   def taxes_box
@@ -141,18 +155,18 @@ class InvoicePdf < Prawn::Document
   def taxes_data
     array = []
     if @booking.event.tax25 > 0
-      array << ["Momspl belopp 25%", format_number(@booking.total_tax25_net)]
-      array << ["Moms kr 25%", @booking.total_tax25_sum]
+      #array << ["Momspl belopp 25%", format_number(@booking.total_tax25_net)]
+      array << ["Moms kr 25%", format_number(@booking.total_tax25_sum)]
     end
 
     if @booking.event.tax12 > 0
-      array << ["Momspl belopp 12%", format_number(@booking.total_tax12_net)]
-      array << ["Moms kr 12%", @booking.total_tax12_sum]
+      #array << ["Momspl belopp 12%", format_number(@booking.total_tax12_net)]
+      array << ["Moms kr 12%", format_number(@booking.total_tax12_sum)]
     end
 
     if @booking.event.tax6 > 0
-      array << ["Momspl belopp 6%", format_number(@booking.total_tax6_net)]
-      array <<["Moms kr 6%", @booking.total_tax6_sum]
+      #array << ["Momspl belopp 6%", format_number(@booking.total_tax6_net)]
+      array <<["Moms kr 6%", format_number(@booking.total_tax6_sum)]
     end
     array << ["<b>Moms kr totalt</b>", "<b>" + format_number(@booking.total_tax) + "</b>"]
     return array
