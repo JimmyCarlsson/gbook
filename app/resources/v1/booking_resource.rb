@@ -12,11 +12,11 @@ class V1::BookingResource < JSONAPI::Resource
   end
 
   def fetchable_fields
-    pp context
     if context[:admin_signed_in] == true
       super
     else
-      super - [:memo]
+      #super - [:memo]
+      super
     end
   end
 end
