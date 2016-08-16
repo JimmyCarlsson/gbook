@@ -19,7 +19,7 @@ class V1::BaseController < JSONAPI::ResourceController
       admin = admin_email && Admin.find_by_email(admin_email)
 
       if admin && Devise.secure_compare(admin.authentication_token, token)
-        sign_in admin, store: true
+        sign_in admin, store: false
       end
     end
   end

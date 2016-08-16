@@ -13,6 +13,10 @@ class Admin < ActiveRecord::Base
     end
   end
 
+  def salted_authentication_token
+    Digest::SHA256.hexdigest authentication_token + current_sign_in_at.to_s
+  end
+
   private
 
   def generate_authentication_token

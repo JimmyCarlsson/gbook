@@ -67,3 +67,5 @@ end
 
 gem 'prawn'
 gem 'prawn-table', require: 'prawn'
+
+gem 'spreadsheet'
