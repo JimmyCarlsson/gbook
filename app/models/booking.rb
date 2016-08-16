@@ -16,10 +16,25 @@ class Booking < ActiveRecord::Base
   validates :token, presence: true
   before_validation :ensure_token
   validate :enough_tickets_available
+  validate :validate_discount
+  validates :discount, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Rabatt måste vara ett heltal", allow_nil: true}
+
+  # Set discount on related event
+  def event
+    event = super
+    event.discount = discount
+    return event
+  end
 
   def ensure_token
     if self.token.blank?
       self.token = generate_token
+    end
+  end
+
+  def validate_discount
+    if discount.present? && discount > event.price
+      errors.add(:discount, "Rabatt kan inte vara högre än priset")
     end
   end
 
@@ -70,7 +85,7 @@ def reference
   end
 
   def total_price
-    return (self.tickets * event.price).round(2)
+    return (self.tickets * event.price_actual).round(2)
   end
 
   def total_net_price

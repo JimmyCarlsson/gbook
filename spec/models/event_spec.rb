@@ -133,6 +133,31 @@ RSpec.describe Event, type: :model do
     end
   end
 
+  describe "tax_share" do
+    it "should return the share of given ax price" do
+      event = build(:event, price: 200)
+
+      expect(event.tax_share(100)).to eq 0.5
+    end
+  end
+
+  describe "tax_actual" do
+    context "without a discount value" do
+      it "should return the original tax value" do
+        event = build(:event, price: 200, discount: nil)
+
+        expect(event.tax_actual(100)).to eq 100
+      end
+    end
+    context "with a discount value" do
+      it "should return tax value after discount" do
+        event = build(:event, price: 200, discount: 50)
+
+        expect(event.tax_actual(100)).to eq 75
+      end
+    end
+  end
+
   describe "total_tax" do
     it "should return the full tax sum" do
       event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
@@ -146,6 +171,23 @@ RSpec.describe Event, type: :model do
       event = build(:event, price: 100, tax6: 20, tax12: 20, tax25: 60)
 
       expect(event.net_price).to eq 84.73
+    end
+  end
+
+  describe "price_actual" do
+    context "with no discount" do
+      it "should return full price" do
+        event = build(:event, price: 200)
+
+        expect(event.price_actual).to eq 200
+      end
+    end
+    context "with a discount" do
+      it "should return price minus discount" do
+        event = build(:event, price: 200, discount: 50)
+
+        expect(event.price_actual).to eq 150
+      end
     end
   end
 end

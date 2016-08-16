@@ -16,7 +16,7 @@ export default DS.Model.extend({
   discount: attr('number', {updateOnly: true}),
   discountMessage: attr('string', {updateOnly: true}),
   memo: attr('string', {updateOnly: true}),
-  paid: attr('boolean'),
+  paid: attr('boolean', {updateOnly: true}),
 
   totalPrice: Ember.computed('event.price', 'tickets', function(){
     return this.get('event.price') * this.get('tickets');

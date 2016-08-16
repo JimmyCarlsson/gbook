@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  attr_accessor :discount
   # Scopes
   default_scope { where(deleted_at: nil)}
   # Relations
@@ -67,29 +68,47 @@ class Event < ActiveRecord::Base
     end
   end
 
-  # Returns the actual takes in money
+  def tax_actual(tax)
+    return tax - discount * tax_share(tax) if discount.present?
+    return tax
+  end 
+
+  # Returns the actual taxes in money
+  def tax_sum(tax, tax_percent)
+    (tax - (tax / (1 + tax_percent))).round(2)
+  end
+
   def tax25_sum
-    (self.tax25 - self.tax25 / 1.25).round(2)
+    tax_sum(tax_actual(tax25), 0.25)
   end
 
   def tax12_sum
-    (self.tax12 - self.tax12 / 1.12).round(2)
+    tax_sum(tax_actual(tax12), 0.12)
   end
 
   def tax6_sum
-    (self.tax6 - self.tax6 / 1.06).round(2)
+    tax_sum(tax_actual(tax6), 0.06)
+  end
+
+  def tax_net(tax, tax_percent)
+    tax / (1 + tax_percent)
   end
 
   def tax25_net
-    self.tax25 / 1.25
+    tax_net(tax_actual(tax25), 0.25)
   end
 
   def tax12_net
-    self.tax12 / 1.12
+    tax_net(tax_actual(tax12), 0.12)
   end
 
   def tax6_net
-    self.tax6 / 1.06
+    tax_net(tax_actual(tax6), 0.06)
+  end
+
+  # Returns the share in decimals per tax count
+  def tax_share(tax)
+    tax.to_f / price
   end
 
   def total_tax
@@ -97,6 +116,11 @@ class Event < ActiveRecord::Base
   end
 
   def net_price
-    price - total_tax
+    price_actual - total_tax
+  end
+
+  def price_actual
+    discount = self.discount || 0
+    price - discount
   end
 end

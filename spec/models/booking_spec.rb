@@ -67,10 +67,27 @@ RSpec.describe Booking, type: :model do
     end
   end
 
+  describe "discount" do
+    subject {build(:booking, event: build(:event, price: 100))}
+
+    it {should allow_value(100).for(:discount)}
+    it {should_not allow_value(101).for(:discount)}
+    it {should_not allow_value(-1).for(:discount)}
+    it {should validate_numericality_of(:discount).with_message("Rabatt måste vara ett heltal")}
+  end
+
   # Relations
   describe "event" do
     it {should validate_presence_of(:event)}
     it {should belong_to(:event)}
+
+    context "with discount" do
+      it "should set event discount value" do
+        booking = build(:booking, event: build(:event), discount: 100)
+
+        expect(booking.event.discount).to eq 100
+      end
+    end
   end
 
   # Methods

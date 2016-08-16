@@ -125,7 +125,7 @@ class InvoicePdf < Prawn::Document
 
   def invoice_rows
     [
-      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(food_sum: @booking.event.tax12_sum, show_sum: @booking.event.tax6_sum) : format_number(@booking.event.price), "", @booking.is_business ? business_price_info(food_sum: @booking.total_tax12_sum, show_sum: @booking.total_tax6_sum) : format_number(@booking.total_price)]
+      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(food_sum: @booking.event.tax12_sum, show_sum: @booking.event.tax6_sum) : format_number(@booking.event.price_actual), @booking.discount ? format_number(@booking.discount) : "", @booking.is_business ? business_price_info(food_sum: @booking.total_tax12_sum, show_sum: @booking.total_tax6_sum) : format_number(@booking.total_price)]
     ]
   end
 
