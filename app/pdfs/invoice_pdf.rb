@@ -125,12 +125,12 @@ class InvoicePdf < Prawn::Document
 
   def invoice_rows
     [
-      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(food_sum: @booking.event.tax12_sum, show_sum: @booking.event.tax6_sum) : format_number(@booking.event.price_actual), @booking.discount ? format_number(@booking.discount) : "", @booking.is_business ? business_price_info(food_sum: @booking.total_tax12_sum, show_sum: @booking.total_tax6_sum) : format_number(@booking.total_price)]
+      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(price_sum: @booking.event.net_price, food_sum: @booking.event.tax12_net, show_sum: @booking.event.tax6_net) : format_number(@booking.event.price_actual), @booking.discount ? format_number(@booking.discount) : "", @booking.is_business ? business_price_info(price_sum: @booking.total_net_price, food_sum: @booking.total_tax12_net, show_sum: @booking.total_tax6_net) : format_number(@booking.total_price)]
     ]
   end
 
-  def business_price_info(food_sum:, show_sum:)
-    str = "#{format_number(@booking.event.net_price)}"
+  def business_price_info(price_sum:, food_sum:, show_sum:)
+    str = "#{format_number(price_sum)}"
     if @booking.event.tax12 + @booking.event.tax6 > 0
       str += "<br/><font size='10'>Varav:<br/>"
       if @booking.event.tax12 > 0

@@ -9,7 +9,7 @@ class V1::InvoicesController < ApplicationController
     end
 
     pdf = InvoicePdf.new(booking)
-    send_data pdf.render, filename: "Faktura_#{booking.id}.pdf", type: "application/pdf", disposition: "inline"
+    send_data pdf.render, filename: "Faktura_#{booking.event.name}_#{booking.event.date.strftime("%Y%m%d")}_#{booking.id}.pdf", type: "application/pdf", disposition: "inline"
 
   end
 end

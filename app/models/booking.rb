@@ -22,7 +22,9 @@ class Booking < ActiveRecord::Base
   # Set discount on related event
   def event
     event = super
-    event.discount = discount
+    if event.present?
+      event.discount = discount
+    end
     return event
   end
 

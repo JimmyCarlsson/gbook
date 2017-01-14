@@ -5,7 +5,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def authenticate_admin_from_token_param!
-    pp "authentication2"
     Admin.all.each do |admin|
       if admin.authentication_token == params[:token]
         sign_in admin, store: false 

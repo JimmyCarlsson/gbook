@@ -78,6 +78,8 @@ RSpec.describe Booking, type: :model do
 
   # Relations
   describe "event" do
+    subject {build(:booking, event: build(:event))}
+    
     it {should validate_presence_of(:event)}
     it {should belong_to(:event)}
 
