@@ -27,6 +27,10 @@ export default DS.Model.extend({
 
   invoiceLink: Ember.computed('token', function(){
     return "/v1/invoices/" + this.get('token') + ".pdf";
+  }),
+
+  ticketLink: Ember.computed('token', function(){
+    return "/v1/tickets/" + this.get('token') + ".pdf";
   })
 
 });
