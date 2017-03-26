@@ -82,7 +82,6 @@
       </div>
     </div>
     {{#if showAdminFields}}
-    {{#if showDiscount}} <!-- Rabatt inaktiverad tills funktionalitet är verifierad -->
     <div class="form-group {{if model.errors.discount 'has-error'}}">
       <label class="control-label col-sm-3">Rabatt (kr)</label>
       <div class="col-sm-9">
@@ -92,10 +91,9 @@
     <div class="form-group {{if model.errors.discount_message 'has-error'}}">
       <label class="control-label col-sm-3">Rabattmeddelande</label>
       <div class="col-sm-9">
-        {{input value=model.discount_message class="form-control" name="phone_nr"}}
+        {{input value=model.discountMessage class="form-control" }}
       </div>
     </div>
-    {{/if}}
     <div class="form-group {{if model.errors.memo 'has-error'}}">
       <label class="control-label col-sm-3">Notering (admin)</label>
       <div class="col-sm-9">
@@ -124,7 +122,11 @@
     {{/if}}
     <div class="form-group">
       <div class="col-sm-offset-3">
-        <button {{action 'save' model}} class="btn btn-primary">Spara bokning</button>
+        {{#unless savingMode}}
+          <button {{action 'save' model}} class="btn btn-primary">Spara bokning</button>
+        {{else}}
+          Sparar...
+        {{/unless}}
       </div>
     </div>
   {{/if}}

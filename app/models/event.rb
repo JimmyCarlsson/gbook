@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessor :discount
+  attr_accessor :booking
   # Scopes
   default_scope { where(deleted_at: nil)}
   # Relations
@@ -46,6 +46,9 @@ class Event < ActiveRecord::Base
   def booked_seats
     booked_seats = 0
     bookings.each do |booking|
+      if self.booking.present? && self.booking.id == booking.id
+        next
+      end
       booked_seats += booking.tickets
     end
     return booked_seats
@@ -68,42 +71,56 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def tax_actual(tax)
-    return tax - discount * tax_share(tax) if discount.present?
-    return tax
-  end 
+  # Fraction of price using a 25% tax rate (format: 0.38)
+  def tax_share_25
+    tax_share(tax25)
+  end
 
-  # Returns the actual taxes in money
+  # Fraction of price using a 12% tax rate (format: 0.38)
+  def tax_share_12
+    tax_share(tax12)
+  end
+
+  # Fraction of price using a 6% tax rate (format: 0.38)
+  def tax_share_6
+    tax_share(tax6)
+  end
+
+  # Returns the actual taxes for a given sum and percentage in money
   def tax_sum(tax, tax_percent)
     (tax - (tax / (1 + tax_percent))).round(2)
   end
 
+  # The total taxes sum derived from 25% tax rate for a booking
   def tax25_sum
-    tax_sum(tax_actual(tax25), 0.25)
+    tax_sum(tax25, 0.25)
   end
 
   def tax12_sum
-    tax_sum(tax_actual(tax12), 0.12)
+    tax_sum(tax12, 0.12)
   end
 
   def tax6_sum
-    tax_sum(tax_actual(tax6), 0.06)
+    tax_sum(tax6, 0.06)
   end
 
   def tax_net(tax, tax_percent)
     tax / (1 + tax_percent)
   end
 
+  # Sum using 25% tax rate excluding taxes per ticket
   def tax25_net
-    tax_net(tax_actual(tax25), 0.25)
+    tax_net(tax25, 0.25)
   end
 
+  # Sum using 12% tax rate excluding taxes per ticket
   def tax12_net
-    tax_net(tax_actual(tax12), 0.12)
+    tax_net(tax12, 0.12)
   end
 
+  # Sum using 6% tax rate excluding taxes per ticket
   def tax6_net
-    tax_net(tax_actual(tax6), 0.06)
+    tax_net(tax6, 0.06)
   end
 
   # Returns the share in decimals per tax count
@@ -116,11 +133,6 @@ class Event < ActiveRecord::Base
   end
 
   def net_price
-    price_actual - total_tax
-  end
-
-  def price_actual
-    discount = self.discount || 0
-    price - discount
+    price - total_tax
   end
 end

@@ -19,11 +19,11 @@ class Booking < ActiveRecord::Base
   validate :validate_discount
   validates :discount, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Rabatt måste vara ett heltal", allow_nil: true}
 
-  # Set discount on related event
+  # Set booking on related event
   def event
     event = super
     if event.present?
-      event.discount = discount
+      event.booking = self
     end
     return event
   end
@@ -86,40 +86,116 @@ def reference
     end
   end
 
+  # Total price of booking after discount including tax
   def total_price
-    return (self.tickets * event.price_actual).round(2)
+    return (self.tickets * price_actual).round(2)
   end
 
   def total_net_price
-    return (event.net_price * tickets).round(2)
+    return (net_price * tickets).round(2)
   end
 
   def total_tax
-    return (event.total_tax * tickets).round(2)
+    return (total_tax_ticket * tickets).round(2)
+  end
+
+  # Total tax of booking after discount
+  def tax_actual(tax)
+    if discount.present?
+      return tax - discount * event.tax_share(tax)
+    else
+      return tax
+    end
+  end 
+  #
+  # Returns the actual taxes for a given sum and percentage in money
+  def tax_sum(tax, tax_percent)
+    (tax - (tax / (1 + tax_percent))).round(2)
+  end
+
+  # The total taxes sum derived from 25% tax rate for a booking
+  def tax25_sum
+    tax_sum(tax_actual(event.tax25), 0.25)
+  end
+
+  def tax12_sum
+    tax_sum(tax_actual(event.tax12), 0.12)
+  end
+
+  def tax6_sum
+    tax_sum(tax_actual(event.tax6), 0.06)
   end
 
   def total_tax25_net
-    return (event.tax25_net * tickets).round(2)
+    return (tax25_net * tickets).round(2)
   end
 
   def total_tax12_net
-    return (event.tax12_net * tickets).round(2)
+    return (tax12_net * tickets).round(2)
   end
 
   def total_tax6_net
-    return (event.tax6_net * tickets).round(2)
+    return (tax6_net * tickets).round(2)
   end
 
   def total_tax25_sum
-    return (event.tax25_sum * tickets).round(2)
+    return (tax25_sum * tickets).round(2)
   end
 
   def total_tax12_sum
-    return (event.tax12_sum * tickets).round(2)
+    return (tax12_sum * tickets).round(2)
   end
 
   def total_tax6_sum
-    return (event.tax6_sum * tickets).round(2)
+    return (tax6_sum * tickets).round(2)
+  end
+
+  def tax_net(tax, tax_percent)
+    tax / (1 + tax_percent)
+  end
+
+  # Sum using 25% tax rate excluding taxes per ticket
+  def tax25_net
+    tax_net(tax_actual(event.tax25), 0.25)
+  end
+
+  # Sum using 12% tax rate excluding taxes per ticket
+  def tax12_net
+    tax_net(tax_actual(event.tax12), 0.12)
+  end
+
+  # Sum using 6% tax rate excluding taxes per ticket
+  def tax6_net
+    tax_net(tax_actual(event.tax6), 0.06)
+  end
+
+  # Returns the discount excluding tax
+  def discount_net
+    return self.discount - self.discount * event.tax_share_25 * 0.25 - self.discount * event.tax_share_12 * 0.12 - self.discount * event.tax_share_6 * 0.06
+  end
+
+  # Tax per ticket for booking
+  def total_tax_booking
+    (total_tax25_sum + total_tax12_sum + total_tax6_sum).round(2)
+  end
+  #
+  # Tax per ticket for booking
+  def total_tax_ticket
+    (tax25_sum + tax12_sum + tax6_sum).round(2)
+  end
+
+  # Price per ticket excluding tax after discount
+  def net_price
+    price_actual - total_tax_ticket
+  end
+
+  # Price per ticket including tax after discount
+  def price_actual
+    if discount.present?
+      return event.price - discount
+    else
+      return event.price
+    end
   end
 
 end

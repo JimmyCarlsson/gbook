@@ -102,8 +102,8 @@ class InvoicePdf < Prawn::Document
     translate(@x,@y) do
       stroke_rounded_rectangle [0,0], width, height, @corners
     end
-    bounding_box [@x+20,@y-5], width: 450 do
-      table [["Benämning", "Lev ant", "á-pris", "Rabatt", "Summa"]],column_widths: [200, 50, 75, 50], width: 450 do
+    bounding_box [@x+20,@y-0], width: 450 do
+      table [["Benämning", "Lev ant", "á-pris", "Rabatt á-pris", "Summa"]],column_widths: [200, 50, 75, 50], width: 450 do
         cells.borders = []
         columns(4).align = :right
       end
@@ -125,7 +125,7 @@ class InvoicePdf < Prawn::Document
 
   def invoice_rows
     [
-      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(price_sum: @booking.event.net_price, food_sum: @booking.event.tax12_net, show_sum: @booking.event.tax6_net) : format_number(@booking.event.price_actual), @booking.discount ? format_number(@booking.discount) : "", @booking.is_business ? business_price_info(price_sum: @booking.total_net_price, food_sum: @booking.total_tax12_net, show_sum: @booking.total_tax6_net) : format_number(@booking.total_price)]
+      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(price_sum: @booking.event.net_price, food_sum: @booking.event.tax12_net, show_sum: @booking.event.tax6_net) : format_number(@booking.event.price), @booking.discount ? (@booking.is_business ? format_number(@booking.discount_net) : format_number(@booking.discount)) : "", @booking.is_business ? business_price_info(price_sum: @booking.total_net_price, food_sum: @booking.total_tax12_net, show_sum: @booking.total_tax6_net) : format_number(@booking.total_price)]
     ]
   end
 

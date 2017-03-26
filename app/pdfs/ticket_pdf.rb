@@ -28,7 +28,7 @@ class TicketPdf < Prawn::Document
     text "<b>Tid:</b> 19:00 insläpp 18:30", align: :center, inline_format: true
     text "<b>Namn:</b> #{@booking.name}", align: :center, inline_format: true
     move_down 30
-    text "<b>Pris:</b> #{@booking.event.price}:- /pers.", align: :center, inline_format: true
+    text "<b>Pris:</b> #{@booking.price_actual}:- /pers. #{if @booking.discount.present? then "(ord. pris #{@booking.event.price}:- /pers)" end}", align: :center, inline_format: true
     text "i priset ingår Show, trerätters meny och kaffe.", align: :center, size: 9
     text "Betalning sker mot faktura inom 10dgr från utfärdat datum.", align: :center, size: 9
     move_down 20

@@ -17,10 +17,7 @@ export default DS.Model.extend({
   discountMessage: attr('string', {updateOnly: true}),
   memo: attr('string', {updateOnly: true}),
   paid: attr('boolean', {updateOnly: true}),
-
-  totalPrice: Ember.computed('event.price', 'tickets', function(){
-    return this.get('event.price') * this.get('tickets');
-  }),
+  totalPrice: attr('number', {readOnly: true}),
 
   isBusiness: Ember.computed.equal('bookingType', 'business'),
   isPrivate: Ember.computed.equal('bookingType', 'private'),
