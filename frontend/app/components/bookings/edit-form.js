@@ -14,7 +14,7 @@ export default Ember.Component.extend({
   }),
 
   showAdminFields: Ember.computed('model.id', 'session.isAuthenticated', function(){
-    return this.get('session.isAuthenticated') && this.get('model.id');
+    return this.get('session.isAuthenticated'); //&& this.get('model.id');
   }),
   actions: {
     save() {

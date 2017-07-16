@@ -28,6 +28,10 @@ export default DS.Model.extend({
 
   ticketLink: Ember.computed('token', function(){
     return "/v1/tickets/" + this.get('token') + ".pdf";
+  }),
+
+  calculatedTotalPrice: Ember.computed('event.price', 'discount', 'tickets', function(){
+    return (this.get('event.price')- this.get('discount')) * this.get('tickets');
   })
 
 });
