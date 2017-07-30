@@ -1,8 +1,10 @@
 class BookingMailer < ApplicationMailer
-  default from: 'noreply@grebbans.se'
  
   def booking_email(booking)
     @booking = booking
-    mail(to: @booking.email, subject: 'Din bokningsbekräftelse!')
+    mail(
+      from: "Grebbans <noreply@grebbans.se>", 
+      to: @booking.email, 
+      subject: "Bokningsbekräftelse #{@booking.event.name} #{@booking.event.date.strftime('%F')}")
   end
 end

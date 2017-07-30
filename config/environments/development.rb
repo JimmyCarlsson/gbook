@@ -53,4 +53,6 @@ Rails.application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   } 
+
+  ENV['BOOKING_LINK_URL'] = "http://localhost:3000/#/bookings/"
 end

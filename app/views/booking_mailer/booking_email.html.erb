@@ -4,10 +4,15 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Welcome to example.com, <%= @booking.email %></h1>
+    <h1>Bokningsbekräftelse: Grebbans Nöjesrestaureang</h1>
     <p>
-      You have successfully signed up to example.com,
+      Event: <%= @booking.event.name %><br/>
+      Datum: <%= @booking.event.date.strftime('%F %R')%><br/>
+      Antal biljetter: <%= @booking.tickets %>
     </p>
-    <p>Thanks for joining and have a great day!</p>
+    <p>
+    Du hittar biljett och faktura på följande länk: <a href="<%= ENV['BOOKING_LINK_URL'] + @booking.token %>"><%= ENV['BOOKING_LINK_URL'] + @booking.token %></a>
+    </p>
+    <p>Välkomna!</p>
   </body>
 </html>
