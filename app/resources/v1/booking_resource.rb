@@ -19,4 +19,9 @@ class V1::BookingResource < JSONAPI::Resource
       super
     end
   end
+
+  after_save do
+    pp @model
+    BookingMailer.booking_email(@model).deliver_now
+  end
 end
