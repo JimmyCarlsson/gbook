@@ -18,6 +18,7 @@ export default DS.Model.extend({
   memo: attr('string', {updateOnly: true}),
   paid: attr('boolean', {updateOnly: true}),
   totalPrice: attr('number', {readOnly: true}),
+  termsAccepted: false,
 
   isBusiness: Ember.computed.equal('bookingType', 'business'),
   isPrivate: Ember.computed.equal('bookingType', 'private'),
@@ -32,6 +33,13 @@ export default DS.Model.extend({
 
   calculatedTotalPrice: Ember.computed('event.price', 'discount', 'tickets', function(){
     return (this.get('event.price')- this.get('discount')) * this.get('tickets');
+  }),
+
+  saveDisabled: Ember.computed('termsAccepted', function(){
+    if (this.get('termsAccepted') === true){
+      return null;
+    }
+    return true;
   })
 
 });
