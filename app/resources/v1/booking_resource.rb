@@ -4,24 +4,33 @@ class V1::BookingResource < JSONAPI::Resource
   has_one :event
 
   def self.updatable_fields(context)
-    return super - [:token, :created_at, :updated_at, :total_price]
+    non_updateables =  [:token, :created_at, :updated_at, :total_price]
+
+    return super - non_updateables
   end
 
   def self.creatable_fields(context)
-    return super - [:token, :created_at, :updated_at, :paid, :discount, :memo, :discount_message, :total_price]
+    # These should never be updated through json api
+    non_creatables =  [:token, :created_at, :updated_at, :total_price]
+    non_autorized = []
+
+    # Unless admin, these fields should not be possible to set
+    if context[:current_admin].nil?
+      non_authorized = [:discount, :paid, :discount_message, :memo]
+    end
+
+    return super - non_creatables - non_authorized
   end
 
-  def fetchable_fields
-    if context[:admin_signed_in] == true
+  def self.fetchable_fields(context)
+    if context[:current_admin].present?
       super
     else
-      #super - [:memo]
-      super
+      super - [:memo]
     end
   end
 
   after_save do
-    pp @model
     BookingMailer.booking_email(@model).deliver_now
   end
 end
