@@ -18,6 +18,18 @@
       <p class="form-control-static">{{model.event.price}}:-</p>
     </div>
   </div>
+  <div class="form-group {{if model.errors.tickets 'has-error'}}">
+    <label class="control-label col-sm-3">Antal biljetter</label>
+    <div class="col-sm-9">
+      {{input type="number" value=model.tickets class="form-control"}}
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-3">Totalkostnad</label>
+    <div class="col-sm-9">
+      {{#if model.tickets}}<p class="form-control-static">{{model.calculatedTotalPrice}}:-</p>{{/if}} 
+      </div>
+    </div>
   <div class="form-group {{if model.errors.bookingType 'has-error'}}">
     <label class="control-label col-sm-3">Bokas som</label>
     <div class="radio col-sm-9">
@@ -69,12 +81,6 @@
           {{input value=model.phone_nr class="form-control" name="phone_nr"}}
         </div>
       </div>
-      <div class="form-group {{if model.errors.tickets 'has-error'}}">
-        <label class="control-label col-sm-3">Antal biljetter</label>
-        <div class="col-sm-9">
-          {{input type="number" value=model.tickets class="form-control"}}
-        </div>
-      </div>
       <div class="form-group {{if model.errors.message 'has-error'}}">
         <label class="control-label col-sm-3">Meddelande</label>
         <div class="col-sm-9">
@@ -82,6 +88,7 @@
         </div>
       </div>
       {{#if showAdminFields}}
+        <h2>Administratörsfält</h2>
         <div class="form-group {{if model.errors.discount 'has-error'}}">
           <label class="control-label col-sm-3">Rabatt (kr)</label>
           <div class="col-sm-9">
@@ -107,12 +114,6 @@
           </div>
         </div>
       {{/if}}
-      <div class="form-group">
-        <label class="control-label col-sm-3">Totalkostnad</label>
-        <div class="col-sm-9">
-          {{#if model.tickets}}<p class="form-control-static">{{model.calculatedTotalPrice}}:-</p>{{/if}} 
-          </div>
-        </div>
         {{#if model.errors}}
           <div class="alert alert-danger">
             {{#each model.errors as |error|}}

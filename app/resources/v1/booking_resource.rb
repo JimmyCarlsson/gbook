@@ -12,14 +12,7 @@ class V1::BookingResource < JSONAPI::Resource
   def self.creatable_fields(context)
     # These should never be updated through json api
     non_creatables =  [:token, :created_at, :updated_at, :total_price]
-    non_autorized = []
-
-    # Unless admin, these fields should not be possible to set
-    if context[:current_admin].nil?
-      non_authorized = [:discount, :paid, :discount_message, :memo]
-    end
-
-    return super - non_creatables - non_authorized
+    return super - non_creatables 
   end
 
   def self.fetchable_fields(context)
@@ -27,6 +20,16 @@ class V1::BookingResource < JSONAPI::Resource
       super
     else
       super - [:memo]
+    end
+  end
+
+  before_save do
+    # If not admin, make sure certain field have not been set
+    if context[:current_admin].nil?
+      @model.paid = false
+      @model.discount = 0
+      @model.discount_message = nil
+      @model.memo = nil
     end
   end
 

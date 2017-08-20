@@ -1,5 +1,5 @@
 class V1::BookingsController < V1::BaseController
-  before_action :authenticate_admin_from_token! #, except: [:create, :show, :show_relationship]
+  before_action :authenticate_admin_from_token! 
   before_action :authenticate_admin! , except: [:create, :show, :show_relationship]
   def show
     token = params[:id]

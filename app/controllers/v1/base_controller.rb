@@ -1,4 +1,5 @@
 class V1::BaseController < JSONAPI::ResourceController
+  helper_method :authenticate_admin_from_token!
   require 'pp'
   include JSONAPI::Utils
   protect_from_forgery with: :null_session
