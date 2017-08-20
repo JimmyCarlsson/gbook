@@ -6,7 +6,7 @@ class V1::EventsController < V1::BaseController
   before_action :authenticate_admin! , except: [:index, :show, :get_related_resource]
   def index
     if context[:current_admin].nil?
-      events = Event.where("date <= ?", Date.today).order(:date)
+      events = Event.where("date >= ?", Date.today).order(:date)
     else
       if params[:historical] == "true"
         events = Event.where('date <= ?', Date.today).order(:date)
