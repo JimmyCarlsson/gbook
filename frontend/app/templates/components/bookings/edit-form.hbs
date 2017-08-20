@@ -1,9 +1,11 @@
 <h2>Köp biljetter till {{model.event.name}} <small>{{moment-format model.event.date 'LLLL'}}</small></h2>
 <h4>{{model.event.price}}:-/pers. inkl. moms</h4>
 <div class="form" style="margin-top:30px;">
+  <hr/>
   <div class="row">
+    <p class="form-control-static input-lg col-sm-offset-2">Jag vill köpa...</p>
   <div class="form-group {{if model.errors.tickets 'has-error'}} {{if tooManyTickets 'has-error'}}">
-    <div class="col-sm-offset-2 col-sm-4">
+    <div class="col-sm-offset-1 col-sm-4">
       <div class="input-group">
         <span class="input-group-addon input-lg" id="basic-addon1">Antal biljetter</span>
         {{input type="number" min=1 value=model.tickets class="form-control input-lg" }}
@@ -23,8 +25,8 @@
   <hr/>
   <div class="row">
   <div class="form-group">
-    <p class="form-control-static input-lg col-sm-offset-2">Jag bokar som...</p>
-    <div class="btn-group col-sm-offset-2">
+    <p class="form-control-static input-lg col-sm-offset-2">Jag köper biljetter som...</p>
+    <div class="btn-group col-sm-offset-1">
       <button class="btn btn-default btn-lg {{if model.isBusiness 'active'}}" {{action 'setType' 'business'}}>Företag</button>
       <button class="btn btn-default btn-lg {{if model.isPrivate 'active'}}" {{action 'setType' 'private'}}>Privatperson</button>
     </div>
@@ -34,38 +36,38 @@
 {{#if typeIsSet}}
   <hr/>
     <div class="row">
-    <p class="form-control-static input-lg col-sm-offset-2">Bokningsinformation</p>
+    <p class="form-control-static input-lg col-sm-offset-2">Kontaktinformation</p>
   <div class="form-horizontal">
     <div class="form-group {{if model.errors.name 'has-error'}}">
-      <label class="control-label col-sm-3">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
-      <div class="col-sm-9">
+      <label class="control-label col-sm-1">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
+      <div class="col-sm-4">
         {{input value=model.name class="form-control"}}
       </div>
     </div>
     {{#if model.isBusiness}}
       <div class="form-group {{if model.errors.contact_person 'has-error'}}">
-        <label class="col-sm-3 control-label">Kontaktperson</label>
-        <div class="col-sm-9">
+        <label class="col-sm-1 control-label">Kontaktperson</label>
+        <div class="col-sm-4">
           {{input value=model.contact_person class="form-control"}}
         </div>
       </div>
     {{/if}}
     <div class="form-group {{if model.errors.email 'has-error'}}">
-      <label class="control-label col-sm-3">E-post</label>
-      <div class="col-sm-9">
+      <label class="control-label col-sm-1">E-post</label>
+      <div class="col-sm-4">
         {{input value=model.email class="form-control" name="email"}}
       </div>
     </div>
     <div class="form-group {{if showEmailDiffersMessage 'has-error'}}">
-      <label class="control-label col-sm-3">Bekräfta E-post</label>
-      <div class="col-sm-9">
+      <label class="control-label col-sm-1">Bekräfta E-post</label>
+      <div class="col-sm-4">
         {{input value=confirmEmail class="form-control" autocomplete="off"}}
         {{#if showEmailDiffersMessage}}{{fa-icon 'exclamation-triangle' title='E-post adresserna matchar inte' class="text-danger"}}{{/if}}
         </div>
       </div>
       <div class="form-group {{if model.errors.phone_nr 'has-error'}}">
-        <label class="control-label col-sm-3">Telefon</label>
-        <div class="col-sm-9">
+        <label class="control-label col-sm-1">Telefon</label>
+        <div class="col-sm-4">
           {{input value=model.phone_nr class="form-control" name="phone_nr"}}
         </div>
       </div>
@@ -73,10 +75,10 @@
     <hr/>
     <div class="row">
     <p class="form-control-static input-lg col-sm-offset-2">Meddelande</p>
-        <div class="col-sm-9 col-sm-offset-1">
+        <div class="col-sm-9 ">
           <div class="alert alert-info">Här kan du meddela om du eller någon i ditt sällskap är rullstolsburen, anmäla om någon har allergi eller önskar specialkost samt om ni firar någon eller någonting särskilt.</div>
         </div>
-        <div class="col-sm-9 col-sm-offset-1">
+        <div class="col-sm-9 ">
           {{textarea value=model.message class="form-control" rows=7}}
         </div>
       </div>
@@ -120,15 +122,17 @@
         <hr/>
         <div class="row">
         <div class="form-group">
-          <label class="control-label col-sm-3"></label>
+          <label class="control-label col-sm-1"></label>
           <div class="col-sm-9">
             <label for="termsCheckbox"> {{input type="checkbox" checked=model.termsAccepted id="termsCheckbox" class="inline-form-control"}} Jag bekräftar att jag har läst och accepterar <a href="#" data-toggle="modal" data-target="#termsModal">köpvillkoren</a></label>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="form-group">
-          <div class="col-sm-offset-3">
+          <div class="col-sm-offset-1">
             {{#unless savingMode}}
-              <button {{action 'save' model}} class="btn btn-primary btn-lg" disabled="{{saveDisabled}}">Bekräfta bokning</button>
+              <button {{action 'save' model}} class="btn btn-primary btn-lg" disabled="{{saveDisabled}}">Bekräfta köp</button>
             {{else}}
               Sparar...
             {{/unless}}
