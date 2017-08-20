@@ -13,10 +13,10 @@ export default DS.Model.extend({
   token: attr('string', {readOnly: true}),
   createdAt: attr('date', {readOnly: true}),
   message: attr('string'),
-  discount: attr('number', {updateOnly: true}),
-  discountMessage: attr('string', {updateOnly: true}),
-  memo: attr('string', {updateOnly: true}),
-  paid: attr('boolean', {updateOnly: true}),
+  discount: attr('number'),
+  discountMessage: attr('string'),
+  memo: attr('string'),
+  paid: attr('boolean'),
   totalPrice: attr('number', {readOnly: true}),
   termsAccepted: false,
 
@@ -32,7 +32,11 @@ export default DS.Model.extend({
   }),
 
   calculatedTotalPrice: Ember.computed('event.price', 'discount', 'tickets', function(){
-    return (this.get('event.price')- this.get('discount')) * this.get('tickets');
+    var discount = this.get('discount');
+    if (!discount){
+      discount = 0;
+    }
+    return (this.get('event.price')- discount) * this.get('tickets');
   }),
 
   saveDisabled: Ember.computed('termsAccepted', function(){
