@@ -25,8 +25,21 @@ export default Ember.Component.extend({
     return (this.get('model.tickets') > 15 && !this.get('idAdmin'))
   }),
 
+  saveDisabled: Ember.computed('model.termsAccepted', function(){
+    if (this.get('model.termsAccepted') !== true){
+      return true;
+    }
+    if (this.get('tooManyTickets')) {
+      return true;
+    }
+    return null;
+  }),
 
   actions: {
+    setType(type) {
+      this.set('model.bookingType', type);
+    },
+
     save() {
       var that = this;
       this.set('savingMode', true);

@@ -8,7 +8,7 @@ export default DS.Model.extend({
   contact_person: attr('string'),
   email: attr('string'),
   phone_nr: attr('string'),
-  tickets: attr('number'),
+  tickets: attr('number', {defaultValue: 1}),
   event: belongsTo('event'),
   token: attr('string', {readOnly: true}),
   createdAt: attr('date', {readOnly: true}),
@@ -31,19 +31,21 @@ export default DS.Model.extend({
     return "/v1/tickets/" + this.get('token') + ".pdf";
   }),
 
+  discountedTicketPrice: Ember.computed('event.price', 'discount', function(){
+    var discount = this.get('discount');
+    if (!discount){
+      discount = 0;
+    }
+    return (this.get('event.price')- discount);
+  }),
+
   calculatedTotalPrice: Ember.computed('event.price', 'discount', 'tickets', function(){
     var discount = this.get('discount');
     if (!discount){
       discount = 0;
     }
     return (this.get('event.price')- discount) * this.get('tickets');
-  }),
-
-  saveDisabled: Ember.computed('termsAccepted', function(){
-    if (this.get('termsAccepted') === true){
-      return null;
-    }
-    return true;
   })
+
 
 });

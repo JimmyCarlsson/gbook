@@ -1,53 +1,41 @@
-<h2>Köp biljetter</h2>
-<div class="form-horizontal">
-  <div class="form-group">
-    <label class="control-label col-sm-3">Event</label>
-    <div class="col-sm-9">
-      <p class="form-control-static">{{model.event.name}}</p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-sm-3">Datum</label>
-    <div class="col-sm-9">
-      <p class="form-control-static">{{moment-format model.event.date 'LLLL'}}</p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-sm-3">Pris</label>
-    <div class="col-sm-9">
-      <p class="form-control-static">{{model.event.price}}:-</p>
-    </div>
-  </div>
-  <div class="form-group {{if model.errors.tickets 'has-error'}}">
-    <label class="control-label col-sm-3">Antal biljetter</label>
-    <div class="col-sm-9">
-      {{input type="number" value=model.tickets class="form-control"}}
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="control-label col-sm-3">Totalkostnad</label>
-    <div class="col-sm-9">
-      {{#if model.tickets}}<p class="form-control-static">{{model.calculatedTotalPrice}}:-</p>{{/if}} 
+<h2>Köp biljetter till {{model.event.name}} <small>{{moment-format model.event.date 'LLLL'}}</small></h2>
+<h4>{{model.event.price}}:-/pers. inkl. moms</h4>
+<div class="form" style="margin-top:30px;">
+  <div class="row">
+  <div class="form-group {{if model.errors.tickets 'has-error'}} {{if tooManyTickets 'has-error'}}">
+    <div class="col-sm-offset-2 col-sm-4">
+      <div class="input-group">
+        <span class="input-group-addon input-lg" id="basic-addon1">Antal biljetter</span>
+        {{input type="number" min=1 value=model.tickets class="form-control input-lg" }}
       </div>
     </div>
-  <div class="form-group {{if model.errors.bookingType 'has-error'}}">
-    <label class="control-label col-sm-3">Bokas som</label>
-    <div class="radio col-sm-9">
-      {{#radio-button
-        value='business'
-        groupValue=model.bookingType
-        required=true}}
-        Företag
-      {{/radio-button}}
-      {{#radio-button
-        value='private'
-        groupValue=model.bookingType
-        required=true}}
-        Privatperson
-      {{/radio-button}}
+    <div class="col-sm-6">
+      {{#if tooManyTickets}}
+        <div class="alert alert-info">
+          Är ni ett större sällskap på <strong>över 15 pers.</strong> så kontakta oss på telefon 0730-314407 för personlig service eller maila din bokning till info@grebbans.se
+        </div>
+      {{else}}
+        <p class="form-control-static input-lg" style="word-spacing:10px;"> x <strong>{{model.discountedTicketPrice}}:-</strong> = <strong>{{model.calculatedTotalPrice}}:-</strong> inkl.moms</p>
+      {{/if}}
     </div>
   </div>
-  {{#if typeIsSet}}
+</div>
+  <hr/>
+  <div class="row">
+  <div class="form-group">
+    <p class="form-control-static input-lg col-sm-offset-2">Jag bokar som...</p>
+    <div class="btn-group col-sm-offset-2">
+      <button class="btn btn-default btn-lg {{if model.isBusiness 'active'}}" {{action 'setType' 'business'}}>Företag</button>
+      <button class="btn btn-default btn-lg {{if model.isPrivate 'active'}}" {{action 'setType' 'private'}}>Privatperson</button>
+    </div>
+  </div>
+</div>
+</div>
+{{#if typeIsSet}}
+  <hr/>
+    <div class="row">
+    <p class="form-control-static input-lg col-sm-offset-2">Bokningsinformation</p>
+  <div class="form-horizontal">
     <div class="form-group {{if model.errors.name 'has-error'}}">
       <label class="control-label col-sm-3">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
       <div class="col-sm-9">
@@ -81,18 +69,25 @@
           {{input value=model.phone_nr class="form-control" name="phone_nr"}}
         </div>
       </div>
-      <div class="form-group {{if model.errors.message 'has-error'}}">
-        <label class="control-label col-sm-3">Meddelande</label>
-        <div class="col-sm-9">
-          {{textarea value=model.message class="form-control"}}
+    </div>
+    <hr/>
+    <div class="row">
+    <p class="form-control-static input-lg col-sm-offset-2">Meddelande</p>
+        <div class="col-sm-9 col-sm-offset-1">
+          <div class="alert alert-info">Här kan du meddela om du eller någon i ditt sällskap är rullstolsburen, anmäla om någon har allergi eller önskar specialkost samt om ni firar någon eller någonting särskilt.</div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-1">
+          {{textarea value=model.message class="form-control" rows=7}}
         </div>
       </div>
       {{#if showAdminFields}}
+        <hr/>
+        <div class="row" style="background:#DDD; border-radius:5px; border:1px dashed black;padding:10px">
         <h2>Administratörsfält</h2>
         <div class="form-group {{if model.errors.discount 'has-error'}}">
-          <label class="control-label col-sm-3">Rabatt (kr)</label>
+          <label class="control-label col-sm-3">Rabatt (kr/biljett inkl. moms)</label>
           <div class="col-sm-9">
-            {{input type="number" value=model.discount class="form-control"}}:-
+            {{input type="number" value=model.discount class="form-control"}}
           </div>
         </div>
         <div class="form-group {{if model.errors.discount_message 'has-error'}}">
@@ -113,6 +108,7 @@
             {{input type="checkbox" checked=model.paid class="form-control"}}
           </div>
         </div>
+      </div>
       {{/if}}
         {{#if model.errors}}
           <div class="alert alert-danger">
@@ -121,6 +117,8 @@
             {{/each}}
           </div>
         {{/if}}
+        <hr/>
+        <div class="row">
         <div class="form-group">
           <label class="control-label col-sm-3"></label>
           <div class="col-sm-9">
@@ -130,12 +128,13 @@
         <div class="form-group">
           <div class="col-sm-offset-3">
             {{#unless savingMode}}
-              <button {{action 'save' model}} class="btn btn-primary" disabled="{{model.saveDisabled}}">Spara bokning</button>
+              <button {{action 'save' model}} class="btn btn-primary btn-lg" disabled="{{saveDisabled}}">Bekräfta bokning</button>
             {{else}}
               Sparar...
             {{/unless}}
           </div>
         </div>
+      </div>
 
         <div class="modal fade" id="termsModal" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -184,5 +183,5 @@
             </div>
           </div>
         </div>
+      </div>
       {{/if}}
-    </div>
