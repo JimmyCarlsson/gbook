@@ -12,4 +12,7 @@
 </div>
 {{#if session.isAuthenticated}}
   {{#link-to 'events.new' class="btn btn-primary"}}Skapa nytt event{{/link-to}}
+    <hr/>
+  {{#link-to 'events.index'  (query-params historical=true) class="btn btn-primary"}}Visa eventhistorik{{/link-to}}
+  {{#link-to 'events.index' (query-params historical=null) class="btn btn-primary"}}Visa kommande events{{/link-to}}
 {{/if}}
