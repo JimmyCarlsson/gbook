@@ -4,15 +4,8 @@
       {{#link-to 'index' class="navbar-brand"}}GreBook{{/link-to}}
     </div>
         <ul class="nav navbar-nav">
-          <li>{{#link-to 'events'}}Event{{/link-to}}</li>
+          <li>{{#link-to 'events'}}Kommande evenemang{{/link-to}}</li>
         </ul>
-        <p class="navbar-text navbar-right">
-        {{#if session.isAuthenticated}}
-          <a class="navbar-link" href="javascript.void();" {{action 'invalidateSession'}}>Logga ut</a>
-        {{else}}
-          {{#link-to 'login' class="navbar-link"}}Logga in{{/link-to}}
-        {{/if}}
-        </p>
   </div>
 </nav>
 <div class="container">
@@ -21,3 +14,16 @@
   </div>
   {{outlet}}
 </div>
+
+<hr/>
+<div class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container text-center">
+    <p class="navbar-text text-center" style="float:none"><b>Grebbans Nöjesrestaurang</b> | Hemsida: <b>www.grebbans.se</b> | E-post: <b>info@grebbans.se</b> | Telefon: <b>0730-314407</b>
+    {{#if session.isAuthenticated}}
+      | <a class="navbar-link" href="javascript.void();" {{action 'invalidateSession'}}>Logga ut</a>
+    {{else}}
+       | {{#link-to 'login' class="navbar-link"}}Admin{{/link-to}}
+      {{/if}}
+      </p>
+    </div>
+  </div>
