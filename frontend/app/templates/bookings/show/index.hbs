@@ -12,92 +12,92 @@
   </div>
 </div>
 <h2>Bokningsinformation</h2>
-<div class="form-horizontal">
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Event</label>
-    <div class="col-sm-9">
-      <p class="form-control-static">{{model.event.name}}</p>
-    </div>
+<div class="alert alert-info">
+  <p>Din bokning är registrerad, och ett mail har skickats till <strong>{{model.email}}</strong></p> 
+  <p>Kvar att göra:</p>
+  <p>
+  <ul>
+    <li>Betala fakturan</li>
+    <li>Skriv ut biljetten</li>
+    <li>Välkommen till Grebbans Nöjesrestaurang!</li>
+  </ul>
+  </p>
+</div>
+{{#if model.paid}}
+  <div class="alert alert-success">
+    <h3>Fakturastatus: Betald</h3>
+    <p>Din betalning är registrerad!</p>
   </div>
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Datum</label>
-    <div class="col-sm-9">
-      <p class="form-control-static">{{moment-format model.event.date 'LL'}}</p>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Antal biljetter</label>
-    <div class="col-sm-9">
-      <p class="form-control-static">{{model.tickets}}</p>
-    </div>
-  </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{model.name}}</p>
-      </div>
-    </div>
-    {{#if isBusiness}}
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Kontaktperson</label>
-        <div class="col-sm-9">
-        <p class="form-control-static">{{model.contact_person}}</p>
-        </div>
-      </div>
-    {{/if}}
-    <div class="form-group">
-      <label class="control-label col-sm-3">E-post</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{model.email}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3">Telefon</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{model.phone_nr}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3">Meddelande</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{model.message}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3">Rabatt</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{#if model.discount}}{{model.discount}}:- /biljett{{/if}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3">Rabattmeddelande</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{model.discountMessage}}</p>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-sm-3">Totalkostnad</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{model.totalPrice}}:-</p>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="control-label col-sm-3">Betalning verifierad</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{if model.paid 'Ja' 'Nej'}}</p>
-      </div>
-    </div>
-
-    {{#if session.isAuthenticated}}
-    <div class="form-group">
-      <label class="control-label col-sm-3">Notering (admin)</label>
-      <div class="col-sm-9">
-        <p class="form-control-static">{{model.memo}}</p>
-      </div>
-    </div>
-    {{/if}}
-
+{{else}}
+  <div class="alert alert-warning">
+    <h3>Fakturastatus: Ej betald</h3>
+    <p>Din faktura har ej registrerats som betald. Observera att detta kan ta upp till 7 dagar efter betalningen kommit in till oss.</p>
+    <br/>
     <a href="{{model.invoiceLink}}" target="_blank" class="btn btn-lg btn-primary">Visa faktura</a>
+  </div>
+{{/if}}
+<div class="alert alert-success">
+  <h3>Biljett</h3>
+  <p>Skriv ut och ta med biljetten till Grebbans Nöjesrestaurang</p>
+  <br/>
     <a href="{{model.ticketLink}}" target="_blank" class="btn btn-lg btn-primary">Visa biljett</a>
 </div>
+<table class="table table-striped">
+  <tbody>
+  <tr>
+    <td><strong>Evenemang</strong></td>
+    <td>{{model.event.name}}</td>
+  </tr>
+  <tr>
+    <td><strong>Datum</strong></td>
+    <td>{{moment-format model.event.date 'LL'}}</td>
+  </tr>
+  <tr>
+    <td><strong>Antal biljetter</strong></td>
+    <td>{{model.tickets}}</td>
+  </tr>
+  <tr>
+    <td><strong>{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</strong></td>
+    <td>{{model.name}}</td>
+  </tr>
+  {{#if model.isBusiness}}
+  <tr>
+    <td><strong>Kontaktperson</strong></td>
+    <td>{{model.contact_person}}</td>
+  </tr>
+  {{/if}}
+  <tr>
+    <td><strong>E-post</strong></td>
+    <td>{{model.email}}</td>
+  </tr>
+  <tr>
+    <td><strong>Telefon</strong></td>
+    <td>{{model.phone_nr}}</td>
+  </tr>
+  <tr>
+    <td><strong>Meddelande</strong></td>
+    <td>{{model.message}}</td>
+  </tr>
+  <tr>
+    <td><strong>Totalkostnad</strong></td>
+    <td>{{model.totalPrice}} :- (inkl. moms)</td>
+  </tr>
+  {{#if session.isAuthenticated}}
+    <tr>
+      <td colspan=2 class="text-center" style="border:2px solid black"><strong>Admin</strong></td>
+    </tr>
+  <tr>
+    <td><strong>Rabatt</strong></td>
+    <td>{{#if model.discount}}{{model.discount}} :- inkl moms per biljett{{else}}-{{/if}}</td>
+  </tr>
+  <tr>
+    <td><strong>Rabattmeddelande</strong></td>
+    <td>{{model.discount_message}}</td>
+  </tr>
+  <tr>
+    <td><strong>Notering</strong></td>
+    <td>{{model.memo}}</td>
+  </tr>
+  {{/if}}
+  </tbody>
+</table>
