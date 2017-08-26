@@ -1,4 +1,5 @@
 class Booking < ActiveRecord::Base
+  attr_accessor :send_email
   # Scopes
   default_scope { where(deleted_at: nil)}
 

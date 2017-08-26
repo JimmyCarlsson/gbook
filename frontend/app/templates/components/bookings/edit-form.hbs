@@ -76,7 +76,14 @@
     <div class="row">
     <p class="form-control-static input-lg col-sm-offset-2">Meddelande</p>
         <div class="col-sm-9 ">
-          <div class="alert alert-info">Här kan du meddela om du eller någon i ditt sällskap är rullstolsburen, anmäla om någon har allergi eller önskar specialkost samt om ni firar någon eller någonting särskilt.</div>
+          <div class="alert alert-info">Här kan du meddela ifall...
+            <ul>
+              <li> ...någon i ditt sällskap är rullstolsburen</li>
+              <li> ...någon i ditt sällskap har allergi eller önskar specialkost</li> 
+              <li> ...ni firar någon / något</li>
+              <li> ...det finns något annat som ni vill att vi ska känna till</li>
+            </ul>
+          </div>
         </div>
         <div class="col-sm-9 ">
           {{textarea value=model.message class="form-control" rows=7}}
@@ -84,32 +91,54 @@
       </div>
       {{#if showAdminFields}}
         <hr/>
-        <div class="row" style="background:#DDD; border-radius:5px; border:1px dashed black;padding:10px">
-        <h2>Administratörsfält</h2>
-        <div class="form-group {{if model.errors.discount 'has-error'}}">
-          <label class="control-label col-sm-3">Rabatt (kr/biljett inkl. moms)</label>
-          <div class="col-sm-9">
-            {{input type="number" value=model.discount class="form-control"}}
+        <div class="form-horizontal" style="background:#e4e4fe; border-radius:5px; border:1px dashed black;padding:10px">
+            <h2>Administratörsfält</h2>
+          <div class="row">
+            <div class="form-group {{if model.errors.discount 'has-error'}}">
+              <label class="control-label col-sm-3">Rabatt (kr/biljett inkl. moms)</label>
+              <div class="col-sm-3">
+                {{input type="number" value=model.discount class="form-control"}}
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group {{if model.errors.discount_message 'has-error'}}">
-          <label class="control-label col-sm-3">Rabattmeddelande</label>
-          <div class="col-sm-9">
-            {{input value=model.discountMessage class="form-control" }}
+          <div class="row">
+            <div class="form-group {{if model.errors.discount_message 'has-error'}}">
+              <label class="control-label col-sm-3">Rabattmeddelande</label>
+              <div class="col-sm-7">
+                {{input value=model.discountMessage class="form-control" }}
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group {{if model.errors.memo 'has-error'}}">
-          <label class="control-label col-sm-3">Notering (admin)</label>
-          <div class="col-sm-9">
-            {{textarea value=model.memo class="form-control"}}
+          <div class="row">
+            <div class="form-group {{if model.errors.memo 'has-error'}}">
+              <label class="control-label col-sm-3">Notering (admin)</label>
+              <div class="col-sm-7">
+                {{textarea value=model.memo class="form-control" rows="5"}}
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group {{if model.errors.paid 'has-error'}}">
-          <label class="control-label col-sm-3">Betalning verifierad</label>
-          <div class="col-sm-9">
-            {{input type="checkbox" checked=model.paid class="form-control"}}
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-sm-3">Betalning verifierad</label>
+              <div class="col-sm-3 material-switch">
+                <div class="material-switch pull-left">
+                  {{input id="paidSwitch" type="checkbox" checked=model.paid }}
+                  <label for="paidSwitch" class="label-success"></label>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-sm-3">Skicka E-mail</label>
+              <div class="col-sm-3 material-switch">
+                <div class="material-switch pull-left">
+                  {{input id="emailSwitch" type="checkbox" checked=model.sendEmail }}
+                  <label for="emailSwitch" class="label-success"></label>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
       {{/if}}
         {{#if model.errors}}

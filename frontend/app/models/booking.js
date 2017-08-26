@@ -19,6 +19,7 @@ export default DS.Model.extend({
   paid: attr('boolean', {adminOnly: true}),
   totalPrice: attr('number', {readOnly: true}),
   termsAccepted: false,
+  sendEmail: attr('boolean', {adminOnly: true, defaultValue: false}),
 
   isBusiness: Ember.computed.equal('bookingType', 'business'),
   isPrivate: Ember.computed.equal('bookingType', 'private'),

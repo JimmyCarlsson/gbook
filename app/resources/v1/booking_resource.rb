@@ -1,5 +1,5 @@
 class V1::BookingResource < JSONAPI::Resource
-  attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price
+  attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price, :send_email
 
   has_one :event
 
@@ -30,10 +30,14 @@ class V1::BookingResource < JSONAPI::Resource
       @model.discount = 0
       @model.discount_message = nil
       @model.memo = nil
+      @model.send_email = nil
     end
   end
 
   after_save do
-    BookingMailer.booking_email(@model).deliver_now
+    # Only send email if booking created by customer, or admin specified that it should be sent
+    if context[:current_admin].nil? || @model.send_email == true
+      BookingMailer.booking_email(@model).deliver_now
+    end
   end
 end
