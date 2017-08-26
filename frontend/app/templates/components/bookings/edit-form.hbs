@@ -149,25 +149,36 @@
           </div>
         {{/if}}
         <hr/>
-        <div class="row">
-        <div class="form-group">
-          <label class="control-label col-sm-1"></label>
-          <div class="col-sm-9">
-            <label for="termsCheckbox"> {{input type="checkbox" checked=model.termsAccepted id="termsCheckbox" class="inline-form-control"}} Jag bekräftar att jag har läst och accepterar <a href="#" data-toggle="modal" data-target="#termsModal">köpvillkoren</a></label>
+        <div class="alert alert-info" style="padding-left:30px">
+          <div class="row">
+            <h2>Bekräfta köp</h2>
+            <p>Följande kommer att hända då du klickar på <strong>Bekräfta köp</strong> nedan:</p>
+            <p>
+            <ul>
+              <li>Ditt köp registreras och är därmed bindande</li>
+              <li>Du kommer att skickas vidare till en sida där din <strong>Biljett</strong> och <strong>Faktura</strong> finns tillgängliga för nedladdning</li>
+              <li>Ett bekräftelsemail med information kring din bokning skickas till angiven E-post-adress</li>
+              <li><strong>Fakturan</strong> betalar du enklast genom banköverföring</li>
+              <li><strong>Biljetten</strong> skriver du ut och tar med dig till Grebbans Nöjesrestaurang</li>
+            </ul>
+            </p>
+            <hr/>
+            <div class="form-group">
+              <div class="col-sm-9">
+                <label for="termsCheckbox"> {{input type="checkbox" checked=model.termsAccepted id="termsCheckbox" class="inline-form-control"}} Jag bekräftar att jag har läst och accepterar <a href="#" data-toggle="modal" data-target="#termsModal">köpvillkoren</a></label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 text-center">
+                {{#unless savingMode}}
+                  <button {{action 'save' model}} class="btn btn-primary btn-lg" disabled="{{saveDisabled}}">Bekräfta köp</button>
+                {{else}}
+                  Sparar...
+                {{/unless}}
+              </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="form-group">
-          <div class="col-sm-offset-1">
-            {{#unless savingMode}}
-              <button {{action 'save' model}} class="btn btn-primary btn-lg" disabled="{{saveDisabled}}">Bekräfta köp</button>
-            {{else}}
-              Sparar...
-            {{/unless}}
-          </div>
-        </div>
-      </div>
 
         <div class="modal fade" id="termsModal" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
