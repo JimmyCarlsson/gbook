@@ -22,12 +22,12 @@ export default Ember.Component.extend({
     return this.get('session.isAuthenticated'); //&& this.get('model.id');
   }),
 
-  isAdmin: Ember.computed('model.id', 'session.isAuthenticated', function(){
+  isAdmin: Ember.computed('session.isAuthenticated', function(){
     return this.get('session.isAuthenticated'); //&& this.get('model.id');
   }),
 
   tooManyTickets: Ember.computed('model.tickets', 'isAdmin', function(){
-    return (this.get('model.tickets') > 15 && !this.get('idAdmin'))
+    return (this.get('model.tickets') > 15 && !this.get('isAdmin'))
   }),
 
   saveDisabled: Ember.computed('emailConfirmed','model.termsAccepted', function(){
