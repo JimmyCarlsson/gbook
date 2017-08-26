@@ -1,15 +1,15 @@
 <div class="row">
+      {{#if session.isAuthenticated}}
   <div class="col-xs-3">
     {{#link-to 'events.show' model.event}}{{fa-icon 'chevron-left'}} Tillbaka till {{model.event.name}}{{/link-to}}
   </div>
   <div class="col-xs-9">
     <div class="pull-right">
-      {{#if session.isAuthenticated}}
         <button class="btn btn-danger" {{action 'delete' model}}>Radera</button>
         {{#link-to 'bookings.show.edit' class="btn btn-default"}}Redigera{{/link-to}}
-      {{/if}}
     </div>
   </div>
+      {{/if}}
 </div>
 <h2>Bokningsinformation</h2>
 <div class="alert alert-info">

@@ -6,13 +6,25 @@
   <body>
     <h1>Bokningsbekräftelse: Grebbans Nöjesrestaureang</h1>
     <p>
-      Event: <%= @booking.event.name %><br/>
+    Du har bokat platser till följande evenemang hos Grebbans Nöjesrestaurang:<br/><br/>
+      Evenemang: <%= @booking.event.name %><br/>
       Datum: <%= @booking.event.date.strftime('%F %R')%><br/>
-      Antal biljetter: <%= @booking.tickets %>
-    </p>
-    <p>
-    Du hittar biljett och faktura på följande länk: <a href="<%= ENV['BOOKING_LINK_URL'] + @booking.token %>"><%= ENV['BOOKING_LINK_URL'] + @booking.token %></a>
-    </p>
-    <p>Välkomna!</p>
+      Antal biljetter: <%= @booking.tickets %><br/>
+      Namn: <%= @booking.name %><br/>
+      <% if @booking.booking_type == 'business'%>Kontaktperson: <%= @booking.contact_person %><br/><% end %>
+      Telefon: <%= @booking.phone_nr %><br/>
+      Meddelande: <%= @booking.message %><br/>
+      <b>Totalkostnad: <%= @booking.total_price %>:- (inkl. moms)</b><br/>
+
+      </p>
+      <p>
+      Observera att denna bokning är bindande, och att fakturan betalas innan dess förfallodatum.
+      <br/>
+      Du hittar biljett och faktura på följande länk: <a href="<%= ENV['BOOKING_LINK_URL'] + @booking.token %>"><%= ENV['BOOKING_LINK_URL'] + @booking.token %></a>
+      </p>
+      <p>Välkomna!<br/>
+      Grebbans Nöjesrestaurang
+      </p>
+      <p>Ifall du har frågor eller inte är korrekt mottagare av det här mailet, kontakta oss på E-post <b>info@grebbans.se</b></p>
   </body>
 </html>
