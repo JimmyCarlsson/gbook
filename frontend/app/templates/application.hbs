@@ -15,9 +15,8 @@
   {{outlet}}
 </div>
 
-<hr/>
 <div class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container text-center">
+  <div class="text-center">
     <p class="navbar-text text-center" style="float:none"><b>Grebbans Nöjesrestaurang</b> | Hemsida: <b>www.grebbans.se</b> | E-post: <b>info@grebbans.se</b> | Telefon: <b>0730-314407</b>
     {{#if session.isAuthenticated}}
       | <a class="navbar-link" href="javascript.void();" {{action 'invalidateSession'}}>Logga ut</a>
