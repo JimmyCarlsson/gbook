@@ -56,3 +56,8 @@
     background: inherit;
     left: 20px;
 }
+/* Add asterisk to required form fields' labels */
+.form-group.required .control-label:after {
+  content:" *";
+  color:red;
+}
