@@ -26,16 +26,16 @@ export default Model.extend({
   availabilityTranslation: Ember.computed('availabilityString', function() {
     switch(this.get('availabilityString')) {
       case 'plenty':
-        return "Många";
+        return "Många platser kvar";
         break;
       case 'some':
-        return "Måttligt";
+        return "Måttligt med platser kvar";
         break;
       case 'few':
-        return "Fåtal";
+        return "Fåtal platser kvar";
         break;
       case 'none':
-        return "Fullbokat";
+        return "Slutsålt!";
         break;
     }
   }),
