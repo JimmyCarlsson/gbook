@@ -37,6 +37,7 @@
     <label for="inputEventTax25" class="col-sm-2 control-label">25% Skatt</label>
     <div class="col-sm-1">
       {{input value=model.tax25 type='number' min='0' class="form-control"}}
+      {{percentageTax25}}%
       {{#each model.errors.tax25 as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}
@@ -44,6 +45,7 @@
     <label for="inputEventTax12" class="col-sm-2 control-label">12% Skatt</label>
     <div class="col-sm-1">
       {{input value=model.tax12 type='number' min='0' class="form-control"}}
+      {{percentageTax12}}%
       {{#each model.errors.tax12 as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}
@@ -51,6 +53,7 @@
     <label for="inputEventTax6" class="col-sm-2 control-label">6% Skatt</label>
     <div class="col-sm-1">
       {{input value=model.tax6 type='number' min='0' class="form-control"}}
+      {{percentageTax6}}%
       {{#each model.errors.tax6 as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}

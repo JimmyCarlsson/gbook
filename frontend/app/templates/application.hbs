@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      {{#link-to 'index' class="navbar-brand"}}GreBook{{/link-to}}
+      {{#link-to 'index' class="navbar-brand"}}Grebbans Bokningssystem{{/link-to}}
     </div>
         <ul class="nav navbar-nav">
           <li>{{#link-to 'events'}}Kommande evenemang{{/link-to}}</li>
@@ -17,7 +17,7 @@
 
 <div class="navbar navbar-default navbar-fixed-bottom">
   <div class="text-center">
-    <p class="navbar-text text-center" style="float:none"><b>Grebbans Nöjesrestaurang</b> | Hemsida: <b>www.grebbans.se</b> | E-post: <b>info@grebbans.se</b> | Telefon: <b>0730-314407</b>
+    <p class="navbar-text text-center" style="float:none"><b>Grebbans Nöjesrestaurang</b> | Hemsida: <a href="http://www.grebbans.se" target="_blank"><b>www.grebbans.se</b></a> | E-post: <b>info@grebbans.se</b> | Telefon: <b>0730-314407</b>
     {{#if session.isAuthenticated}}
       | <a class="navbar-link" href="javascript.void();" {{action 'invalidateSession'}}>Logga ut</a>
     {{else}}

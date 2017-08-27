@@ -4,7 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Bokningsbekräftelse: Grebbans Nöjesrestaureang</h1>
+    <h1>Bokningsbekräftelse: Grebbans Nöjesrestaurang</h1>
     <p>
     Du har bokat platser till följande evenemang hos Grebbans Nöjesrestaurang:<br/><br/>
       Evenemang: <%= @booking.event.name %><br/>
@@ -14,13 +14,13 @@
       <% if @booking.booking_type == 'business'%>Kontaktperson: <%= @booking.contact_person %><br/><% end %>
       Telefon: <%= @booking.phone_nr %><br/>
       Meddelande: <%= @booking.message %><br/>
-      <b>Totalkostnad: <%= @booking.total_price %>:- (inkl. moms)</b><br/>
+      <b>Totalkostnad: <%= '%.2f' % @booking.total_price %>:- (inkl. moms)</b><br/>
 
       </p>
       <p>
       Observera att denna bokning är bindande, och att fakturan betalas innan dess förfallodatum.
       <br/>
-      Du hittar biljett och faktura på följande länk: <a href="<%= ENV['BOOKING_LINK_URL'] + @booking.token %>"><%= ENV['BOOKING_LINK_URL'] + @booking.token %></a>
+      Du hittar biljett och faktura bifogat med detta E-post meddelande, samt på följande länk: <a href="<%= ENV['BOOKING_LINK_URL'] + @booking.token %>"><%= ENV['BOOKING_LINK_URL'] + @booking.token %></a>
       </p>
       <p>Välkomna!<br/>
       Grebbans Nöjesrestaurang
