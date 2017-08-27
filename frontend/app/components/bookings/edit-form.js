@@ -30,7 +30,7 @@ export default Ember.Component.extend({
     return (this.get('model.tickets') > 15 && !this.get('isAdmin'))
   }),
 
-  saveDisabled: Ember.computed('emailConfirmed','model.termsAccepted', function(){
+  saveDisabled: Ember.computed('tooManyTickets' ,'emailConfirmed','model.termsAccepted', function(){
     if (!this.get('emailConfirmed')) {
       return true;
     }
