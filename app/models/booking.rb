@@ -102,6 +102,10 @@ def reference
     end
   end
 
+  def invoice_days_calculated
+    return (self.due_date.to_date - self.delivery_date.to_date).to_i
+  end
+
   # Total price of booking after discount including tax
   def total_price
     return (self.tickets * price_actual).round(2)
