@@ -10,8 +10,10 @@ export default Ember.Component.extend({
     this.set('confirmEmail', this.get('model.email'));
     this.set('model.sendEmail', false);
     // Set due date and delivery date
-    this.set('model.deliveryDate', moment());
-    this.set('model.dueDate', moment().add(20, 'days'));
+    if (!this.get('model.id')){
+      this.set('model.deliveryDate', moment());
+      this.set('model.dueDate', moment().add(20, 'days'));
+    }
   }),
 
   updateBookingType: Ember.observer('model.bookingType', function(){
