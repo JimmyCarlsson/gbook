@@ -19,6 +19,8 @@ class Booking < ActiveRecord::Base
   validate :enough_tickets_available
   validate :validate_discount
   validates :discount, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Rabatt måste vara ett heltal", allow_nil: true}
+  validates :due_date, presence: true
+  validates :delivery_date, presence: true
 
   # Set booking on related event
   def event
@@ -71,11 +73,6 @@ def reference
 
   def destroy
     self.update_attribute('deleted_at', DateTime.now)
-  end
-
-  # Date when invoice is due
-  def due_date
-    DateTime.parse(self.created_at.to_s) + invoice_days
   end
 
   # Number of days crom booking creation until invoice has to be paid

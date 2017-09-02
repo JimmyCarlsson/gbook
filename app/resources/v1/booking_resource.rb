@@ -1,5 +1,5 @@
 class V1::BookingResource < JSONAPI::Resource
-  attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price, :send_email
+  attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price, :send_email, :due_date, :delivery_date
 
   has_one :event
 
@@ -31,6 +31,9 @@ class V1::BookingResource < JSONAPI::Resource
       @model.discount_message = nil
       @model.memo = nil
       @model.send_email = nil
+
+      @model.delivery_date = Date.today
+      @model.due_date = Date.today + @model.invoice_days
     end
   end
 

@@ -91,7 +91,7 @@ class InvoicePdf < Prawn::Document
     [
       ["Er referens", @booking.reference, "Vår referens", "Anna Rockenstierna"], 
       ["Betalningsvillkor", "#{@booking.invoice_days} dagar netto", "Förfallodatum", @booking.due_date.strftime('%F')],
-      ["Leveransdatum", @booking.created_at.strftime('%F'), "Dröjsmålsränta", "8%"]
+      ["Leveransdatum", @booking.delivery_date.strftime('%F'), "Dröjsmålsränta", "8%"]
     ]
   end
 

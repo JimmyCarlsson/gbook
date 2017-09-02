@@ -8,6 +8,7 @@ export default Ember.Component.extend({
   setConfirmEmail: Ember.on('init', function(){
     // Set confirmEmail to model email in case such exists (edit mode)
     this.set('confirmEmail', this.get('model.email'));
+    this.set('model.sendEmail', false);
   }),
 
   emailConfirmed: Ember.computed('model.email', 'confirmEmail', function(){
@@ -27,7 +28,7 @@ export default Ember.Component.extend({
   }),
 
   tooManyTickets: Ember.computed('model.tickets', 'isAdmin', function(){
-    return (this.get('model.tickets') > 15 && !this.get('isAdmin'))
+    return (this.get('model.tickets') > 20 && !this.get('isAdmin'))
   }),
 
   saveDisabled: Ember.computed('tooManyTickets' ,'emailConfirmed','model.termsAccepted', function(){
