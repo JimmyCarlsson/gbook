@@ -25,7 +25,7 @@ class TicketPdf < Prawn::Document
     text "<b>Antal:</b> #{@booking.tickets}", align: :center, inline_format: true
     move_down 20
     text "<b>Datum:</b> #{@booking.event.date.strftime("%F")}", align: :center, inline_format: true
-    text "<b>Tid:</b> #{@booking.event.date.strftime("%H:%M")} insläpp #{(@booking.event.date - 30.minutes).strftime("%H:%M")}", align: :center, inline_format: true
+    text "<b>Insläpp:</b> #{(@booking.event.date - 30.minutes).strftime("%H:%M")} - #{@booking.event.date.strftime("%H:%M")} ", align: :center, inline_format: true
     text "<b>Namn:</b> #{@booking.name}", align: :center, inline_format: true
     move_down 30
     text "<b>Pris:</b> #{@booking.price_actual}:- /pers. #{if @booking.discount.present? then "(ord. pris #{@booking.event.price}:- /pers)" end}", align: :center, inline_format: true
