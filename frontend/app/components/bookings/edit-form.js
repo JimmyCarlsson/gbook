@@ -5,10 +5,13 @@ export default Ember.Component.extend({
   typeIsSet: Ember.computed.or('model.isPrivate', 'model.isBusiness'),
   savingMode: false,
 
-  setConfirmEmail: Ember.on('init', function(){
+  initEditForm: Ember.on('init', function(){
     // Set confirmEmail to model email in case such exists (edit mode)
     this.set('confirmEmail', this.get('model.email'));
     this.set('model.sendEmail', false);
+    // Set due date and delivery date
+    this.set('model.deliveryDate', moment());
+    this.set('model.dueDate', moment().add(20, 'days'));
   }),
 
   emailConfirmed: Ember.computed('model.email', 'confirmEmail', function(){
