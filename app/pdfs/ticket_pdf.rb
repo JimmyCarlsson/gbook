@@ -40,8 +40,10 @@ class TicketPdf < Prawn::Document
     text "<b>Tider: </b>Dörrarna öppnas kl.#{(@booking.event.date - 30.minutes).strftime("%H:%M")} och insläpp sker mellan #{(@booking.event.date - 30.minutes).strftime("%H:%M")}-#{@booking.event.date.strftime("%H:%M")}", align: :center, inline_format: true
     #text "Mat och show pågår till ca kl 23.00. Därefter håller restaurangen öppet längst till 01:00", align: :center, inline_format: true
     move_down 10
-    text "<b>Bokning & Betalningsregler:</b> Det antal som uppges i detta dokument är bindande. Vid obetald faktura gäller ej denna biljett.", align: :center, inline_format: true
-    text "Observera att eventuell avbokning måste ske via telefon eller mail innan fakturans förfallodatum.", align: :center, inline_format: true
+    text "<b>Bokning & Betalningsregler:</b>", align: :center, inline_format: true
+    text "Det antal som uppges i detta dokument är bindande. Vid obetald faktura är denna biljett ogiltig. ", align: :center, inline_format: true
+    text "Observera att vid utebliven betalning och därmed ogiltig biljett kvarstår fordran som således kommer att krävas in via inkasso.", align: :center, inline_format: true
+    text "Distansavtalslagen gäller ej vid köp av evenemangsbiljetter.", align: :center, inline_format: true
     move_down 20
     font_size 12
     text "<b>Regler: </b> 18 års gräns.", align: :center, inline_format: true
