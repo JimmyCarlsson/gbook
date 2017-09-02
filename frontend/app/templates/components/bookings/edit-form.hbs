@@ -109,6 +109,7 @@
                 <label for="inputEventDate" class="col-sm-3 control-label">Förfallodatum</label>
                 <div class="col-sm-3">
                   {{bs-datetimepicker date=model.dueDate format='YYYY-MM-DD' locale='sv'}}
+                  {{invoiceDaysCalculated}} dagar netto
                   {{#each model.errors.due_date as |error|}}
                   <span class="help-block" id="helpBlockName">{{error.message}}</span>
                   {{/each}}

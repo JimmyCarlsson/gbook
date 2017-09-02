@@ -14,6 +14,18 @@ export default Ember.Component.extend({
     this.set('model.dueDate', moment().add(20, 'days'));
   }),
 
+  updateBookingType: Ember.observer('model.bookingType', function(){
+    if (this.get('model.bookingType') == 'business'){
+      this.set('model.dueDate', moment(this.get('model.deliveryDate')).add(10, 'days'));
+    } else {
+      this.set('model.dueDate', moment(this.get('model.deliveryDate')).add(20, 'days'));
+    }
+  }),
+
+  invoiceDaysCalculated: Ember.computed('model.dueDate', 'model.deliveryDate', function(){
+    return moment(this.get('model.dueDate')).diff(moment(this.get('model.deliveryDate')), 'days');
+  }),
+
   emailConfirmed: Ember.computed('model.email', 'confirmEmail', function(){
     return (this.get('model.email') === this.get('confirmEmail'));
   }),
