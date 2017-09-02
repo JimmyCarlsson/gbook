@@ -34,6 +34,7 @@
       <th>Antal</th>
       <th>Bokades</th>
       <th>Betalad</th>
+      <th>Notering</th>
     </tr>
   </thead>
   <tbody>
@@ -45,6 +46,7 @@
       <td>{{booking.tickets}}</td>
       <td>{{moment-format booking.createdAt 'LL'}}</td>
       <td>{{if booking.paid 'Ja' 'Nej'}}</td>
+      <td>{{booking.memo}}</td>
     </tr>
   {{/each}}
   </tbody>
