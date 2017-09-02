@@ -34,24 +34,6 @@ class Booking < ActiveRecord::Base
     return event
   end
 
-  #legacy due_date
-  def due_date
-    if @due_date.nil?
-      created_at + (invoice_days).days
-    else
-      @due_date
-    end
-  end
-
-  # legacy delivery date
-  def delivery_date
-    if @delivery_date.nil?
-      created_at
-    else
-      @delivery_date
-    end
-  end
-
   def ensure_token
     if self.token.blank?
       self.token = generate_token

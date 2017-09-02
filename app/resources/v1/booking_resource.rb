@@ -33,7 +33,16 @@ class V1::BookingResource < JSONAPI::Resource
       @model.send_email = nil
 
       @model.delivery_date = Date.today
-      @model.due_date = Date.today + @model.invoice_days
+      
+      invoice_days = @model.invoice_days 
+      if Date.today + invoice_days > @model.event.date.to_date
+        invoice_days = @model.event.date.to_date - Date.today
+        if invoice_days < 0
+          invoice_days = 0
+        end
+      end
+
+      @model.due_date = Date.today + invoice_days
     end
   end
 
