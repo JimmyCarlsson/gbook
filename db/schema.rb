@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902104006) do
+ActiveRecord::Schema.define(version: 20170902150554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,9 @@ ActiveRecord::Schema.define(version: 20170902104006) do
     t.text     "memo"
     t.datetime "due_date"
     t.datetime "delivery_date"
+    t.string   "address_street",   default: ""
+    t.string   "address_zip",      default: ""
+    t.string   "address_city",     default: ""
   end
 
   create_table "events", force: :cascade do |t|

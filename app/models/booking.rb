@@ -21,6 +21,9 @@ class Booking < ActiveRecord::Base
   validates :discount, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Rabatt måste vara ett heltal", allow_nil: true}
   validates :due_date, presence: true
   validates :delivery_date, presence: true
+  validates :address_street, presence: true
+  validates :address_zip, presence: true
+  validates :address_city, presence: true
 
   # Set booking on related event
   def event

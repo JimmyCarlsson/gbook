@@ -12,6 +12,9 @@
       Antal biljetter: <%= @booking.tickets %><br/>
       Namn: <%= @booking.name %><br/>
       <% if @booking.booking_type == 'business'%>Kontaktperson: <%= @booking.contact_person %><br/><% end %>
+      Gatuadress: <%= @booking.address_street %><br/>
+      Postnummer: <%= @booking.address_zip %><br/>
+      Ort: <%= @booking.address_city %><br/>
       Telefon: <%= @booking.phone_nr %><br/>
       Meddelande: <%= @booking.message %><br/>
       <b>Totalkostnad: <%= '%.2f' % @booking.total_price %>:- (inkl. moms)</b><br/>

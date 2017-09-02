@@ -39,19 +39,37 @@
     <p class="form-control-static input-lg text-center">Kontaktinformation</p>
   <div class="form-horizontal">
     <div class="form-group {{if model.errors.name 'has-error'}} required">
-      <label class="control-label col-sm-1 col-sm-offset-3">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
+      <label class="control-label col-sm-2 col-sm-offset-2">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
       <div class="col-sm-4">
         {{input value=model.name class="form-control"}}
       </div>
     </div>
     {{#if model.isBusiness}}
-      <div class="form-group {{if model.errors.contact_person 'has-error'}} required">
-        <label class="col-sm-1 control-label col-sm-offset-3">Kontaktperson</label>
+      <div class="form-group {{if model.errors.contactPerson 'has-error'}} required">
+        <label class="col-sm-2 control-label col-sm-offset-2">Kontaktperson</label>
         <div class="col-sm-4">
           {{input value=model.contact_person class="form-control"}}
         </div>
       </div>
     {{/if}}
+    <div class="form-group {{if model.errors.addressStreet 'has-error'}} required">
+      <label class="control-label col-sm-2 col-sm-offset-2">Gatuadress</label>
+      <div class="col-sm-4">
+        {{input value=model.addressStreet class="form-control" name="address-street"}}
+      </div>
+    </div>
+    <div class="form-group {{if model.errors.addressZip 'has-error'}} required">
+      <label class="control-label col-sm-2 col-sm-offset-2">Postnummer</label>
+      <div class="col-sm-4">
+        {{input value=model.addressZip class="form-control" name="address-zip"}}
+      </div>
+    </div>
+    <div class="form-group {{if model.errors.addressCity 'has-error'}} required">
+      <label class="control-label col-sm-1 col-sm-offset-3">Ort</label>
+      <div class="col-sm-4">
+        {{input value=model.addressCity class="form-control" name="address-city"}}
+      </div>
+    </div>
     <div class="form-group {{if model.errors.email 'has-error'}} required">
       <label class="control-label col-sm-1 col-sm-offset-3">E-post</label>
       <div class="col-sm-4">
@@ -65,7 +83,7 @@
         {{#if showEmailDiffersMessage}}{{fa-icon 'exclamation-triangle' title='E-post adresserna matchar inte' class="text-danger"}}{{/if}}
         </div>
       </div>
-      <div class="form-group {{if model.errors.phone_nr 'has-error'}} required">
+      <div class="form-group {{if model.errors.phoneNr 'has-error'}} required">
         <label class="control-label col-sm-1 col-sm-offset-3">Telefon</label>
         <div class="col-sm-4">
           {{input value=model.phone_nr class="form-control" name="phone_nr"}}

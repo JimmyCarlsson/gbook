@@ -74,7 +74,10 @@ class InvoicePdf < Prawn::Document
       stroke_rounded_rectangle [0,0], width, height, @corners
       draw_text "Fakturaadress", size: 10, at: [10,-10]
       draw_text @booking.name, size: 12, at: [12, -25]
-      draw_text @booking.email, size: 12, at: [12, -60]
+      draw_text @booking.address_street, size: 12, at: [12, -40]
+      draw_text @booking.address_zip, size: 12, at: [12, -55]
+      draw_text @booking.address_city, size: 12, at: [12, -70]
+      draw_text @booking.email, size: 12, at: [12, -90]
     end
     @y -= height + @spacing
   end

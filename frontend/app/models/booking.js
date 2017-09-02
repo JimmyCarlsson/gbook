@@ -22,6 +22,9 @@ export default DS.Model.extend({
   sendEmail: attr('boolean', {adminOnly: true, defaultValue: false}),
   dueDate: attr('date', {adminOnly: true}),
   deliveryDate: attr('date', {adminOnly: true}),
+  addressStreet: attr('string'),
+  addressZip: attr('string'),
+  addressCity: attr('string'),
 
   isBusiness: Ember.computed.equal('bookingType', 'business'),
   isPrivate: Ember.computed.equal('bookingType', 'private'),
