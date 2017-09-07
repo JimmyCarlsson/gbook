@@ -19,11 +19,11 @@
 <p>{{model.description}}</p>
 
   {{#unless model.availabilityNone}}
-    {{#link-to 'bookings.new' class="btn btn-primary"}}Boka biljetter{{/link-to}}
+    {{#link-to 'bookings.new' class="btn btn-primary"}}Köp biljetter{{/link-to}}
   {{/unless}}
 
   {{#if session.isAuthenticated}}
-    <h2>Bokningar</h2>
+    <h2>Sålda biljetter</h2>
     <strong>Totalt sålda biljetter: </strong> {{model.totalTickets}} / {{model.seats}}
 <table class="table">
   <thead>
@@ -32,7 +32,7 @@
       <th>Namn/Företag</th>
       <th>E-post</th>
       <th>Antal</th>
-      <th>Bokades</th>
+      <th>Registrerades</th>
       <th>Betalad</th>
       <th>Notering</th>
     </tr>
