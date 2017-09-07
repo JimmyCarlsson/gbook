@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
       if (confirm) {
         booking.deleteRecord();
         booking.save();
-        this.transitionToRoute('events.show', booking.get('event.id'));
+        this.transitionToRoute('events.index');
       }
     }
   }
