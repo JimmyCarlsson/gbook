@@ -62,7 +62,7 @@ class InvoicePdf < Prawn::Document
       draw_text @booking.id, size: 16, at: [50,-25]
       stroke_rounded_rectangle [width+@spacing,0], width2, height, @corners
       draw_text "Fakturadatum", size: 10, at: [width+@spacing+10,-10]
-      draw_text @booking.created_at.strftime('%F'), size: 16, at: [width+@spacing+15,-25]
+      draw_text @booking.delivery_date.strftime('%F'), size: 16, at: [width+@spacing+15,-25]
     end
     @y -= (height + @spacing)
   end
