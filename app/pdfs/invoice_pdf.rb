@@ -128,7 +128,7 @@ class InvoicePdf < Prawn::Document
 
   def invoice_rows
     [
-      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business ? business_price_info(price_sum: @booking.event.net_price, food_sum: @booking.event.tax12_net, show_sum: @booking.event.tax6_net) : format_number(@booking.event.price), @booking.discount ? (@booking.is_business ? format_number(@booking.discount_net) : format_number(@booking.discount)) : "", @booking.is_business ? business_price_info(price_sum: @booking.total_net_price, food_sum: @booking.total_tax12_net, show_sum: @booking.total_tax6_net) : format_number(@booking.total_price)]
+      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business_flagged ? business_price_info(price_sum: @booking.event.net_price, food_sum: @booking.event.tax12_net, show_sum: @booking.event.tax6_net) : format_number(@booking.event.price), (@booking.discount && @booking.discount.positive?) ? (@booking.is_business_flagged ? format_number(@booking.discount_net) : format_number(@booking.discount)) : "", @booking.is_business_flagged ? business_price_info(price_sum: @booking.total_net_price, food_sum: @booking.total_tax12_net, show_sum: @booking.total_tax6_net) : format_number(@booking.total_price)]
     ]
   end
 

@@ -25,6 +25,11 @@ class Booking < ActiveRecord::Base
   validates :address_zip, presence: true
   validates :address_city, presence: true
 
+  # Used in case the businiess specific invoice wants to make a reentry 
+  def is_business_flagged
+    return false #remove this to reactivate business invoice
+    return is_business
+  end
   # Set booking on related event
   def event
     event = super
