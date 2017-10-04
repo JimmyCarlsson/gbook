@@ -2,6 +2,9 @@
   <p>Här kan du köpa biljetter till kommande evenemang hos Grebbans Nöjesrestaurang! För frågor kontakta oss via  e-post <strong>info@grebbans.se</strong> eller telefon <strong>0730-314407</strong></p>
   <hr/>
 <h2>Kommande evenemang</h2>
+    {{#if session.isAuthenticated}}
+      <div>Total sålda biljetter för filter (samtliga event i listan nedan): <strong>{{totalTickets}}</strong></div>
+    {{/if}}
 <div class="list-group">
   {{#each model as |event|}}
     {{#link-to 'events.show' event class="list-group-item"}}
@@ -11,7 +14,7 @@
     <p>{{event.description}}</p>
     <strong>Biljettpris:</strong> {{event.price}}:- <span style="font-size: 10px">({{event.netPrice}}:- ex. moms)</span>
     {{#if session.isAuthenticated}}
-      <span class="pull-right">Sålda biljetter: {{event.bookedSeats}} / {{event.seats}}</span>
+      <span class="pull-right"><strong>{{event.bookedSeats}}</strong> / {{event.seats}}</span>
     {{else}}
       <span class="pull-right"><strong>{{event.availabilityTranslation}}</strong></span>
     {{/if}}
