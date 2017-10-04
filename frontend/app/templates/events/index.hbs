@@ -3,7 +3,7 @@
   <hr/>
 <h2>Kommande evenemang</h2>
     {{#if session.isAuthenticated}}
-      <div>Total sålda biljetter för filter (samtliga event i listan nedan): <strong>{{totalTickets}}</strong></div>
+      <div>Total sålda biljetter för filter (samtliga event i listan nedan): <strong>{{totalTickets}}</strong> / {{totalSeats}}</div>
     {{/if}}
 <div class="list-group">
   {{#each model as |event|}}
