@@ -10,6 +10,11 @@
     </h4>
     <p>{{event.description}}</p>
     <strong>Biljettpris:</strong> {{event.price}}:- <span style="font-size: 10px">({{event.netPrice}}:- ex. moms)</span>
+    {{#if session.isAuthenticated}}
+      <span class="pull-right">Sålda biljetter: {{event.bookedSeats}} / {{event.seats}}</span>
+    {{else}}
+      <span class="pull-right"><strong>{{event.availabilityTranslation}}</strong></span>
+    {{/if}}
   {{/link-to}}
 {{/each}}
 </div>
