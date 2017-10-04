@@ -74,7 +74,6 @@ export default Ember.Component.extend({
         return this.save(response);
       }, (error) =>{
         that.set('savingMode', false);
-        console.log('errors', error.errors);
         error.errors.forEach(function(error){
           if (error.detail === "tickets - Det finns inte tillräckligt många platser kvar."){
             that.$('#tooManyTicketsModal').modal();
