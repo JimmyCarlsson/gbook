@@ -135,4 +135,28 @@ class Event < ActiveRecord::Base
   def net_price
     price - total_tax
   end
+
+  # Takes a book and adds a sheet for the event
+  def add_as_sheet(book:)
+
+    sheet = book.create_worksheet
+
+    sheet.name = "#{name} #{date.strftime('%F')}"
+    row = sheet.row(1)
+    row.push "Event: "
+    row.push name + " " + date.strftime('%F')
+    row = sheet.row(2)
+    row.push "Uttag datum:"
+    row.push DateTime.now.strftime('%FT%R')
+    row = sheet.row(3)
+    row.push "Bokningar:"
+    row = sheet.row(4)
+    row.push "Id", "Biljetter", "Namn", "Bokades", "Epost", "Telefon", "Kontaktperson", "Betalat", "Meddelande", "Notering", "Rabatt", "Rabattmeddelande"
+    bookings.each_with_index do |booking, index|
+      row = sheet.row(5+index)
+      row.push booking.id, booking.tickets, booking.name, booking.created_at.strftime('%FT%R'), booking.email, booking.phone_nr, booking.contact_person, booking.paid, booking.message, booking.memo, booking.discount, booking.discount_message
+    end
+
+    return book
+  end
 end

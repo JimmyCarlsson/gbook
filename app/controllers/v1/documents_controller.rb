@@ -10,28 +10,31 @@ class V1::DocumentsController < ApplicationController
     end
 
     book = Spreadsheet::Workbook.new
-    sheet = book.create_worksheet
 
-    sheet.name = "#{event.name}"
-    row = sheet.row(1)
-    row.push "Event: "
-    row.push event.name + " " + event.date.strftime('%F')
-    row = sheet.row(2)
-    row.push "Uttag datum:"
-    row.push DateTime.now.strftime('%FT%R')
-    row = sheet.row(3)
-    row.push "Bokningar:"
-    row = sheet.row(4)
-    row.push "Id", "Biljetter", "Namn", "Bokades", "Epost", "Telefon", "Kontaktperson", "Betalat", "Meddelande", "Notering", "Rabatt", "Rabattmeddelande"
-    event.bookings.each_with_index do |booking, index|
-      row = sheet.row(5+index)
-      row.push booking.id, booking.tickets, booking.name, booking.created_at.strftime('%FT%R'), booking.email, booking.phone_nr, booking.contact_person, booking.paid, booking.message, booking.memo, booking.discount, booking.discount_message
+    book = event.add_as_sheet(book: book)
+
+    data = StringIO.new ''
+    book.write data
+
+    send_data data.string.force_encoding('binary'), type: 'application/excel', disposition: 'attachment', filename: "event_#{event.name}_#{event.date.strftime('%F')}_copied_#{Date.today.strftime('%F')}.xls"
+
+  end
+
+  def index
+
+    book = Spreadsheet::Workbook.new
+
+    # Export all events from the last 6 months (and future events)
+    events = Event.where("date >= ?", Date.today - 6.months).order(:date)
+
+    events.each do |event|
+      book = event.add_as_sheet(book: book)
     end
 
     data = StringIO.new ''
     book.write data
 
-    send_data data.string.force_encoding('binary'), type: 'application/excel', disposition: 'attachment', filename: 'report.xls'
+    send_data data.string.force_encoding('binary'), type: 'application/excel', disposition: 'attachment', filename: "bookings_copied_#{Date.today.strftime('%F')}.xls"
 
   end
 end

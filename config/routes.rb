@@ -7,6 +7,6 @@ Rails.application.routes.draw do
     jsonapi_resources :bookings
     resources :invoices, only: [:show], defaults: {format: 'pdf'}
     resources :tickets, only: [:show], defaults: {format: 'pdf'}
-    resources :documents, only: [:show], defaults: {format: 'xls'}
+    resources :documents, only: [:show, :index], defaults: {format: 'xls'}
   end
 end

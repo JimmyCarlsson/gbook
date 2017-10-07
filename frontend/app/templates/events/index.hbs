@@ -26,4 +26,6 @@
     <hr/>
   {{#link-to 'events.index'  (query-params historical=true) class="btn btn-primary"}}Visa eventhistorik{{/link-to}}
   {{#link-to 'events.index' (query-params historical=null) class="btn btn-primary"}}Visa kommande events{{/link-to}}
+
+<a href="v1/documents.xls?token={{session.session.content.authenticated.token}}" class="btn btn-primary" target="_blank">Ladda ner bokningsinformation för samtliga events(inkl 6 månader bakåt)</a>
 {{/if}}
