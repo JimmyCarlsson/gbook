@@ -12,7 +12,7 @@
     </div>
   </div>
 </div>
-<h1>{{model.name}}</h1>
+<h1>{{model.name}} <small>{{moment-format model.date 'LLLL'}}</small></h1>
 <strong>Biljetter kvar: </strong> {{fa-icon 'stop' class=model.availabilityString}} {{model.availabilityTranslation}}
 <br/>
 <strong>Biljettpris:</strong> {{model.price}}:- <span style="font-size: 10px">({{model.netPrice}}:- ex. moms)</span>
