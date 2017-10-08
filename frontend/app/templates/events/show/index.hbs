@@ -28,28 +28,28 @@
 <table class="table">
   <thead>
     <tr>
-      <th>id</th>
-      <th>Namn/Företag</th>
-      <th>E-post</th>
-      <th>Antal</th>
-      <th>Registrerades</th>
-      <th>Betalad</th>
-      <th>Notering</th>
+      <th>Id</th>
+      <th style="text-align:center">Antal</th>
+      <th style="text-align:center">Registrerades</th>
+      <th style="text-align:center">Betalad</th>
+      <th style="text-align:center">Förfallodatum</th>
+      <th style="text-align:center">Notering</th>
     </tr>
   </thead>
   <tbody>
   {{#each model.bookings as |booking|}}
     <tr>
-      <td>{{#link-to 'bookings.show.index' booking.token}}{{booking.id}}{{/link-to}}</td>
-        <td>{{booking.name}}</td>
-        <td>{{booking.email}}</td>
-      <td>{{booking.tickets}}</td>
-      <td>{{moment-format booking.createdAt 'LL'}}</td>
-      <td>{{if booking.paid 'Ja' 'Nej'}}</td>
+      <td><strong>ID: </strong>{{booking.id}} {{#link-to 'bookings.show.index' booking.token}}(öppna){{/link-to}}<br/>
+          <strong>Namn:</strong> {{booking.name}}<br/>
+          <strong>E-post:</strong> {{booking.email}}</td>
+      <td style="text-align:center">{{booking.tickets}}</td>
+      <td style="text-align:center">{{moment-format booking.createdAt 'LL'}}</td>
+      <td style="text-align:center">{{#if booking.paid}}{{fa-icon 'check' class="text-success" size="lg" }}{{else}}{{fa-icon 'exclamation' class="text-danger" size="lg"}}{{/if}}</td>
+      <td style="text-align:center">{{moment-format booking.dueDate 'LL'}} <br/><span style="color:{{if booking.overDue 'red' '#999'}}">({{booking.daysLeftUntilDue}})</span></td>
       <td>{{booking.memo}}</td>
     </tr>
   {{/each}}
   </tbody>
 </table>
-<a href="v1/documents/{{model.id}}.xls?token={{session.session.content.authenticated.token}}" class="btn btn-primary" target="_blank">Ladda ner bokningsinformation</a>
+<a href="v1/documents/{{model.id}}.xls?token={{session.session.content.authenticated.token}}" class="btn btn-default" target="_blank">Ladda ner bokningsinformation</a>
 {{/if}}

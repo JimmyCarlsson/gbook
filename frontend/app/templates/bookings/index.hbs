@@ -19,7 +19,7 @@
   <tbody>
   {{#each model as |booking|}}
     <tr>
-      <td><strong>{{booking.event.name}}</strong><br/>{{moment-format booking.event.date 'LL'}}</td>
+      <td>{{#link-to 'events.show' booking.event}}<strong>{{booking.event.name}}</strong>{{/link-to}}<br/>{{moment-format booking.event.date 'LL'}}</td>
       <td><strong>ID: </strong>{{booking.id}} {{#link-to 'bookings.show.index' booking.token}}(öppna){{/link-to}}<br/>
           <strong>Namn:</strong> {{booking.name}}<br/>
           <strong>E-post:</strong> {{booking.email}}</td>
