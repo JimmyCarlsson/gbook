@@ -11,4 +11,19 @@ class V1::BookingsController < V1::BaseController
     end
 
   end
+
+  def index
+    event_ids = Event.all.pluck(:id)
+    bookings = Booking.where(event_id: event_ids)
+
+    if params[:paid] == "false"
+      bookings = bookings.where(paid: false)
+    end
+
+    if params[:sort_by].present?
+      bookings = bookings.order(params[:sort_by])
+    end
+
+    jsonapi_render json: bookings
+  end
 end

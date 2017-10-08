@@ -51,6 +51,10 @@ export default DS.Model.extend({
       discount = 0;
     }
     return (this.get('event.price')- discount) * this.get('tickets');
+  }),
+
+  daysLeftUntilDue: Ember.computed('dueDate', function(){
+    return moment(this.get('dueDate')).fromNow();
   })
 
 

@@ -2,6 +2,7 @@
   <div class="container-fluid">
     <div class="navbar-header">
       {{#link-to 'index'}}<img src="assets/images/logga_utan.png" height="50px"/>{{/link-to}}
+        {{#if session.isAuthenticated}}{{#link-to 'bookings.index'}}Bokningar{{/link-to}}{{/if}}
     </div>
         <ul class="nav navbar-text">
           <li>Biljettsystem - Köp dina biljetter här!</li>
