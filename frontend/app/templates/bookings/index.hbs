@@ -1,16 +1,19 @@
 <h1>Bokningar</h1>
-  {{#link-to 'bookings.index' (query-params paid=false) class="btn btn-primary"}}Visa bara ej betalda bokningar{{/link-to}}
-  {{#link-to 'bookings.index' (query-params paid=null) class="btn btn-primary"}}Visa alla bokningar{{/link-to}}
+  {{#link-to 'bookings.index' (query-params paid=null) class="btn btn-default"}}Visa alla bokningar{{/link-to}}
+  {{#link-to 'bookings.index' (query-params paid=false) class="btn btn-default"}}Visa bara ej betalda bokningar{{/link-to}}
+    <div style="margin-top:10px;"> <p> Visar <strong>{{model.length}}</strong> bokningar
+      </p>
+    </div>
 <table class="table">
   <thead>
     <tr>
       <th>{{#link-to 'bookings.index' (query-params sort_by="event_id ASC") }}Event{{/link-to}}</th>
       <th>{{#link-to 'bookings.index' (query-params sort_by="id ASC") }}Id{{/link-to}}</th>
-      <th>{{#link-to 'bookings.index' (query-params sort_by="tickets DESC") }}Antal{{/link-to}}</th>
-      <th>{{#link-to 'bookings.index' (query-params sort_by="created_at DESC") }}Registrerades{{/link-to}}</th>
-      <th>{{#link-to 'bookings.index' (query-params sort_by="paid ASC") }}Betalad{{/link-to}}</th>
-      <th>{{#link-to 'bookings.index' (query-params sort_by="due_date ASC") }}Förfallodatum{{/link-to}}</th>
-      <th>{{#link-to 'bookings.index' (query-params sort_by="memo ASC") }}Notering{{/link-to}}</th>
+      <th style="text-align:center">{{#link-to 'bookings.index' (query-params sort_by="tickets DESC") }}Antal{{/link-to}}</th>
+      <th style="text-align:center">{{#link-to 'bookings.index' (query-params sort_by="created_at DESC") }}Registrerades{{/link-to}}</th>
+      <th style="text-align:center">{{#link-to 'bookings.index' (query-params sort_by="paid ASC") }}Betalad{{/link-to}}</th>
+      <th style="text-align:center">{{#link-to 'bookings.index' (query-params sort_by="due_date ASC") }}Förfallodatum{{/link-to}}</th>
+      <th style="text-align:center">{{#link-to 'bookings.index' (query-params sort_by="memo ASC") }}Notering{{/link-to}}</th>
     </tr>
   </thead>
   <tbody>
@@ -20,10 +23,10 @@
       <td><strong>ID: </strong>{{booking.id}} {{#link-to 'bookings.show.index' booking.token}}(öppna){{/link-to}}<br/>
           <strong>Namn:</strong> {{booking.name}}<br/>
           <strong>E-post:</strong> {{booking.email}}</td>
-      <td>{{booking.tickets}}</td>
-      <td>{{moment-format booking.createdAt 'LL'}}</td>
-      <td>{{if booking.paid 'Ja' 'Nej'}}</td>
-      <td>{{moment-format booking.dueDate 'LL'}} <br/><span style="color:{{if booking.overDue 'red' '#999'}}">({{booking.daysLeftUntilDue}})</span></td>
+      <td style="text-align:center">{{booking.tickets}}</td>
+      <td style="text-align:center">{{moment-format booking.createdAt 'LL'}}</td>
+      <td style="text-align:center">{{#if booking.paid}}{{fa-icon 'check' class="text-success" size="lg" }}{{else}}{{fa-icon 'exclamation' class="text-danger" size="lg"}}{{/if}}</td>
+      <td style="text-align:center">{{moment-format booking.dueDate 'LL'}} <br/><span style="color:{{if booking.overDue 'red' '#999'}}">({{booking.daysLeftUntilDue}})</span></td>
       <td>{{booking.memo}}</td>
     </tr>
   {{/each}}
