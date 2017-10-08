@@ -1,3 +1,6 @@
+.active{
+  color: black;
+}
 .ember-application {
   background-color: #EEE;
 }

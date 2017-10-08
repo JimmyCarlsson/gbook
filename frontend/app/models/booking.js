@@ -55,6 +55,13 @@ export default DS.Model.extend({
 
   daysLeftUntilDue: Ember.computed('dueDate', function(){
     return moment(this.get('dueDate')).fromNow();
+  }),
+
+  overDue: Ember.computed('dueDate', function(){
+    if (this.get('dueDate') < new Date()){
+      return true;
+    }
+    return false;
   })
 
 
