@@ -26,7 +26,7 @@
       <td style="text-align:center">{{booking.tickets}}</td>
       <td style="text-align:center">{{moment-format booking.createdAt 'LL'}}</td>
       <td style="text-align:center">{{#if booking.paid}}{{fa-icon 'check' class="text-success" size="lg" }}{{else}}{{fa-icon 'exclamation' class="text-danger" size="lg"}}{{/if}}</td>
-      <td style="text-align:center">{{moment-format booking.dueDate 'LL'}} <br/><span style="color:{{if booking.overDue 'red' '#999'}}">({{booking.daysLeftUntilDue}})</span></td>
+        <td style="text-align:center">{{#unless booking.paid}}{{moment-format booking.dueDate 'LL'}} <br/><span style="color:{{if booking.overDue 'red' '#999'}}">({{booking.daysLeftUntilDue}})</span>{{/unless}}</td>
       <td>{{booking.memo}}</td>
     </tr>
   {{/each}}
