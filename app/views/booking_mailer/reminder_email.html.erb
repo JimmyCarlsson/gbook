@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Påminnelse: Grebbans Nöjesrestaurang</h1>
+    <p>
+    Hej!<br/>
+    Du har köpt biljetter till Grebbans Nöjesrestaurang, här kommer en påminnelse att betalning skall vara oss tillhanda senast: <b><%= @booking.event.date.strftime('%F %R')%></b>.
+    </p>
+    <p>
+    Vi vill påminna om att köpet är bindande. Observera att det kan ta upp till <b>7 dagar</b> innan vi registrerat er betalning, så bortse ifrån detta mail ifall ni redan betalat fakturan.
+    </p>
+    </br>
+    <p>
+    Du har bokat platser till följande evenemang hos Grebbans Nöjesrestaurang:<br/><br/>
+      Evenemang: <%= @booking.event.name %><br/>
+      Datum: <%= @booking.event.date.strftime('%F %R')%><br/>
+      Antal biljetter: <%= @booking.tickets %><br/>
+      Namn: <%= @booking.name %><br/>
+      <% if @booking.booking_type == 'business'%>Kontaktperson: <%= @booking.contact_person %><br/><% end %>
+      Gatuadress: <%= @booking.address_street %><br/>
+      Postnummer: <%= @booking.address_zip %><br/>
+      Ort: <%= @booking.address_city %><br/>
+      Telefon: <%= @booking.phone_nr %><br/>
+      Meddelande: <%= @booking.message %><br/>
+      <b>Totalkostnad: <%= '%.2f' % @booking.total_price %>:- (inkl. moms)</b><br/>
+
+      </p>
+      <p>
+      Observera att denna bokning är bindande, och att fakturan betalas innan dess förfallodatum.
+      <br/>
+      Du hittar biljett och faktura bifogat med detta E-post meddelande, samt på följande länk: <a href="<%= ENV['BOOKING_LINK_URL'] + @booking.token %>"><%= ENV['BOOKING_LINK_URL'] + @booking.token %></a>
+      </p>
+      <p>Välkomna!<br/>
+      Grebbans Nöjesrestaurang
+      </p>
+      <p>Ifall du har frågor eller inte är korrekt mottagare av det här mailet, kontakta oss på E-post <b>info@grebbans.se</b></p>
+  </body>
+</html>

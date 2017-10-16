@@ -8,5 +8,6 @@ Rails.application.routes.draw do
     resources :invoices, only: [:show], defaults: {format: 'pdf'}
     resources :tickets, only: [:show], defaults: {format: 'pdf'}
     resources :documents, only: [:show, :index], defaults: {format: 'xls'}
+    resources :reminder_email, only: [:show]
   end
 end
