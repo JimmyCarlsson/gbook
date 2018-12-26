@@ -13,8 +13,8 @@ class V1::BookingsController < V1::BaseController
   end
 
   def index
-    event_ids = event.all.pluck(:id)
-    bookings = booking.where(event_id: event_ids)
+    event_ids = Event.all.pluck(:id)
+    bookings = Booking.where(event_id: event_ids)
 
     if params[:paid] == "false"
       bookings = bookings.where(paid: false)
