@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pp'
 
 RSpec.describe Booking, type: :model do
 
@@ -51,6 +52,8 @@ RSpec.describe Booking, type: :model do
         booking = build(:booking, event: event, tickets: 5)
 
         expect(booking.valid?).to be false
+        pp booking.errors
+        pp booking.errors.messages
         expect(booking.errors.messages[:tickets]).to include("Det finns inte tillräckligt många platser kvar.")
       end
     end
