@@ -47,13 +47,11 @@ RSpec.describe Booking, type: :model do
     context "when available seats are less than tickets" do
       it "should give an error message" do
         event = build(:event, seats: 10)
-        event.bookings << build(:booking, event: event, tickets: 6)
+        event.bookings << create(:booking, event: event, tickets: 6)
 
         booking = build(:booking, event: event, tickets: 5)
 
         expect(booking.valid?).to be false
-        pp booking.errors
-        pp booking.errors.messages
         expect(booking.errors.messages[:tickets]).to include("Det finns inte tillräckligt många platser kvar.")
       end
     end
@@ -85,14 +83,6 @@ RSpec.describe Booking, type: :model do
     
     it {should validate_presence_of(:event)}
     it {should belong_to(:event)}
-
-    context "with discount" do
-      it "should set event discount value" do
-        booking = build(:booking, event: build(:event), discount: 100)
-
-        expect(booking.event.discount).to eq 100
-      end
-    end
   end
 
   # Methods
@@ -175,14 +165,6 @@ RSpec.describe Booking, type: :model do
 
         expect(booking.reference).to eq 'contact_person'
       end
-    end
-  end
-
-  describe "due_date" do
-    it "should return a date" do
-      booking = build(:booking, created_at: DateTime.now)
-
-      expect(booking.due_date).to be_a DateTime
     end
   end
 
