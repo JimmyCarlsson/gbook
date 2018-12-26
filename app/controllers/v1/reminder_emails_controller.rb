@@ -11,6 +11,6 @@ class V1::ReminderEmailsController < ApplicationController
       BookingMailer.reminder_email(@model).deliver_now
     end
 
-    render json: {} status: 200
+    render json: {}, status: 200
   end
 end
