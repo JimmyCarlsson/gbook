@@ -1,3 +1,5 @@
+require 'pp'
+
 class V1::BookingResource < JSONAPI::Resource
   attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price, :send_email, :due_date, :delivery_date, :address_street, :address_zip, :address_city
 

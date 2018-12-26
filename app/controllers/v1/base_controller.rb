@@ -8,6 +8,7 @@ class V1::BaseController < JSONAPI::ResourceController
   # Used in resources to determine auth level
 
   def context
+    authenticate_admin_from_token! unless current_admin.present?
     {current_admin: current_admin}
   end
 
@@ -20,6 +21,7 @@ class V1::BaseController < JSONAPI::ResourceController
       admin = admin_email && Admin.find_by_email(admin_email)
 
       if admin && Devise.secure_compare(admin.authentication_token, token)
+        puts "signing in " + admin.email + " via  authenticate_admin_from_token"
         sign_in admin, store: false
       end
     end
