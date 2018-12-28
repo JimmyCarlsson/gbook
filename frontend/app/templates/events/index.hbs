@@ -15,6 +15,7 @@
     <strong>Biljettpris:</strong> {{event.price}}:- <span style="font-size: 10px">({{event.netPrice}}:- ex. moms)</span>
     {{#if session.isAuthenticated}}
       <span class="pull-right"><strong>{{event.bookedSeats}}</strong> / {{event.seats}}</span>
+      {{#if event.hidden}}<span class="pull-right" style="margin-right:20px;color:red"><strong>Dolt event</strong></span>{{/if}}
     {{else}}
       <span class="pull-right"><strong>{{event.availabilityTranslation}}</strong></span>
     {{/if}}
