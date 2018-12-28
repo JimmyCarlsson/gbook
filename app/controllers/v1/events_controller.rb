@@ -5,9 +5,9 @@ class V1::EventsController < V1::BaseController
   def index
     # If current user is not an admin, return all future events
     if context[:current_admin].nil?
-      events = Event.where("date >= ?", Date.today).order(:date)
+      events = Event.where(hidden: false).where("date >= ?", Date.today).order(:date)
     else
-      # If current user is an admin, include historical events if selected
+      # If current user is an admin, return historical events if selected
       if params[:historical] == "true"
         events = Event.where('date <= ?', Date.today).order(:date)
       else

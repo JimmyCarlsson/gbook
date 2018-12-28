@@ -15,13 +15,13 @@ class V1::BaseController < JSONAPI::ResourceController
   private
 
   def authenticate_admin_from_token!
-    pp "authentication"
+    #pp "authentication"
     authenticate_with_http_token do |token, options|
       admin_email = options[:email].presence
       admin = admin_email && Admin.find_by_email(admin_email)
 
       if admin && Devise.secure_compare(admin.authentication_token, token)
-        puts "signing in " + admin.email + " via  authenticate_admin_from_token"
+        #puts "signing in " + admin.email + " via  authenticate_admin_from_token"
         sign_in admin, store: false
       end
     end

@@ -90,5 +90,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+  config.after(:each) do
+    sign_out @admin unless !@admin
+  end
 end
 

@@ -102,3 +102,8 @@ end
 def parsed_json
   JSON.parse(response.body)
 end
+
+def sign_in_admin
+  @admin = create(:admin)
+  sign_in @admin
+end
