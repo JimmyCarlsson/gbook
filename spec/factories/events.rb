@@ -9,5 +9,9 @@ FactoryGirl.define do
     tax6 0
     seats 100
     deleted_at nil
+
+    trait :skip_validate do
+      to_create {|instance| instance.save(validate: false)}
+    end
   end
 end

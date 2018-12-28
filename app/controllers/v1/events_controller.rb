@@ -1,13 +1,13 @@
 class V1::EventsController < V1::BaseController
   before_action :authenticate_admin_from_token! #, except: [:index, :show, :get_related_resource]
-  #before_action :authenticate_admin! #, except: [:index, :show, :get_related_resource]
-  #
   ## USE THIS LINE WHEN GOING LIVE - WILL MAKE IT POSSIBLE FOR USERS NOT LOGGED IN TO SEE EVENTS AND CREATE BOOKINGS!
   before_action :authenticate_admin! , except: [:index, :show, :get_related_resource]
   def index
+    # If current user is not an admin, return all future events
     if context[:current_admin].nil?
       events = Event.where("date >= ?", Date.today).order(:date)
     else
+      # If current user is an admin, include historical events if selected
       if params[:historical] == "true"
         events = Event.where('date <= ?', Date.today).order(:date)
       else
