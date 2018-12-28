@@ -81,4 +81,24 @@ RSpec.describe V1::EventsController, type: :controller do
       end
     end
   end
+  describe "GET show" do
+    context "an event is hidden" do
+      it "is available for admins" do
+        sign_in_admin
+        hidden_event = create(:event, date: DateTime.now + 1.week, hidden: true)
+
+        get :show, id: hidden_event.id
+
+        expect(response.status).to eq 200
+        expect(parsed_json['data']['id'].to_i).to eq hidden_event.id
+      end
+      it "is not available for regular users" do
+        hidden_event = create(:event, date: DateTime.now + 1.week, hidden: true)
+
+        get :show, id: hidden_event.id
+
+        expect(response.status).to eq 401
+      end
+    end
+  end
 end

@@ -17,4 +17,16 @@ class V1::EventsController < V1::BaseController
 
     jsonapi_render json: events
   end
+
+  def show
+    event = Event.find_by_id(params[:id])
+
+    # If event is hidden, only allow admins to see it
+    if event.hidden && context[:current_admin].nil?
+      render json: {}, status: 401, adapter: :json_api
+      return
+    end
+
+    jsonapi_render json: event
+  end
 end
