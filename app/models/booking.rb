@@ -6,6 +6,7 @@ class Booking < ActiveRecord::Base
   # Relations
   belongs_to :event
   validates :event, presence: true
+  has_many :order_rows
   
   # Validations
   validates :booking_type, inclusion: {in: %w(private business)}, presence: true

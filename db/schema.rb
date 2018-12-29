@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181228161255) do
+ActiveRecord::Schema.define(version: 20181228234357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,19 @@ ActiveRecord::Schema.define(version: 20181228161255) do
     t.integer  "tax12",       default: 0
     t.integer  "tax25",       default: 0
     t.boolean  "hidden",      default: false
+  end
+
+  create_table "order_rows", force: :cascade do |t|
+    t.integer  "booking_id"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "price"
+    t.integer  "tax6"
+    t.integer  "tax12"
+    t.integer  "tax25"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "amount"
   end
 
 end

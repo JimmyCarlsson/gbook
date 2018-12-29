@@ -4,6 +4,7 @@ class V1::BookingResource < JSONAPI::Resource
   attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price, :send_email, :due_date, :delivery_date, :address_street, :address_zip, :address_city
 
   has_one :event
+  has_many :order_rows
 
   def self.updatable_fields(context)
     non_updateables =  [:token, :created_at, :updated_at, :total_price]

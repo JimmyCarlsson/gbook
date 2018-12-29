@@ -180,6 +180,29 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <h2>Orderrader (Anvands endast for test! Kommer paverka fakturan!)</h2>
+            <table class="table">
+              <thead>
+                <th>Paket</th>
+                <th>Beskrivning</th>
+                <th>Antal</th>
+                <th>Pris/st</th>
+                <th>Totalpris</th>
+              </thead>
+              <tbody>
+                {{#each model.orderRows as |orderRow| }}
+                  <tr>
+                    <td>{{orderRow.name}}</td>
+                    <td>{{orderRow.description}}</td>
+                    <td>{{orderRow.amount}}</td>
+                    <td>{{orderRow.price}}:-</td>
+                    <td>{{orderRow.totalPrice}}:- ({{orderRow.totalNetPrice}}:- exkl. moms)</td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
       </div>
       {{/if}}
         {{#if model.errors}}

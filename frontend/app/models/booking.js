@@ -10,6 +10,7 @@ export default DS.Model.extend({
   phone_nr: attr('string'),
   tickets: attr('number', {defaultValue: 1}),
   event: belongsTo('event'),
+  orderRows: hasMany('order-row'),
   token: attr('string', {readOnly: true}),
   createdAt: attr('date', {readOnly: true}),
   message: attr('string'),
