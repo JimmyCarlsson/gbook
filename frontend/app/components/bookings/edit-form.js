@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   session: Ember.inject.service(),
+  store: Ember.inject.service(),
   typeIsSet: Ember.computed.or('model.isPrivate', 'model.isBusiness'),
   savingMode: false,
 
@@ -14,6 +15,9 @@ export default Ember.Component.extend({
       this.set('model.deliveryDate', moment()._d);
       this.set('model.dueDate', moment().add(20, 'days')._d);
     }
+    this.set('newOrderRow', this.get('store').createRecord('orderRow', {
+      booking: this.get('model')
+    }))
   }),
 
   updateBookingType: Ember.observer('model.bookingType', function(){
@@ -80,6 +84,26 @@ export default Ember.Component.extend({
           }
         })
       });
+    },
+    saveNewOrderRow(){
+      var that = this;
+      this.get('newOrderRow').save().then((response) =>{
+        that.set('savingMode', false);
+        this.set('newOrderRow', this.get('store').createRecord('orderRow', {
+          booking: this.get('model')
+        }));
+        return;
+      }, (error) =>{
+        that.set('savingMode', false);
+        })
+    },
+    deleteOrderRow(orderRow){
+      var confirm = window.confirm("Är du säker på att du vill radera orderraden? " + orderRow.name + "? All information kommer att raderas.")
+      if (confirm) {
+        orderRow.deleteRecord();
+        orderRow.save();
+        return this.get('model').reload
+      }
     }
   }
 });

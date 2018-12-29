@@ -192,14 +192,32 @@
               </thead>
               <tbody>
                 {{#each model.orderRows as |orderRow| }}
+                  {{#if orderRow.id}}
                   <tr>
                     <td>{{orderRow.name}}</td>
                     <td>{{orderRow.description}}</td>
                     <td>{{orderRow.amount}}</td>
                     <td>{{orderRow.price}}:-</td>
-                    <td>{{orderRow.totalPrice}}:- ({{orderRow.totalNetPrice}}:- exkl. moms)</td>
+                    <td>{{orderRow.totalPrice}}:- ({{orderRow.totalNetPrice}}:- exkl. moms)
+                  <button {{action 'deleteOrderRow' orderRow}} class="btn btn-primary btn-sm">Radera</button>
+                    </td>
                   </tr>
+                  {{/if}}
                 {{/each}}
+                <tr>
+                  <td>{{input value=newOrderRow.name class="form-control"}}</td>
+                  <td>{{input value=newOrderRow.description class="form-control"}}</td>
+                  <td>{{input value=newOrderRow.amount class="form-control"}}</td>
+                  <td>{{input value=newOrderRow.price class="form-control"}}</td>
+                  <td colsize=2>
+                  
+                    25%{{input value=newOrderRow.tax25 class="form-control"}}<br/>
+                    12%{{input value=newOrderRow.tax12 class="form-control"}}<br/>
+                    6%{{input value=newOrderRow.tax6 class="form-control"}}<br/>
+                  <button {{action 'saveNewOrderRow'}} class="btn btn-primary btn-sm">Addera</button>
+                  
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
