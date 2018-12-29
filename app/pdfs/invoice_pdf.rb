@@ -17,7 +17,7 @@ class InvoicePdf < Prawn::Document
     info_table
     @y -= 50
     invoice_table
-    bounding_box [375, 270], width: 200 do
+    bounding_box [40, 210], width: 200 do
       taxes_box
     end
     bounding_box [330,190], width: 200 do
@@ -115,7 +115,7 @@ class InvoicePdf < Prawn::Document
     translate(@x,@y) do
       stroke_rounded_rectangle [0,0], width, height2, @corners
     end
-    bounding_box [@x+20, @y-20], width: 450 do
+    bounding_box [@x+20, @y-10], width: 450 do
       table invoice_rows, column_widths: [200, 50, 75, 50], cell_style: {inline_format: true}, width: 450 do
         cells.borders = []
         columns(4).align = :right
@@ -127,10 +127,43 @@ class InvoicePdf < Prawn::Document
   end
 
   def invoice_rows
-    [
-      ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", @booking.tickets, @booking.is_business_flagged ? business_price_info(price_sum: @booking.event.net_price, food_sum: @booking.event.tax12_net, show_sum: @booking.event.tax6_net) : format_number(@booking.event.price), (@booking.discount && @booking.discount.positive?) ? (@booking.is_business_flagged ? format_number(@booking.discount_net) : format_number(@booking.discount)) : "", @booking.is_business_flagged ? business_price_info(price_sum: @booking.total_net_price, food_sum: @booking.total_tax12_net, show_sum: @booking.total_tax6_net) : format_number(@booking.total_price)]
-    ]
+    invoice_rows = []
+    invoice_rows << tickets_invoice_row
+    @booking.order_rows.each do |order_row|
+      invoice_rows << order_row_invoice_row(order_row)
+    end
+    return invoice_rows
   end
+
+  def tickets_invoice_row
+      [
+       "#{@booking.event.name} #{@booking.event.date.strftime('%F')}", 
+       @booking.tickets, 
+       format_number(@booking.event.price), 
+       (@booking.discount && @booking.discount.positive?) ? format_number(@booking.discount) : "",
+       format_number(@booking.total_price_tickets)
+      ]
+  end
+
+  def order_row_invoice_row(order_row)
+    [
+     order_row.name,
+     order_row.amount,
+     format_number(order_row.price),
+     '',
+     format_number(order_row.total_price)
+    ] 
+  end
+
+ # def invoice_rows_old #this version includes special treatment of businesses with additional tax information. This has been disabled via booking.rb for now.
+ #   [
+ #     ["#{@booking.event.name} #{@booking.event.date.strftime('%F')}", 
+ #      @booking.tickets, 
+ #      @booking.is_business_flagged ? business_price_info(price_sum: @booking.event.net_price, food_sum: @booking.event.tax12_net, show_sum: @booking.event.tax6_net) : format_number(@booking.event.price), 
+ #      (@booking.discount && @booking.discount.positive?) ? (@booking.is_business_flagged ? format_number(@booking.discount_net) : format_number(@booking.discount)) : "", 
+ #      @booking.is_business_flagged ? business_price_info(price_sum: @booking.total_net_price, food_sum: @booking.total_tax12_net, show_sum: @booking.total_tax6_net) : format_number(@booking.total_price)]
+ #   ]
+ # end
 
   def business_price_info(price_sum:, food_sum:, show_sum:)
     str = "#{format_number(price_sum)}"
@@ -157,17 +190,17 @@ class InvoicePdf < Prawn::Document
 
   def taxes_data
     array = []
-    if @booking.event.tax25 > 0
+    if @booking.total_tax25_sum > 0
       #array << ["Momspl belopp 25%", format_number(@booking.total_tax25_net)]
       array << ["Moms kr 25%", format_number(@booking.total_tax25_sum)]
     end
 
-    if @booking.event.tax12 > 0
+    if @booking.total_tax12_sum > 0
       #array << ["Momspl belopp 12%", format_number(@booking.total_tax12_net)]
       array << ["Moms kr 12%", format_number(@booking.total_tax12_sum)]
     end
 
-    if @booking.event.tax6 > 0
+    if @booking.total_tax6_sum > 0
       #array << ["Momspl belopp 6%", format_number(@booking.total_tax6_net)]
       array <<["Moms kr 6%", format_number(@booking.total_tax6_sum)]
     end

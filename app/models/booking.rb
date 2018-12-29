@@ -97,17 +97,20 @@ def reference
     return (self.due_date.to_date - self.delivery_date.to_date).to_i
   end
 
+  def total_price_tickets
+    return (self.tickets * price_actual).round(2)
+  end
   # Total price of booking after discount including tax
   def total_price
-    return (self.tickets * price_actual).round(2)
+    return ((self.tickets * price_actual) + sum_order_row_field(field: 'total_price')).round(2)
   end
 
   def total_net_price
-    return (net_price * tickets).round(2)
+    return ((net_price * tickets) + sum_order_row_field(field: 'total_net_price') ).round(2)
   end
 
   def total_tax
-    return (total_tax_ticket * tickets).round(2)
+    return ((total_tax_ticket * tickets) + sum_order_row_field(field: 'total_tax_sum_total' )).round(2)
   end
 
   # Total tax of booking after discount
@@ -150,15 +153,15 @@ def reference
   end
 
   def total_tax25_sum
-    return (tax25_sum * tickets).round(2)
+    return ((tax25_sum * tickets) + sum_order_row_field(field: 'total_tax25_sum')).round(2)
   end
 
   def total_tax12_sum
-    return (tax12_sum * tickets).round(2)
+    return ((tax12_sum * tickets) + sum_order_row_field(field: 'total_tax12_sum')).round(2)
   end
 
   def total_tax6_sum
-    return (tax6_sum * tickets).round(2)
+    return ((tax6_sum * tickets) + sum_order_row_field(field: 'total_tax6_sum')).round(2)
   end
 
   def tax_net(tax, tax_percent)
@@ -207,6 +210,14 @@ def reference
     else
       return event.price
     end
+  end
+
+  def sum_order_row_field(field:)
+    sum = 0
+    self.order_rows.each do |order_row|
+      sum += order_row.send(field)
+    end
+    return sum
   end
 
 end

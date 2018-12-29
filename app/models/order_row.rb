@@ -56,5 +56,22 @@ class OrderRow < ActiveRecord::Base
     tax25_sum + tax12_sum + tax6_sum
   end
 
+  def total_tax25_sum
+    return tax25_sum * amount
+  end
+
+  def total_tax12_sum
+    return tax12_sum * amount
+  end
+
+  def total_tax6_sum
+    return tax6_sum * amount
+  end
+
+  def total_tax_sum_total
+    return tax_sum_total * amount
+  end
+
+
 
 end
