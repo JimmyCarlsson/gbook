@@ -7,13 +7,13 @@ class OrderRow < ActiveRecord::Base
   validates :name, presence: {message: "Ett namn måste anges"}
   validates :amount, presence: {message: "Du måste ange ett antal"}, numericality: {only_integer: true, greater_than: 0, message: "Antal måste vara större än 0"} 
   validates :price, presence: {message: "Ett pris måste anges" }, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
-  validates :tax25, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
-  validates :tax12, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
-  validates :tax6, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Priset måste vara ett heltal"}
+  validates :tax25, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Andelen av priset måste vara ett heltal"}
+  validates :tax12, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Andelen av priset måste vara ett heltal"}
+  validates :tax6, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Andelen av priset måste vara ett heltal"}
   validate :sum_of_taxvalues_equals_price
 
   def sum_of_taxvalues_equals_price
-    taxvalues_sum = tax25 + tax12 + tax6
+    taxvalues_sum = tax25.to_i + tax12.to_i + tax6.to_i
     if taxvalues_sum != price
       errors.add(:price, "Totalvärdet för skattesatserna(#{taxvalues_sum}) matchar inte priset(#{price})")
     end

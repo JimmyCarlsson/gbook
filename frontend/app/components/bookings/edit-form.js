@@ -98,7 +98,7 @@ export default Ember.Component.extend({
         })
     },
     deleteOrderRow(orderRow){
-      var confirm = window.confirm("Är du säker på att du vill radera orderraden? " + orderRow.name + "? All information kommer att raderas.")
+      var confirm = window.confirm("Är du säker på att du vill radera orderraden: " + orderRow.get('name') + "? Totalpris och faktura kommer att påverkas.")
       if (confirm) {
         orderRow.deleteRecord();
         orderRow.save();

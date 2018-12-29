@@ -180,15 +180,16 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <h2>Orderrader (Anvands endast for test! Kommer paverka fakturan!)</h2>
-            <table class="table">
+          <div class="row" style="margin-left:20px;padding:10px;width:90%;background-color:white;border:1px dashed grey">
+            <h2>Orderrader - läggs till på fakturan!</h2>
+            <table class="table table-hover" >
               <thead>
                 <th>Paket</th>
                 <th>Beskrivning</th>
                 <th>Antal</th>
                 <th>Pris/st</th>
                 <th>Totalpris</th>
+                <th></th>
               </thead>
               <tbody>
                 {{#each model.orderRows as |orderRow| }}
@@ -198,28 +199,41 @@
                     <td>{{orderRow.description}}</td>
                     <td>{{orderRow.amount}}</td>
                     <td>{{orderRow.price}}:-</td>
-                    <td>{{orderRow.totalPrice}}:- ({{orderRow.totalNetPrice}}:- exkl. moms)
-                  <button {{action 'deleteOrderRow' orderRow}} class="btn btn-primary btn-sm">Radera</button>
+                    <td>{{orderRow.totalPrice}}:- ({{orderRow.totalNetPrice}}:- exkl. moms)</td>
+                    <td>
+                  <button {{action 'deleteOrderRow' orderRow}} class="btn btn-danger btn-sm">Radera</button>
                     </td>
                   </tr>
                   {{/if}}
                 {{/each}}
-                <tr>
-                  <td>{{input value=newOrderRow.name class="form-control"}}</td>
-                  <td>{{input value=newOrderRow.description class="form-control"}}</td>
-                  <td>{{input value=newOrderRow.amount class="form-control"}}</td>
-                  <td>{{input value=newOrderRow.price class="form-control"}}</td>
-                  <td colsize=2>
-                  
-                    25%{{input value=newOrderRow.tax25 class="form-control"}}<br/>
-                    12%{{input value=newOrderRow.tax12 class="form-control"}}<br/>
-                    6%{{input value=newOrderRow.tax6 class="form-control"}}<br/>
-                  <button {{action 'saveNewOrderRow'}} class="btn btn-primary btn-sm">Addera</button>
-                  
-                  </td>
-                </tr>
               </tbody>
             </table>
+            <label>Lägg till orderrad</label>
+            <div class="input-group">
+              <span class="input-group-addon">Namn</span>
+              {{input value=newOrderRow.name class="form-control"}}
+              <span class="input-group-addon">Beskrivning</span>
+              {{input value=newOrderRow.description class="form-control"}}
+            </div>
+            <div class="input-group" style="margin-top:20px">
+              <span class="input-group-addon">Pris/st</span>
+              {{input type="number" value=newOrderRow.price class="form-control"}}
+              <span class="input-group-addon">25% moms</span>
+              {{input type="number" value=newOrderRow.tax25 class="form-control"}}
+              <span class="input-group-addon">12% moms</span>
+              {{input type="number" value=newOrderRow.tax12 class="form-control"}}
+              <span class="input-group-addon">6% moms</span>
+              {{input type="number" value=newOrderRow.tax6 class="form-control"}}
+            </div>
+            <div class="input-group" style="margin-top:20px">
+              <span class="input-group-addon">Antal</span>
+              {{input value=newOrderRow.amount class="form-control"}}
+              <div class="input-group-btn">
+                <button {{action 'saveNewOrderRow'}} class="btn btn-default">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  Lägg till orderrad till bokning</button>
+              </div>
+            </div>
           </div>
       </div>
       {{/if}}

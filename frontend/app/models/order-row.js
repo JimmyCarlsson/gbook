@@ -9,9 +9,9 @@ export default DS.Model.extend({
   description: attr('string'),
   amount: attr('number'),
   price: attr('number'),
-  tax6: attr('number'),
-  tax12: attr('number'),
-  tax25: attr('number'),
+  tax6: attr('number', {defaultValue: 0}),
+  tax12: attr('number', {defaultValue: 0}),
+  tax25: attr('number', {defaultValue: 0}),
   totalPrice: attr('number', {readOnly: true}),
   totalNetPrice: attr('number', {readOnly: true})
 
