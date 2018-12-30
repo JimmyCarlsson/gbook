@@ -209,6 +209,7 @@
               </tbody>
             </table>
             <label>Lägg till orderrad</label>
+            {{#if model.id}}
             <div class="input-group">
               <span class="input-group-addon">Namn</span>
               {{input value=newOrderRow.name class="form-control"}}
@@ -234,6 +235,9 @@
                   Lägg till orderrad till bokning</button>
               </div>
             </div>
+          {{else}}
+              <p>Orderrader kan endast läggas till efter att bokningen har sparats.</p>
+          {{/if}}
           </div>
       </div>
       {{/if}}
