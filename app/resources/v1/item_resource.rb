@@ -1,15 +1,11 @@
-require 'pp'
-
-class V1::OrderRowResource < JSONAPI::Resource
-  attributes :name, :created_at, :updated_at, :description, :price, :tax6, :tax12, :tax25, :total_price, :total_net_price, :amount
-
-  has_one :booking
+class V1::ItemResource < JSONAPI::Resource
+  attributes :name, :created_at, :updated_at, :description, :price, :tax6, :tax12, :tax25, :net_price
 
   def self.updatable_fields(context)
     if !context[:current_admin].present?
       return []
     end
-    non_updateables =  [:created_at, :updated_at, :total_price]
+    non_updateables =  [:created_at, :updated_at, :net_price]
 
     return super - non_updateables
   end
@@ -19,7 +15,7 @@ class V1::OrderRowResource < JSONAPI::Resource
       return []
     end
     # These should never be updated through json api
-    non_creatables =  [:created_at, :updated_at, :total_price]
+    non_creatables =  [:created_at, :updated_at, :net__price]
     return super - non_creatables 
   end
 
@@ -30,5 +26,4 @@ class V1::OrderRowResource < JSONAPI::Resource
       super - []
     end
   end
-
 end

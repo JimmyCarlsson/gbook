@@ -21,6 +21,7 @@ export default DS.Model.extend({
   totalPrice: attr('number', {readOnly: true}),
   termsAccepted: false,
   sendEmail: attr('boolean', {adminOnly: true, defaultValue: false}),
+  itemRows: attr(),
   dueDate: attr('date', {adminOnly: true}),
   deliveryDate: attr('date', {adminOnly: true}),
   addressStreet: attr('string'),
@@ -63,7 +64,14 @@ export default DS.Model.extend({
       return true;
     }
     return false;
-  })
+  }),
 
+  addItemRow: function(item,amount){
+    if (this.get('itemRows') == null){
+      this.set('itemRows', Ember.A())
+    }
+    this.get('itemRows').pushObject({item: item, amount: amount, itemId: item.get('id')});
+    console.log('itemRows', this.get('itemRows'));
+  }
 
 });

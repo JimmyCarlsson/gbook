@@ -15,6 +15,7 @@ export default Ember.Component.extend({
       this.set('model.deliveryDate', moment()._d);
       this.set('model.dueDate', moment().add(20, 'days')._d);
     }
+    this.set('items', this.get('store').findAll('item'));
     this.set('newOrderRow', this.get('store').createRecord('orderRow', {
       booking: this.get('model')
     }))
@@ -75,6 +76,7 @@ export default Ember.Component.extend({
       this.set('savingMode', true);
       this.get('model').save().then((response) =>{
         that.set('savingMode', false);
+        that.get('model').set('itemRows', null);
         return this.save(response);
       }, (error) =>{
         that.set('savingMode', false);
@@ -104,6 +106,9 @@ export default Ember.Component.extend({
         orderRow.save();
         return this.get('model').reload
       }
+    },
+    addItemRow(item, amount){
+      this.get('model').addItemRow(item, amount);
     }
   }
 });

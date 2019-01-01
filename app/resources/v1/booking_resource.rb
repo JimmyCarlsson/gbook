@@ -1,7 +1,7 @@
 require 'pp'
 
 class V1::BookingResource < JSONAPI::Resource
-  attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price, :send_email, :due_date, :delivery_date, :address_street, :address_zip, :address_city
+  attributes :name, :booking_type, :contact_person, :email, :tickets, :phone_nr, :token, :created_at, :updated_at, :message, :discount, :discount_message, :memo, :paid, :total_price, :send_email, :due_date, :delivery_date, :address_street, :address_zip, :address_city, :item_rows
 
   has_one :event
   has_many :order_rows
@@ -50,6 +50,24 @@ class V1::BookingResource < JSONAPI::Resource
   end
 
   after_save do
+    # Create order rows based on items
+    if @model.item_rows
+      @model.item_rows.each do |item_row|
+        pp item_row
+        item = Item.find(item_row[:item_id])
+        order_row = OrderRow.new(
+          booking: @model,
+          amount: item_row[:amount],
+          name: item.name,
+          description: item.description,
+          price: item.price,
+          tax25: item.tax25,
+          tax12: item.tax12,
+          tax6: item.tax6
+        )
+        order_row.save
+      end
+    end
     # Only send email if booking created by customer, or admin specified that it should be sent
     if context[:current_admin].nil? || @model.send_email == true
       BookingMailer.booking_email(@model).deliver_now

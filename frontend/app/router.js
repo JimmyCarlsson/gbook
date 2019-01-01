@@ -20,6 +20,12 @@ Router.map(function() {
       this.route('edit');
     });
   });
+  this.route('items', function() {
+    this.route('new');
+    this.route('show', {path: '/:token'}, function() {
+      this.route('edit');
+    });
+  });
 });
 
 export default Router;

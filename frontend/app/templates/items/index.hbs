@@ -1,0 +1,28 @@
+
+  <h1>Fördefinierade paket (orderrader)</h1>
+  <p>Här kan du som administratör sätta upp fördefinierade paket som kunder kan välja till sin bokning.</p>
+  <table class="table table-hover" >
+    <thead>
+      <th>Paket</th>
+      <th>Beskrivning</th>
+      <th>Pris</th>
+      <th>Moms 25%</th>
+      <th>Moms 12%</th>
+      <th>Moms 6%</th>
+      <th></th>
+    </thead>
+    <tbody>
+      {{#each model as |item| }}
+        {{#if item.id}}
+          <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.price}}:- ({{item.netPrice}}:- ex. moms)</td>
+            <td>{{item.tax25}}:-</td>
+            <td>{{item.tax12}}:-</td>
+            <td>{{item.tax6}}:-</td>
+          </tr>
+        {{/if}}
+      {{/each}}
+    </tbody>
+  </table>

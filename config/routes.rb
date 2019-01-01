@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :v1, defaults: {format: 'json'}do
     jsonapi_resources :order_rows
+    jsonapi_resources :items
     jsonapi_resources :events
     jsonapi_resources :bookings
     resources :invoices, only: [:show], defaults: {format: 'pdf'}

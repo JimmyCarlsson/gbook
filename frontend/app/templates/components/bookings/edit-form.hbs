@@ -209,6 +209,14 @@
               </tbody>
             </table>
             <label>Lägg till orderrad</label>
+            <h2>Paket</h2>
+            {{#each items as |item|}}
+              {{item.name}} {{item.id}}
+              <button {{action 'addItemRow' item 1}} class="btn btn-primary btn-sm">Add package</button>
+            {{/each}}
+            {{#each model.itemRows as |itemRow|}}
+              {{itemRow.item.name}} {{itemRow.amount}}
+            {{/each}}
             {{#if model.id}}
             <div class="input-group">
               <span class="input-group-addon">Namn</span>
