@@ -5,8 +5,10 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   typeIsSet: Ember.computed.or('model.isPrivate', 'model.isBusiness'),
   savingMode: false,
+  itemRows: Ember.A(),
 
   initEditForm: Ember.on('init', function(){
+    var that = this;
     // Set confirmEmail to model email in case such exists (edit mode)
     this.set('confirmEmail', this.get('model.email'));
     this.set('model.sendEmail', false);
@@ -15,7 +17,14 @@ export default Ember.Component.extend({
       this.set('model.deliveryDate', moment()._d);
       this.set('model.dueDate', moment().add(20, 'days')._d);
     }
-    this.set('items', this.get('store').findAll('item'));
+    // Populate itemrows
+    this.set('itemRows', Ember.A());
+    this.get('store').findAll('item').then(function(items) {
+      items.forEach(function(item) {
+        that.get('itemRows').pushObject({item: item, amount: 0, itemId: item.get('id')})
+      });
+    });
+    //Setup additional orderrow
     this.set('newOrderRow', this.get('store').createRecord('orderRow', {
       booking: this.get('model')
     }))
@@ -74,10 +83,13 @@ export default Ember.Component.extend({
     save() {
       var that = this;
       this.set('savingMode', true);
+      this.get('model').set('itemRows', this.get('itemRows'));
       this.get('model').save().then((response) =>{
         that.set('savingMode', false);
         that.get('model').set('itemRows', null);
-        return this.save(response);
+        that.get('model').get('orderRows').reload().then(function() {
+          return that.save(response);
+        });
       }, (error) =>{
         that.set('savingMode', false);
         error.errors.forEach(function(error){
@@ -100,15 +112,16 @@ export default Ember.Component.extend({
         })
     },
     deleteOrderRow(orderRow){
+      var that = this;
       var confirm = window.confirm("Är du säker på att du vill radera orderraden: " + orderRow.get('name') + "? Totalpris och faktura kommer att påverkas.")
       if (confirm) {
         orderRow.deleteRecord();
-        orderRow.save();
-        return this.get('model').reload
+        orderRow.save().then(function(){
+          that.get('model').get('orderRows').reload().then(function() {
+            return;
+          })
+        });
       }
-    },
-    addItemRow(item, amount){
-      this.get('model').addItemRow(item, amount);
     }
   }
 });

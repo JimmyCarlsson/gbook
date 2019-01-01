@@ -4,83 +4,83 @@
   <hr/>
   <div class="row">
     <p class="form-control-static input-lg text-center">Jag vill köpa...</p>
-  <div class="form-group {{if model.errors.tickets 'has-error'}} {{if tooManyTickets 'has-error'}} text-center">
-    <div class="col-sm-offset-2 col-sm-4 text-center">
-      <div class="input-group">
-        <span class="input-group-addon input-lg" id="basic-addon1">Antal biljetter</span>
-        {{input type="number" min=1 value=model.tickets class="form-control input-lg" }}
+    <div class="form-group {{if model.errors.tickets 'has-error'}} {{if tooManyTickets 'has-error'}} text-center">
+      <div class="col-sm-offset-2 col-sm-4 text-center">
+        <div class="input-group">
+          <span class="input-group-addon input-lg" id="basic-addon1">Antal biljetter</span>
+          {{input type="number" min=1 value=model.tickets class="form-control input-lg" }}
+        </div>
+      </div>
+      <div class="col-sm-4">
+        {{#if tooManyTickets}}
+          <div class="alert alert-info">
+            Är ni ett större sällskap på <strong>över 20 personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service eller maila din beställning till <strong>info@grebbans.se</strong>
+          </div>
+        {{else}}
+          <p class="form-control-static input-lg" style="word-spacing:10px;"> x <strong>{{model.discountedTicketPrice}}:-</strong> = <strong>{{model.calculatedTotalPrice}}:-</strong> inkl.moms</p>
+        {{/if}}
       </div>
     </div>
-    <div class="col-sm-4">
-      {{#if tooManyTickets}}
-        <div class="alert alert-info">
-          Är ni ett större sällskap på <strong>över 20 personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service eller maila din beställning till <strong>info@grebbans.se</strong>
-        </div>
-      {{else}}
-        <p class="form-control-static input-lg" style="word-spacing:10px;"> x <strong>{{model.discountedTicketPrice}}:-</strong> = <strong>{{model.calculatedTotalPrice}}:-</strong> inkl.moms</p>
-      {{/if}}
-    </div>
   </div>
-</div>
   <hr/>
   <div class="row">
-  <div class="form-group text-center">
-    <p class="form-control-static input-lg text-center">Jag köper biljetter som...</p>
-    <div class="btn-group">
-      <button class="btn btn-default btn-lg {{if model.isBusiness 'active'}}" {{action 'setType' 'business'}}>Företag</button>
-      <button class="btn btn-default btn-lg {{if model.isPrivate 'active'}}" {{action 'setType' 'private'}}>Privatperson</button>
+    <div class="form-group text-center">
+      <p class="form-control-static input-lg text-center">Jag köper biljetter som...</p>
+      <div class="btn-group">
+        <button class="btn btn-default btn-lg {{if model.isBusiness 'active'}}" {{action 'setType' 'business'}}>Företag</button>
+        <button class="btn btn-default btn-lg {{if model.isPrivate 'active'}}" {{action 'setType' 'private'}}>Privatperson</button>
+      </div>
     </div>
   </div>
-</div>
 </div>
 {{#if typeIsSet}}
   <hr/>
-    <div class="row">
+  <div class="row">
     <p class="form-control-static input-lg text-center">Kontaktinformation</p>
-  <div class="form-horizontal">
-    <div class="form-group {{if model.errors.name 'has-error'}} required">
-      <label class="control-label col-sm-2 col-sm-offset-2">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
-      <div class="col-sm-4">
-        {{input value=model.name class="form-control"}}
-      </div>
-    </div>
-    {{#if model.isBusiness}}
-      <div class="form-group {{if model.errors.contactPerson 'has-error'}} required">
-        <label class="col-sm-2 control-label col-sm-offset-2">Kontaktperson</label>
+    <div class="form-horizontal">
+      <div class="form-group {{if model.errors.name 'has-error'}} required">
+        <label class="control-label col-sm-2 col-sm-offset-2">{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</label>
         <div class="col-sm-4">
-          {{input value=model.contact_person class="form-control"}}
+          {{input value=model.name class="form-control"}}
         </div>
       </div>
-    {{/if}}
-    <div class="form-group {{if model.errors.addressStreet 'has-error'}} required">
-      <label class="control-label col-sm-2 col-sm-offset-2">Gatuadress</label>
-      <div class="col-sm-4">
-        {{input value=model.addressStreet class="form-control" name="address-street"}}
+      {{#if model.isBusiness}}
+        <div class="form-group {{if model.errors.contactPerson 'has-error'}} required">
+          <label class="col-sm-2 control-label col-sm-offset-2">Kontaktperson</label>
+          <div class="col-sm-4">
+            {{input value=model.contact_person class="form-control"}}
+          </div>
+        </div>
+      {{/if}}
+      <div class="form-group {{if model.errors.addressStreet 'has-error'}} required">
+        <label class="control-label col-sm-2 col-sm-offset-2">Gatuadress</label>
+        <div class="col-sm-4">
+          {{input value=model.addressStreet class="form-control" name="address-street"}}
+        </div>
       </div>
-    </div>
-    <div class="form-group {{if model.errors.addressZip 'has-error'}} required">
-      <label class="control-label col-sm-2 col-sm-offset-2">Postnummer</label>
-      <div class="col-sm-4">
-        {{input value=model.addressZip class="form-control" name="address-zip"}}
+      <div class="form-group {{if model.errors.addressZip 'has-error'}} required">
+        <label class="control-label col-sm-2 col-sm-offset-2">Postnummer</label>
+        <div class="col-sm-4">
+          {{input value=model.addressZip class="form-control" name="address-zip"}}
+        </div>
       </div>
-    </div>
-    <div class="form-group {{if model.errors.addressCity 'has-error'}} required">
-      <label class="control-label col-sm-1 col-sm-offset-3">Ort</label>
-      <div class="col-sm-4">
-        {{input value=model.addressCity class="form-control" name="address-city"}}
+      <div class="form-group {{if model.errors.addressCity 'has-error'}} required">
+        <label class="control-label col-sm-1 col-sm-offset-3">Ort</label>
+        <div class="col-sm-4">
+          {{input value=model.addressCity class="form-control" name="address-city"}}
+        </div>
       </div>
-    </div>
-    <div class="form-group {{if model.errors.email 'has-error'}} required">
-      <label class="control-label col-sm-1 col-sm-offset-3">E-post</label>
-      <div class="col-sm-4">
-        {{input value=model.email class="form-control" name="email"}}
+      <div class="form-group {{if model.errors.email 'has-error'}} required">
+        <label class="control-label col-sm-1 col-sm-offset-3">E-post</label>
+        <div class="col-sm-4">
+          {{input value=model.email class="form-control" name="email"}}
+        </div>
       </div>
-    </div>
-    <div class="form-group {{if showEmailDiffersMessage 'has-error'}} required">
-      <label class="control-label col-sm-2 col-sm-offset-2">Bekräfta E-post</label>
-      <div class="col-sm-4">
-        {{input value=confirmEmail class="form-control" autocomplete="off"}}
-        {{#if showEmailDiffersMessage}}{{fa-icon 'exclamation-triangle' title='E-post adresserna matchar inte' class="text-danger"}}{{/if}}
+      <div class="form-group {{if showEmailDiffersMessage 'has-error'}} required">
+        <label class="control-label col-sm-2 col-sm-offset-2">Bekräfta E-post</label>
+        <div class="col-sm-4">
+          {{input value=confirmEmail class="form-control" autocomplete="off"}}
+          {{#if showEmailDiffersMessage}}{{fa-icon 'exclamation-triangle' title='E-post adresserna matchar inte' class="text-danger"}}{{/if}}
         </div>
       </div>
       <div class="form-group {{if model.errors.phoneNr 'has-error'}} required">
@@ -92,108 +92,108 @@
     </div>
     <hr/>
     <div class="row">
-    <p class="form-control-static input-lg text-center">Meddelande</p>
-        <div class="col-sm-8 col-sm-offset-2">
-          <div class="alert alert-info">Här kan du meddela ifall...
-            <ul>
-              <li> ...någon i ditt sällskap är rullstolsburen</li>
-              <li> ...någon i ditt sällskap har allergi eller önskar specialkost</li> 
-              <li> ...ni firar någon / något</li>
-              <li> ...det finns något annat som ni vill att vi ska känna till</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-8 col-sm-offset-2">
-          {{textarea value=model.message class="form-control" rows=7}}
+      <p class="form-control-static input-lg text-center">Meddelande</p>
+      <div class="col-sm-8 col-sm-offset-2">
+        <div class="alert alert-info">Här kan du meddela ifall...
+          <ul>
+            <li> ...någon i ditt sällskap är rullstolsburen</li>
+            <li> ...någon i ditt sällskap har allergi eller önskar specialkost</li> 
+            <li> ...ni firar någon / något</li>
+            <li> ...det finns något annat som ni vill att vi ska känna till</li>
+          </ul>
         </div>
       </div>
-      {{#if showAdminFields}}
-        <hr/>
-        <div class="form-horizontal" style="background:#e4e4fe; border-radius:5px; border:1px dashed black;padding:10px">
-            <h2>Administratörsfält</h2>
-            <div class="row">
-              <div class="form-group {{if model.errors.delivery_date 'has-error'}} ">
-                <label for="inputEventDate" class="col-sm-3 control-label">Leveransdatum</label>
-                <div class="col-sm-3">
-                  {{bs-datetimepicker date=model.deliveryDate format='YYYY-MM-DD' locale='sv'}}
-                  {{#each model.errors.delivery_date as |error|}}
-                  <span class="help-block" id="helpBlockName">{{error.message}}</span>
-                  {{/each}}
-                </div>
-              </div>
+      <div class="col-sm-8 col-sm-offset-2">
+        {{textarea value=model.message class="form-control" rows=7}}
+      </div>
+    </div>
+    {{#if showAdminFields}}
+      <hr/>
+      <div class="form-horizontal" style="background:#e4e4fe; border-radius:5px; border:1px dashed black;padding:10px">
+        <h2>Administratörsfält</h2>
+        <div class="row">
+          <div class="form-group {{if model.errors.delivery_date 'has-error'}} ">
+            <label for="inputEventDate" class="col-sm-3 control-label">Leveransdatum</label>
+            <div class="col-sm-3">
+              {{bs-datetimepicker date=model.deliveryDate format='YYYY-MM-DD' locale='sv'}}
+              {{#each model.errors.delivery_date as |error|}}
+                <span class="help-block" id="helpBlockName">{{error.message}}</span>
+              {{/each}}
             </div>
-            <div class="row">
-              <div class="form-group {{if model.errors.due_date 'has-error'}} ">
-                <label for="inputEventDate" class="col-sm-3 control-label">Förfallodatum</label>
-                <div class="col-sm-3">
-                  {{bs-datetimepicker date=model.dueDate format='YYYY-MM-DD' locale='sv'}}
-                  {{invoiceDaysCalculated}} dagar netto
-                  {{#each model.errors.due_date as |error|}}
-                  <span class="help-block" id="helpBlockName">{{error.message}}</span>
-                  {{/each}}
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group {{if model.errors.due_date 'has-error'}} ">
+            <label for="inputEventDate" class="col-sm-3 control-label">Förfallodatum</label>
+            <div class="col-sm-3">
+              {{bs-datetimepicker date=model.dueDate format='YYYY-MM-DD' locale='sv'}}
+              {{invoiceDaysCalculated}} dagar netto
+              {{#each model.errors.due_date as |error|}}
+                <span class="help-block" id="helpBlockName">{{error.message}}</span>
+              {{/each}}
             </div>
-          <div class="row">
-            <div class="form-group {{if model.errors.discount 'has-error'}}">
-              <label class="control-label col-sm-3">Rabatt (kr/biljett inkl. moms)</label>
-              <div class="col-sm-3">
-                {{input type="number" value=model.discount class="form-control"}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group {{if model.errors.discount 'has-error'}}">
+            <label class="control-label col-sm-3">Rabatt (kr/biljett inkl. moms)</label>
+            <div class="col-sm-3">
+              {{input type="number" value=model.discount class="form-control"}}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group {{if model.errors.discount_message 'has-error'}}">
+            <label class="control-label col-sm-3">Rabattmeddelande</label>
+            <div class="col-sm-7">
+              {{input value=model.discountMessage class="form-control" }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group {{if model.errors.memo 'has-error'}}">
+            <label class="control-label col-sm-3">Notering (admin)</label>
+            <div class="col-sm-7">
+              {{textarea value=model.memo class="form-control" rows="5"}}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label class="control-label col-sm-3">Betalning verifierad</label>
+            <div class="col-sm-3 material-switch">
+              <div class="material-switch pull-left">
+                {{input id="paidSwitch" type="checkbox" checked=model.paid }}
+                <label for="paidSwitch" class="label-success"></label>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="form-group {{if model.errors.discount_message 'has-error'}}">
-              <label class="control-label col-sm-3">Rabattmeddelande</label>
-              <div class="col-sm-7">
-                {{input value=model.discountMessage class="form-control" }}
+        </div>
+        <div class="row">
+          <div class="form-group">
+            <label class="control-label col-sm-3">Skicka E-mail</label>
+            <div class="col-sm-3 material-switch">
+              <div class="material-switch pull-left">
+                {{input id="emailSwitch" type="checkbox" checked=model.sendEmail }}
+                <label for="emailSwitch" class="label-success"></label>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="form-group {{if model.errors.memo 'has-error'}}">
-              <label class="control-label col-sm-3">Notering (admin)</label>
-              <div class="col-sm-7">
-                {{textarea value=model.memo class="form-control" rows="5"}}
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-sm-3">Betalning verifierad</label>
-              <div class="col-sm-3 material-switch">
-                <div class="material-switch pull-left">
-                  {{input id="paidSwitch" type="checkbox" checked=model.paid }}
-                  <label for="paidSwitch" class="label-success"></label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-sm-3">Skicka E-mail</label>
-              <div class="col-sm-3 material-switch">
-                <div class="material-switch pull-left">
-                  {{input id="emailSwitch" type="checkbox" checked=model.sendEmail }}
-                  <label for="emailSwitch" class="label-success"></label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row" style="margin-left:20px;padding:10px;width:90%;background-color:white;border:1px dashed grey">
-            <h2>Orderrader - läggs till på fakturan!</h2>
-            <table class="table table-hover" >
-              <thead>
-                <th>Paket</th>
-                <th>Beskrivning</th>
-                <th>Antal</th>
-                <th>Pris/st</th>
-                <th>Totalpris</th>
-                <th></th>
-              </thead>
-              <tbody>
-                {{#each model.orderRows as |orderRow| }}
-                  {{#if orderRow.id}}
+        </div>
+        <div class="row" style="margin-left:20px;padding:10px;width:90%;background-color:white;border:1px dashed grey">
+          <h2>Orderrader - läggs till på fakturan!</h2>
+          <table class="table table-hover" >
+            <thead>
+              <th>Paket</th>
+              <th>Beskrivning</th>
+              <th>Antal</th>
+              <th>Pris/st</th>
+              <th>Totalpris</th>
+              <th></th>
+            </thead>
+            <tbody>
+              {{#each model.orderRows as |orderRow| }}
+                {{#if orderRow.id}}
                   <tr>
                     <td>{{orderRow.name}}</td>
                     <td>{{orderRow.description}}</td>
@@ -201,23 +201,37 @@
                     <td>{{orderRow.price}}:-</td>
                     <td>{{orderRow.totalPrice}}:- ({{orderRow.totalNetPrice}}:- exkl. moms)</td>
                     <td>
-                  <button {{action 'deleteOrderRow' orderRow}} class="btn btn-danger btn-sm">Radera</button>
+                      <button {{action 'deleteOrderRow' orderRow}} class="btn btn-danger btn-sm">Radera</button>
                     </td>
                   </tr>
-                  {{/if}}
-                {{/each}}
-              </tbody>
-            </table>
-            <label>Lägg till orderrad</label>
-            <h2>Paket</h2>
-            {{#each items as |item|}}
-              {{item.name}} {{item.id}}
-              <button {{action 'addItemRow' item 1}} class="btn btn-primary btn-sm">Add package</button>
-            {{/each}}
-            {{#each model.itemRows as |itemRow|}}
-              {{itemRow.item.name}} {{itemRow.amount}}
-            {{/each}}
-            {{#if model.id}}
+                {{/if}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          {{#each itemRows as |itemRow|}}
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="assets/images/food_drink.png"/>
+                <div class="caption">
+                  <h3>{{itemRow.item.name}}</h3>
+                  <p>{{itemRow.item.description}}</p>
+                  <p><b>{{itemRow.item.price}}:- / st </b>({{itemRow.item.netPrice}}:- ex. moms)</p>
+                  <label for="amount">Antal</label> {{input type="number" id="amount" class="form-control" value=itemRow.amount min=0}}
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+        <div class="row" style="margin-left:20px;margin-right:20px">
+          <h3>Lägg till orderrad</h3>
+          <label>Paket</label>
+          {{#each items as |item|}}
+            {{item.name}} {{item.description}} - {{item.price}}:- ({{item.netPrice}}:- ex. moms)
+            <button {{action 'addItemRow' item itemAmount}} class="btn btn-primary btn-sm">Add package</button>
+          {{/each}}
+          {{#if model.id}}
             <div class="input-group">
               <span class="input-group-addon">Namn</span>
               {{input value=newOrderRow.name class="form-control"}}
@@ -244,192 +258,192 @@
               </div>
             </div>
           {{else}}
-              <p>Orderrader kan endast läggas till efter att bokningen har sparats.</p>
+            <p>Orderrader kan endast läggas till efter att bokningen har sparats.</p>
           {{/if}}
-          </div>
+        </div>
       </div>
-      {{/if}}
-        {{#if model.errors}}
-          <div class="alert alert-danger">
-            {{#each model.errors as |error|}}
-              {{error.message}}<br/>
-            {{/each}}
-          </div>
-        {{/if}}
+    {{/if}}
+    {{#if model.errors}}
+      <div class="alert alert-danger">
+        {{#each model.errors as |error|}}
+          {{error.message}}<br/>
+        {{/each}}
+      </div>
+    {{/if}}
+    <hr/>
+    <div class="alert alert-info" style="padding-left:30px">
+      <div class="row">
+        <h2>Bekräfta köp</h2>
+        <p>Följande kommer att hända då du klickar på <strong>Bekräfta köp</strong> nedan:</p>
+        <p>
+        <ul>
+          <li>Ditt köp registreras och är därmed bindande</li>
+          <li>Du kommer att skickas vidare till en sida där din <strong>Biljett</strong> och <strong>Faktura</strong> finns tillgängliga för nedladdning</li>
+          <li>Ett bekräftelsemail med information kring ditt köp skickas till angiven E-post-adress</li>
+          <li><strong>Fakturan</strong> betalar du enklast genom banköverföring</li>
+          <li><strong>Biljetten</strong> skriver du ut och tar med dig till Grebbans Nöjesrestaurang</li>
+        </ul>
+        </p>
         <hr/>
-        <div class="alert alert-info" style="padding-left:30px">
-          <div class="row">
-            <h2>Bekräfta köp</h2>
-            <p>Följande kommer att hända då du klickar på <strong>Bekräfta köp</strong> nedan:</p>
-            <p>
-            <ul>
-              <li>Ditt köp registreras och är därmed bindande</li>
-              <li>Du kommer att skickas vidare till en sida där din <strong>Biljett</strong> och <strong>Faktura</strong> finns tillgängliga för nedladdning</li>
-              <li>Ett bekräftelsemail med information kring ditt köp skickas till angiven E-post-adress</li>
-              <li><strong>Fakturan</strong> betalar du enklast genom banköverföring</li>
-              <li><strong>Biljetten</strong> skriver du ut och tar med dig till Grebbans Nöjesrestaurang</li>
-            </ul>
-            </p>
-            <hr/>
-            <div class="form-group">
-              <div class="col-sm-9">
-                <label for="termsCheckbox"> {{input type="checkbox" checked=model.termsAccepted id="termsCheckbox" class="inline-form-control"}} Jag bekräftar att jag har läst och accepterar <a href="#" data-toggle="modal" data-target="#termsModal">köpvillkoren</a></label>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 text-center">
-                {{#unless savingMode}}
-                  <button {{action 'save' model}} class="btn btn-primary btn-lg" disabled="{{saveDisabled}}">Bekräfta köp</button>
-                {{else}}
-                  Sparar...
-                {{/unless}}
-              </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="tooManyTicketsModal" role="dialog" aria-labelledby="tooManyTicketsModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">För många biljetter</h3>
-              </div>
-              <div class="modal-body">
-                <p>
-                Tyvärr! Du har önskat köpa fler biljetter än vad som finns lediga för det här evenemanget.
-                </p>
-                <p>
-                Det är möjligt att ytterligare biljetter kan släppas i efterhand, kontakta oss gärna på telefon <strong>0730-314407</strong> eller e-post <strong>info@grebbans.se</strong> för att få slutgiltigt besked.
-                </p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="modal fade" id="termsModal" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">Villkor</h3>
-              </div>
-              <div class="modal-body">
-                <p>
-                <strong>Köpeavtalet</strong><br/>
-                Köpeavtalet är underkastat rättsreglerna i svensk lagstiftning. Avtalet är bindande för båda parter när
-                Rockenstierna Nöjesproduktion AB har registrerat ditt köp och kunden har godkänt villkoren.
-                </p>
-
-                <p>
-                <strong>Betalning</strong><br/>
-                Betalning sker vid köp mot faktura.
-                Om kredittiden passerat kommer en påminnelseavgift samt dröjsmålsränta att läggas på från första
-                dagen efter att betaltiden gått ut.
-                </p>
-
-                <p>
-                <strong>Biljetten</strong><br/>
-                Om du får förhinder och inte kan delta i ett evenemang får du gärna ge din plats till en vän.
-                </p>
-
-                <p>
-                <strong>Återbetalning</strong><br/>
-                Köpta platser återbetalas endast vid inställt evenemang.
-                Köpt plats vid ett evenemang kan inte återlösas eller bytas mot plats på annat evenemang.
-                Observera att plats som betalats direkt vid bokningstillfället betraktas som köpt. Distansavtalslagen
-                gäller ej vid köp av evenemangsbiljetter.
-                </p>
-
-                <p>
-                <strong>Inställt evenemang</strong><br/>
-                Ett evenemang anses vara inställt om evenemanget inte alls genomförs. Ändringar i repertoaren,
-                ändrat datum, delvis genomfört evenemang och dylikt utgör således inte ett inställt evenemang och
-                pengarna återbetalas i dessa fall normalt inte. Läs emellertid informationen om evenemanget.
-                </p>
-
-                <p>
-                <h2>Personuppgiftspolicy</h2><br/>
-                Vi är angelägna om att hantera dina personuppgifter på ett säkert och tryggt sätt. All behandling av
-                personuppgifter sker enligt gällande lagstiftning. Detta innebär bland annat att vi skyddar dina
-                uppgifter med nödvändiga åtgärder och att du alltid har rätt att kontakta oss för att få reda på vilka
-                personuppgifter som vi har sparade om dig.
-                Vi spara bara de uppgifter som är nödvändiga när du bli kund hos oss eller tar kontakt med oss i
-                annat affärsärende. Dessa uppgifter behandlar vi för att kunna fullgöra våra åtaganden mot er som
-                kund.
-                Du har rätt att begära information om vilka personuppgifter som behandlas av oss, och vilka
-                möjligheter ni har för rättelser och radering av uppgifter. Vi kan inte radera dina uppgifter i de fall då
-                det föreligger ett lagstadgat krav på lagring, som exempelvis bokföringsregler.
-                </p>
-
-
-                <p>
-                <strong>Vilka uppgifter vi har och varifrån vi får dem</strong><br/>
-                När du köper en biljett kommer vi att samla in dina uppgifter som kan komma att innefatta dina
-                kontakt- och fakturauppgifter.
-                När du besöker en social media-funktion inom vår webbsida och gör inlägg på en social media-
-                plattform kommer den sociala media-webbsidan ge oss uppgifter om dig.
-                Om du har tillgänglighetsbehov vill vi se till att du får den bästa upplevelsen när du besöker ett
-                evenemang. För att möjliggöra detta måste vi samla in uppgifter om dina behov (som kan komma att
-                kräva att du lämnar information om din mentala och fysiska hälsa om du t.ex. är rullstolsburen eller
-                har något annat speciellt behov som kan vara avgörande för din upplevelse hos oss).
-                </p>
-                
-                <p>
-                <strong>Hur vi använder dina uppgifter och varför</strong><br/>
-                För att uppfylla vårt kontrakt med dig
-                Vi använder dina uppgifter när du kommer i kontakt med oss (till exempel för att köpa varor eller
-                biljetter) så att vi kan:
-                behandla din beställning, ta betalt, och ge dig kundsupport.
-                </p>
-                
-                <p>
-                <strong>För våra berättigade affärsintressen</strong><br/>
-                I marknadsföringssyfte, såvida inte ditt samtycke krävs för sådan marknadsföring.
-                För att skicka kundtjänst-epost till dig, innefattande bokningsbekräftelser, biljetter och
-                evenemangspåminnelser.
-                För att kontakta dig med information eller erbjudanden om våra kommande evenemang, produkter
-                eller tjänster – det kan ske via e-post, via SMS eller sociala medieplattformar. Du kan närsomhelst
-                avregistrera dig från vår information.
-                För att behandla dina hälsouppgifter för att kunna tillgodose dina tillgänglighetsbehov, i de fall då det
-                specifikt krävs och uttryckligt samtycke ges.
-                </p>
-                
-                <p>
-                <strong>Dina rättigheter</strong><br/>
-                Du har också rättigheter gällande hur dina personuppgifter används:
-
-                Rätten att invända mot vår behandling av dina personuppgifter.
-                Rätten att begära att dina uppgifter raderas eller begränsas från vidare användning.
-                Rätten att kräva en kopia av den information som vi innehar om dig.
-                Rätten att korrigera, ändra eller uppdatera den information som du givit oss.
-                </p>
-                
-                <p>
-                <strong>Vård av dina uppgifter</strong><br/>
-                Vi har infört säkerhetsåtgärder för att skydda dina uppgifter. Vilka säkerhetsåtgärder vi använder
-                beror på vilken typ av information som samlas in.
-                Vi behåller endast dina uppgifter så länge som det krävs för att ge dig de tjänster som du begär, för
-                de syften som uppställs i denna policy och för eventuella juridiska syften som vi är skyldiga att
-                behålla informationen. Vi kommer på ett säkert sätt att radera dina uppgifter när den ej längre
-                behövs för dessa syften i enlighet med våra bolagspolicyer.
-                </p>
-                
-                <p>
-                <strong>Kontakt</strong><br/>
-                Har du frågor ang. vår personuppgiftspolicy kan du självklart kontakta oss via mail info@grebbans.se
-                eller telefon 073-0314407
-                </p>
-                
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
-              </div>
-            </div>
+        <div class="form-group">
+          <div class="col-sm-9">
+            <label for="termsCheckbox"> {{input type="checkbox" checked=model.termsAccepted id="termsCheckbox" class="inline-form-control"}} Jag bekräftar att jag har läst och accepterar <a href="#" data-toggle="modal" data-target="#termsModal">köpvillkoren</a></label>
           </div>
         </div>
       </div>
-      {{/if}}
+      <div class="row">
+        <div class="col-sm-12 text-center">
+          {{#unless savingMode}}
+            <button {{action 'save' model}} class="btn btn-primary btn-lg" disabled="{{saveDisabled}}">Bekräfta köp</button>
+          {{else}}
+            Sparar...
+          {{/unless}}
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="tooManyTicketsModal" role="dialog" aria-labelledby="tooManyTicketsModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">För många biljetter</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+            Tyvärr! Du har önskat köpa fler biljetter än vad som finns lediga för det här evenemanget.
+            </p>
+            <p>
+            Det är möjligt att ytterligare biljetter kan släppas i efterhand, kontakta oss gärna på telefon <strong>0730-314407</strong> eller e-post <strong>info@grebbans.se</strong> för att få slutgiltigt besked.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="termsModal" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h3 class="modal-title">Villkor</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+            <strong>Köpeavtalet</strong><br/>
+            Köpeavtalet är underkastat rättsreglerna i svensk lagstiftning. Avtalet är bindande för båda parter när
+            Rockenstierna Nöjesproduktion AB har registrerat ditt köp och kunden har godkänt villkoren.
+            </p>
+
+            <p>
+            <strong>Betalning</strong><br/>
+            Betalning sker vid köp mot faktura.
+            Om kredittiden passerat kommer en påminnelseavgift samt dröjsmålsränta att läggas på från första
+            dagen efter att betaltiden gått ut.
+            </p>
+
+            <p>
+            <strong>Biljetten</strong><br/>
+            Om du får förhinder och inte kan delta i ett evenemang får du gärna ge din plats till en vän.
+            </p>
+
+            <p>
+            <strong>Återbetalning</strong><br/>
+            Köpta platser återbetalas endast vid inställt evenemang.
+            Köpt plats vid ett evenemang kan inte återlösas eller bytas mot plats på annat evenemang.
+            Observera att plats som betalats direkt vid bokningstillfället betraktas som köpt. Distansavtalslagen
+            gäller ej vid köp av evenemangsbiljetter.
+            </p>
+
+            <p>
+            <strong>Inställt evenemang</strong><br/>
+            Ett evenemang anses vara inställt om evenemanget inte alls genomförs. Ändringar i repertoaren,
+            ändrat datum, delvis genomfört evenemang och dylikt utgör således inte ett inställt evenemang och
+            pengarna återbetalas i dessa fall normalt inte. Läs emellertid informationen om evenemanget.
+            </p>
+
+            <p>
+            <h2>Personuppgiftspolicy</h2><br/>
+            Vi är angelägna om att hantera dina personuppgifter på ett säkert och tryggt sätt. All behandling av
+            personuppgifter sker enligt gällande lagstiftning. Detta innebär bland annat att vi skyddar dina
+            uppgifter med nödvändiga åtgärder och att du alltid har rätt att kontakta oss för att få reda på vilka
+            personuppgifter som vi har sparade om dig.
+            Vi spara bara de uppgifter som är nödvändiga när du bli kund hos oss eller tar kontakt med oss i
+            annat affärsärende. Dessa uppgifter behandlar vi för att kunna fullgöra våra åtaganden mot er som
+            kund.
+            Du har rätt att begära information om vilka personuppgifter som behandlas av oss, och vilka
+            möjligheter ni har för rättelser och radering av uppgifter. Vi kan inte radera dina uppgifter i de fall då
+            det föreligger ett lagstadgat krav på lagring, som exempelvis bokföringsregler.
+            </p>
+
+
+            <p>
+            <strong>Vilka uppgifter vi har och varifrån vi får dem</strong><br/>
+            När du köper en biljett kommer vi att samla in dina uppgifter som kan komma att innefatta dina
+            kontakt- och fakturauppgifter.
+            När du besöker en social media-funktion inom vår webbsida och gör inlägg på en social media-
+            plattform kommer den sociala media-webbsidan ge oss uppgifter om dig.
+            Om du har tillgänglighetsbehov vill vi se till att du får den bästa upplevelsen när du besöker ett
+            evenemang. För att möjliggöra detta måste vi samla in uppgifter om dina behov (som kan komma att
+            kräva att du lämnar information om din mentala och fysiska hälsa om du t.ex. är rullstolsburen eller
+            har något annat speciellt behov som kan vara avgörande för din upplevelse hos oss).
+            </p>
+
+            <p>
+            <strong>Hur vi använder dina uppgifter och varför</strong><br/>
+            För att uppfylla vårt kontrakt med dig
+            Vi använder dina uppgifter när du kommer i kontakt med oss (till exempel för att köpa varor eller
+            biljetter) så att vi kan:
+            behandla din beställning, ta betalt, och ge dig kundsupport.
+            </p>
+
+            <p>
+            <strong>För våra berättigade affärsintressen</strong><br/>
+            I marknadsföringssyfte, såvida inte ditt samtycke krävs för sådan marknadsföring.
+            För att skicka kundtjänst-epost till dig, innefattande bokningsbekräftelser, biljetter och
+            evenemangspåminnelser.
+            För att kontakta dig med information eller erbjudanden om våra kommande evenemang, produkter
+            eller tjänster – det kan ske via e-post, via SMS eller sociala medieplattformar. Du kan närsomhelst
+            avregistrera dig från vår information.
+            För att behandla dina hälsouppgifter för att kunna tillgodose dina tillgänglighetsbehov, i de fall då det
+            specifikt krävs och uttryckligt samtycke ges.
+            </p>
+
+            <p>
+            <strong>Dina rättigheter</strong><br/>
+            Du har också rättigheter gällande hur dina personuppgifter används:
+
+            Rätten att invända mot vår behandling av dina personuppgifter.
+            Rätten att begära att dina uppgifter raderas eller begränsas från vidare användning.
+            Rätten att kräva en kopia av den information som vi innehar om dig.
+            Rätten att korrigera, ändra eller uppdatera den information som du givit oss.
+            </p>
+
+            <p>
+            <strong>Vård av dina uppgifter</strong><br/>
+            Vi har infört säkerhetsåtgärder för att skydda dina uppgifter. Vilka säkerhetsåtgärder vi använder
+            beror på vilken typ av information som samlas in.
+            Vi behåller endast dina uppgifter så länge som det krävs för att ge dig de tjänster som du begär, för
+            de syften som uppställs i denna policy och för eventuella juridiska syften som vi är skyldiga att
+            behålla informationen. Vi kommer på ett säkert sätt att radera dina uppgifter när den ej längre
+            behövs för dessa syften i enlighet med våra bolagspolicyer.
+            </p>
+
+            <p>
+            <strong>Kontakt</strong><br/>
+            Har du frågor ang. vår personuppgiftspolicy kan du självklart kontakta oss via mail info@grebbans.se
+            eller telefon 073-0314407
+            </p>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}
