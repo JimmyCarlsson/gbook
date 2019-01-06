@@ -33,6 +33,25 @@
     </div>
   </div>
 </div>
+{{#if showAdminFields}}
+  <hr/>
+  <div class="row">
+    <p class="form-control-static input-lg text-center">Jag vill förboka följande valbara paket till min bokning...</p>
+    {{#each itemRows as |itemRow|}}
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <img src="assets/images/food_drink.png"/>
+          <div class="caption">
+            <h3>{{itemRow.item.name}}</h3>
+            <p>{{itemRow.item.description}}</p>
+            <p><b>{{itemRow.item.price}}:- / st </b>({{itemRow.item.netPrice}}:- ex. moms)</p>
+            <label>Antal</label> {{input type="number" class="form-control" value=itemRow.amount min=0}}
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{/if}}
 {{#if typeIsSet}}
   <hr/>
   <div class="row">
@@ -208,21 +227,6 @@
               {{/each}}
             </tbody>
           </table>
-        </div>
-        <div class="row">
-          {{#each itemRows as |itemRow|}}
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img src="assets/images/food_drink.png"/>
-                <div class="caption">
-                  <h3>{{itemRow.item.name}}</h3>
-                  <p>{{itemRow.item.description}}</p>
-                  <p><b>{{itemRow.item.price}}:- / st </b>({{itemRow.item.netPrice}}:- ex. moms)</p>
-                  <label for="amount">Antal</label> {{input type="number" id="amount" class="form-control" value=itemRow.amount min=0}}
-                </div>
-              </div>
-            </div>
-          {{/each}}
         </div>
         <div class="row" style="margin-left:20px;margin-right:20px">
           <h3>Lägg till orderrad</h3>
