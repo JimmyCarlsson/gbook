@@ -36,7 +36,7 @@
 {{#if showAdminFields}}
   <hr/>
   <div class="row">
-    <p class="form-control-static input-lg text-center">Jag vill förboka följande valbara paket till min bokning...</p>
+    <p class="form-control-static input-lg text-center">3-rätters meny samt kaffe ingår. Utöver detta vill jag köpa till följande valbara paket...</p>
     {{#each itemRows as |itemRow|}}
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
@@ -44,7 +44,7 @@
           <div class="caption">
             <h3>{{itemRow.item.name}}</h3>
             <p>{{itemRow.item.description}}</p>
-            <p><b>{{itemRow.item.price}}:- / st </b>({{itemRow.item.netPrice}}:- ex. moms)</p>
+            <p><b>{{itemRow.item.price}}:- / st </b></p>
             <label>Antal</label> {{input type="number" class="form-control" value=itemRow.amount min=0}}
           </div>
         </div>
