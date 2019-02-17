@@ -151,10 +151,10 @@ class Event < ActiveRecord::Base
     row = sheet.row(3)
     row.push "Bokningar:"
     row = sheet.row(4)
-    row.push "Id", "Biljetter", "Namn", "Bokades", "Epost", "Telefon", "Kontaktperson", "Betalat", "Meddelande", "Notering", "Rabatt", "Rabattmeddelande"
+    row.push "Id", "Biljetter", "Namn", "Bokades", "Epost", "Telefon", "Kontaktperson", "Betalat", "Meddelande", "Notering", "Rabatt", "Rabattmeddelande", "Paket"
     bookings.each_with_index do |booking, index|
       row = sheet.row(5+index)
-      row.push booking.id, booking.tickets, booking.name, booking.created_at.strftime('%FT%R'), booking.email, booking.phone_nr, booking.contact_person, booking.paid, booking.message, booking.memo, booking.discount, booking.discount_message
+      row.push booking.id, booking.tickets, booking.name, booking.created_at.strftime('%FT%R'), booking.email, booking.phone_nr, booking.contact_person, booking.paid, booking.message, booking.memo, booking.discount, booking.discount_message, booking.order_rows_string
     end
 
     return book
