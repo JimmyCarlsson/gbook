@@ -22,10 +22,10 @@ module Gbook
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.time_zone = "Europe/Stockholm"
-    config.active_record.raise_in_transactional_callbacks = true
+   # config.active_record.raise_in_transactional_callbacks = true #Removed as its not part of Rails 5
     config.middleware.use ActionDispatch::Flash
 
-    config.middleware.insert_before 0, "Rack::Cors" do
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
         resource '*', :headers => :any, :methods => [:get, :post, :options]

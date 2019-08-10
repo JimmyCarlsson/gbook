@@ -23,7 +23,7 @@ class InvoicePdf < Prawn::Document
     bounding_box [330,190], width: 200 do
       to_pay_box
     end
-    bounding_box [30,120], width: 500 do
+    bounding_box [30,115], width: 500 do
       payment_instructions
     end
     bounding_box [30,80], width: 200 do
@@ -38,7 +38,7 @@ class InvoicePdf < Prawn::Document
   end
 
   def logo
-    logopath = "#{Rails.root}/app/assets/images/logo.png"
+    logopath = "#{Rails.root}/app/assets/images/grebbans-black-invoice.png"
     image logopath
   end
 

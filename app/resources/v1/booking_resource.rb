@@ -54,7 +54,7 @@ class V1::BookingResource < JSONAPI::Resource
     if @model.item_rows
       @model.item_rows.each do |item_row|
         pp item_row
-        item = Item.find(item_row[:item_id])
+        item = Item.find(item_row[:itemId])
         order_row = OrderRow.new(
           booking: @model,
           amount: item_row[:amount],
