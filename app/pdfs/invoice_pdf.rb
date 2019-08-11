@@ -29,7 +29,7 @@ class InvoicePdf < Prawn::Document
     bounding_box [30,80], width: 200 do
       address
     end
-    bounding_box [210,80], width: 200 do
+    bounding_box [250,80], width: 200 do
       bank_info
     end
     bounding_box [400,80], width: 200 do
@@ -223,8 +223,9 @@ class InvoicePdf < Prawn::Document
 
   def address
     text "Adress", size: 10
-    text "Kapellvägen 26"
-    text "544 92 Hjo"
+    text "Rockenstierna Nöjesproduktion AB"
+    text "Kapellvägen 26, 544 92 Hjo"
+   #text "544 92 Hjo"
     move_down 5
     text "Företagets säte", size: 10
     text "Västra Götalands Län"
