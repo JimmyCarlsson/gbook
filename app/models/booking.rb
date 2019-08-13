@@ -7,7 +7,7 @@ class Booking < ActiveRecord::Base
   # Relations
   belongs_to :event
   validates :event, presence: true
-  has_many :order_rows
+  has_many :order_rows #Additional packages like drinks. Each order row is stored completely separate from it's potential origin 'Item'.
   
   # Validations
   validates :booking_type, inclusion: {in: %w(private business)}, presence: true
