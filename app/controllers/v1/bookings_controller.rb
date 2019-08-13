@@ -13,7 +13,9 @@ class V1::BookingsController < V1::BaseController
   end
 
   def index
-    event_ids = Event.all.pluck(:id)
+    # Only show bookings for events that are in the future, or maximum 3 months ago.
+    events = Event.where('date > ?', Date.today - 90.days)
+    event_ids = events.pluck(:id)
     bookings = Booking.where(event_id: event_ids)
 
     if params[:paid] == "false"
