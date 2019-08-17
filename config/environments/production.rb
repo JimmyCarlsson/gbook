@@ -90,4 +90,9 @@ Rails.application.configure do
     :authentication => :plain,
     :enable_starttls_auto => true
   } 
+
+  # Allow other domains to load content (to show ticket status)
+  config.action_dispatch.default_headers = {
+        'X-Frame-Options' => 'ALLOWALL'
+  }
 end
