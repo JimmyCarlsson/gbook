@@ -1,7 +1,8 @@
-<nav class="navbar navbar-default">
+{{#unless bare}}
+  <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      {{#link-to 'index'}}<img src="assets/images/grebbans.png" height="50px"/>{{/link-to}}
+      {{#link-to 'home'}}<img src="assets/images/grebbans.png" height="50px"/>{{/link-to}}
     </div>
         <ul class="nav navbar-text">
           <li>Köp dina biljetter till Grebbans Nöjesrestaurang här!</li>
@@ -15,7 +16,6 @@
 <div class="container" style="margin-bottom:70px;">
   {{outlet}}
 </div>
-
 <div class="navbar navbar-default navbar-fixed-bottom">
   <div class="text-center">
     <p class="navbar-text text-center" style="float:none"><b>Grebbans Nöjesrestaurang</b> | Hemsida: <a href="http://www.grebbans.se" target="_blank"><b>www.grebbans.se</b></a> | E-post: <b>info@grebbans.se</b> | Telefon: <b>0730-314407</b>
@@ -26,4 +26,7 @@
       {{/if}}
       </p>
     </div>
-  </div>
+</div>
+{{else}}
+{{outlet}}
+{{/unless}}

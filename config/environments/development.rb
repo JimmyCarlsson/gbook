@@ -55,4 +55,9 @@ Rails.application.configure do
   } 
 
   ENV['BOOKING_LINK_URL'] = "http://localhost:3000/#/bookings/"
+
+  # Allow other domains to load content (to show ticket status)
+  config.action_dispatch.default_headers = {
+        'X-Frame-Options' => 'ALLOWALL'
+  }
 end

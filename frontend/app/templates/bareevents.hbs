@@ -1,0 +1,10 @@
+  {{#each model as |event|}}
+    <a href="https://biljett.grebbans.se/#/events/{{event.id}}" class="list-group-item" target="_blank">
+      <h4 class="list-group-item-heading">
+        {{event.name}} <small>{{moment-format event.date 'LLLL'}}</small> <span class="float-right">{{fa-icon 'ticket' size="2" class=(concat event.availabilityString ' pull-right') title=event.availabilityTranslation}}</span>
+      </h4>
+      <p>{{event.description}}</p>
+      <strong>Biljettpris:</strong> {{event.price}}:- <span style="font-size: 10px">({{event.netPrice}}:- ex. moms)</span>
+      <span class="pull-right"><strong>{{event.availabilityTranslation}}</strong></span>
+    </a>
+    {{/each}}

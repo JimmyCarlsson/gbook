@@ -6,6 +6,8 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('bareevents', {path: '/bareevents'})
+  this.route('home', {path: '/'});
   this.route('events', function() {
     this.route('new');
     this.route('show', {path: '/:id'}, function() {
