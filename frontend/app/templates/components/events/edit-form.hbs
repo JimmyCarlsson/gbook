@@ -68,6 +68,15 @@
       {{/each}}
     </div>
   </div>
+  <div class="form-group {{if model.errors.items 'has-error'}}">
+    <label for="inputEventItems" class="col-sm-2 control-label">Tillvalspaket som ska vara tillgängliga</label>
+    <div class="col-sm-10">
+      {{model.items}}
+      {{#each model.errors.items as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
   <div class="form-group">
     <label class="control-label col-sm-2">Endast admins kan se detta event</label>
     <div class="col-sm-10 material-switch">

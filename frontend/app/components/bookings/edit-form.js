@@ -19,9 +19,13 @@ export default Ember.Component.extend({
     }
     // Populate itemrows
     this.set('itemRows', Ember.A());
+    console.log('items', that.get('model.event.items'));
     this.get('store').findAll('item').then(function(items) {
       items.forEach(function(item) {
-        that.get('itemRows').pushObject({item: item, amount: 0, itemId: item.get('id')})
+        console.log(item.id, that.get('model.event.items'));
+        if(that.get('model.event.items').includes(Number(item.id))){
+          that.get('itemRows').pushObject({item: item, amount: 0, itemId: item.get('id')})
+        }
       });
     });
     //Setup additional orderrow

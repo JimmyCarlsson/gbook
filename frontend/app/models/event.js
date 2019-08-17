@@ -17,6 +17,7 @@ export default Model.extend({
   netPrice: attr('number', {readOnly: true}),
   totalTax: attr('number', {readOnly: true}),
   hidden: attr('boolean', {defaultValue: false}),
+  items: attr({defaultValue: []}),
 
   ticketsArray: Ember.computed.mapBy('bookings', 'tickets'),
   totalTickets: Ember.computed.sum('ticketsArray'),
