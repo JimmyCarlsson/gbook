@@ -53,7 +53,6 @@ class V1::BookingResource < JSONAPI::Resource
     # Create order rows based on items
     if @model.item_rows
       @model.item_rows.each do |item_row|
-        pp item_row
         item = Item.find(item_row[:itemId])
         order_row = OrderRow.new(
           booking: @model,
@@ -70,8 +69,6 @@ class V1::BookingResource < JSONAPI::Resource
     end
     # Only send email if booking created by customer, or admin specified that it should be sent
     if context[:current_admin].nil? || @model.send_email == true
-      pp APP_CONFIG
-      pp Rails.application.config.action_mailer.smtp_settings
       BookingMailer.booking_email(@model).deliver_now
     end
   end

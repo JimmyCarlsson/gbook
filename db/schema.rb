@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_17_223725) do
+ActiveRecord::Schema.define(version: 2020_09_18_153944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,10 @@ ActiveRecord::Schema.define(version: 2019_08_17_223725) do
     t.integer "tax25", default: 0
     t.boolean "hidden", default: false
     t.integer "items", default: [], array: true
+    t.integer "ticket_limit_lower"
+    t.integer "ticket_limit_higher"
+    t.text "ticket_limit_lower_msg"
+    t.text "ticket_limit_higher_msg"
   end
 
   create_table "items", id: :serial, force: :cascade do |t|

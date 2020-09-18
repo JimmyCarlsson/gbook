@@ -84,6 +84,24 @@
       {{/each}}
     </div>
   </div>
+  <div class="form-group {{if model.errors.ticketLimitHigher 'has-error'}}">
+    <label for="inputTicketLimitHigher" class="col-sm-2 control-label">Max antal biljetter per bokning</label>
+    <div class="col-sm-10">
+      {{input value=model.ticketLimitHigher type='number' min='0' class="form-control"}}
+      {{#each model.errors.ticketLimitHigher as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.ticketLimitLower 'has-error'}}">
+    <label for="inputTicketLimitLower" class="col-sm-2 control-label">Minst antal biljetter per bokning</label>
+    <div class="col-sm-10">
+      {{input value=model.ticketLimitLower type='number' min='0' class="form-control"}}
+      {{#each model.errors.ticketLimitLower as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
   <div class="form-group">
     <label class="control-label col-sm-2">Endast admins kan se detta event</label>
     <div class="col-sm-10 material-switch">

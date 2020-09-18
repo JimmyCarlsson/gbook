@@ -18,6 +18,10 @@ export default Model.extend({
   totalTax: attr('number', {readOnly: true}),
   hidden: attr('boolean', {defaultValue: false}),
   items: attr({defaultValue: []}),
+  ticketLimitHigher: attr('number', {defaultValue: null}),
+  ticketLimitLower: attr('number', {defaultValue: null}),
+  ticketLimitLowerMsg: attr('string', {defaultValue: null}),
+  ticketLimitHigherMsg: attr('string', {defaultValue: null}),
 
   ticketsArray: Ember.computed.mapBy('bookings', 'tickets'),
   totalTickets: Ember.computed.sum('ticketsArray'),

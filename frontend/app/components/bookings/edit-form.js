@@ -19,10 +19,8 @@ export default Ember.Component.extend({
     }
     // Populate itemrows
     this.set('itemRows', Ember.A());
-    console.log('items', that.get('model.event.items'));
     this.get('store').findAll('item').then(function(items) {
       items.forEach(function(item) {
-        console.log(item.id, that.get('model.event.items'));
         if(that.get('model.event.items').includes(Number(item.id))){
           that.get('itemRows').pushObject({item: item, amount: 0, itemId: item.get('id')})
         }
@@ -32,6 +30,10 @@ export default Ember.Component.extend({
     this.set('newOrderRow', this.get('store').createRecord('orderRow', {
       booking: this.get('model')
     }))
+
+    if (this.get('model.event.ticketLimitLower') > 0) {
+      this.set('model.tickets', this.get('model.event.ticketLimitLower'))
+    }
   }),
 
   updateBookingType: Ember.observer('model.bookingType', function(){
@@ -62,11 +64,23 @@ export default Ember.Component.extend({
     return this.get('session.isAuthenticated'); //&& this.get('model.id');
   }),
 
-  tooManyTickets: Ember.computed('model.tickets', 'isAdmin', function(){
-    return (this.get('model.tickets') > 20 && !this.get('isAdmin'))
+  tooManyTickets: Ember.computed('model.tickets', 'isAdmin', 'model.event.ticketLimitHigher', function(){
+    if (this.get('model.event.ticketLimitHigher') > 0){
+      return (this.get('model.tickets') > this.get('model.event.ticketLimitHigher') && !this.get('isAdmin'))
+    } else {
+      return false
+    }
+  }),
+  
+  tooFewTickets: Ember.computed('model.tickets', 'isAdmin', 'model.event.ticketLimitLower', function(){
+    if (this.get('model.event.ticketLimitLower') > 0){
+      return (this.get('model.tickets') < this.get('model.event.ticketLimitLower') && !this.get('isAdmin'))
+    } else {
+      return false
+    }
   }),
 
-  saveDisabled: Ember.computed('tooManyTickets' ,'emailConfirmed','model.termsAccepted', function(){
+  saveDisabled: Ember.computed('tooManyTickets', 'tooFewTickets', 'emailConfirmed','model.termsAccepted', function(){
     if (!this.get('emailConfirmed')) {
       return true;
     }

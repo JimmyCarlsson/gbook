@@ -61,9 +61,9 @@ class Event < ActiveRecord::Base
   def availability_string
     i = seats_left
   
-    if i > 50
+    if i > 25
       return "plenty"
-    elsif i > 20
+    elsif i > 10
       return "some"
     elsif i > 0
       return "few"

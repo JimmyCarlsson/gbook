@@ -14,10 +14,16 @@
       <div class="col-sm-4">
         {{#if tooManyTickets}}
           <div class="alert alert-info">
-            Är ni ett större sällskap på <strong>över 20 personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service eller maila din beställning till <strong>info@grebbans.se</strong>
+            Är ni ett större sällskap på <strong>över {{model.event.ticketLimitHigher}} personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service eller maila din beställning till <strong>info@grebbans.se</strong>
+          </div>
+        {{else}}
+        {{#if tooFewTickets}}
+          <div class="alert alert-info">
+            Är ni ett mindre sällskap på <strong>under {{model.event.ticketLimitLower}} personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service, då vi för tillfället behöver begränsa antalet mindre sällskap p.g.a. Covid-19 restriktioner.
           </div>
         {{else}}
           <p class="form-control-static input-lg" style="word-spacing:10px;"> x <strong>{{model.discountedTicketPrice}}:-</strong> = <strong>{{model.calculatedTotalPrice}}:-</strong> inkl.moms</p>
+        {{/if}}
         {{/if}}
       </div>
     </div>
