@@ -71,7 +71,14 @@
   <div class="form-group {{if model.errors.items 'has-error'}}">
     <label for="inputEventItems" class="col-sm-2 control-label">Tillvalspaket som ska vara tillgängliga</label>
     <div class="col-sm-10">
-      {{model.items}}
+      <ul>
+        {{#each items as |item|}}
+          <li>
+        {{input type="checkbox" checked=item.isSelected title=item.item.name}}
+        {{item.item.name}}
+          </li>
+      {{/each}}
+      </ul>
       {{#each model.errors.items as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}

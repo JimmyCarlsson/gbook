@@ -2,6 +2,25 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 
+  store: Ember.inject.service(),
+  items: Ember.A(),
+  initEditForm: Ember.on('init', function(){
+    var that = this;
+    console.log('initEditForm');
+
+    this.set('items', Ember.A());
+    this.get('store').findAll('item').then(function(items) {
+      items.forEach(function(item) {
+        if(that.get('model.items').includes(Number(item.id))){
+          that.get('items').pushObject({item: item, isSelected: true})
+        }
+        else {
+          that.get('items').pushObject({item: item, isSelected: false})
+        }
+      });
+    });
+  }),
+
   priceWithDedicatedTax: Ember.computed.sum('model.tax25', 'model.tax12', 'model.tax6'),
   priceWithoutDedicatedTax: Ember.computed('priceWithDedicatedTax', 'model.price', function(){
     return this.get('model.price') - this.get('priceWithDedicatedTax');
@@ -29,6 +48,12 @@ export default Ember.Component.extend({
   actions: {
     save() {
       var that = this;
+      var newItems = [];
+      var items = this.get('items').filterBy('isSelected', true)
+      items.forEach(function(item) {
+       newItems.push(parseInt(item.item.id))
+      })
+      this.set('model.items', newItems)
       this.get('model').save().then((response) =>{
         return this.save(response);
       });

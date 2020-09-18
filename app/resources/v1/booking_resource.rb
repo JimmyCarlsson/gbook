@@ -70,6 +70,8 @@ class V1::BookingResource < JSONAPI::Resource
     end
     # Only send email if booking created by customer, or admin specified that it should be sent
     if context[:current_admin].nil? || @model.send_email == true
+      pp APP_CONFIG
+      pp Rails.application.config.action_mailer.smtp_settings
       BookingMailer.booking_email(@model).deliver_now
     end
   end

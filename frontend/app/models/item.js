@@ -9,6 +9,6 @@ export default DS.Model.extend({
   tax6: attr('number', {defaultValue: 0}),
   tax12: attr('number', {defaultValue: 0}),
   tax25: attr('number', {defaultValue: 0}),
-  netPrice: attr('number', {readOnly: true}),
+  netPrice: attr('number', {readOnly: true})
 
 });
