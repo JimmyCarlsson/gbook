@@ -4,7 +4,7 @@
   <hr/>
   <div class="row">
     <p class="form-control-static input-lg text-center">Jag vill köpa...</p>
-    <div class="form-group {{if model.errors.tickets 'has-error'}} {{if tooManyTickets 'has-error'}} text-center">
+    <div class="form-group {{if model.errors.tickets 'has-error'}} {{if tooManyTickets 'has-error'}}{{if tooFewTickets 'has-error'}} text-center">
       <div class="col-sm-offset-2 col-sm-4 text-center">
         <div class="input-group">
           <span class="input-group-addon input-lg" id="basic-addon1">Antal biljetter</span>
@@ -13,14 +13,26 @@
       </div>
       <div class="col-sm-4">
         {{#if tooManyTickets}}
-          <div class="alert alert-info">
-            Är ni ett större sällskap på <strong>över {{model.event.ticketLimitHigher}} personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service eller maila din beställning till <strong>info@grebbans.se</strong>
-          </div>
+          {{#if model.event.ticketLimitHigherMsg}}
+            <div class="alert alert-info">
+              {{model.event.ticketLimitHigherMsg}}
+            </div>
+          {{else}}
+            <div class="alert alert-info">
+              Är ni ett större sällskap på <strong>över {{model.event.ticketLimitHigher}} personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service eller maila din beställning till <strong>info@grebbans.se</strong>
+            </div>
+          {{/if}}
         {{else}}
         {{#if tooFewTickets}}
-          <div class="alert alert-info">
-            Är ni ett mindre sällskap på <strong>under {{model.event.ticketLimitLower}} personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service, då vi för tillfället behöver begränsa antalet mindre sällskap p.g.a. Covid-19 restriktioner.
-          </div>
+          {{#if model.event.ticketLimitLowerMsg}}
+            <div class="alert alert-info">
+              {{model.event.ticketLimitLowerMsg}}
+            </div>
+          {{else}}
+            <div class="alert alert-info">
+              Är ni ett mindre sällskap på <strong>under {{model.event.ticketLimitLower}} personer</strong> så kontakta oss på telefon <strong>0730-314407</strong> för personlig service, då vi för tillfället behöver begränsa antalet mindre sällskap p.g.a. Covid-19 restriktioner.
+            </div>
+          {{/if}}
         {{else}}
           <p class="form-control-static input-lg" style="word-spacing:10px;"> x <strong>{{model.discountedTicketPrice}}:-</strong> = <strong>{{model.calculatedTotalPrice}}:-</strong> inkl.moms</p>
         {{/if}}
@@ -46,7 +58,7 @@
     {{#each itemRows as |itemRow|}}
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
-          <img src="assets/images/food_drink.png"/>
+          <img src="assets/images/dryckespaket.jpg"/>
           <div class="caption">
             <h3>{{itemRow.item.name}}</h3>
             <p>{{itemRow.item.description}}</p>

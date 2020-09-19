@@ -87,8 +87,17 @@
   <div class="form-group {{if model.errors.ticketLimitHigher 'has-error'}}">
     <label for="inputTicketLimitHigher" class="col-sm-2 control-label">Max antal biljetter per bokning</label>
     <div class="col-sm-10">
-      {{input value=model.ticketLimitHigher type='number' min='0' class="form-control"}}
+      {{input value=model.ticketLimitHigher type='number' min='0' class="form-control" placeholder="Ingen begränsning"}}
       {{#each model.errors.ticketLimitHigher as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.ticketLimitHigherMsg 'has-error'}}">
+    <label for="inputTicketLimitHigherMsg" class="col-sm-2 control-label">Meddelande vid för många biljetter</label>
+    <div class="col-sm-10">
+      {{textarea value=model.ticketLimitHigherMsg class="form-control" placeholder="Standardtext används"}}
+      {{#each model.errors.ticketLimitHigherMsg as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}
     </div>
@@ -96,8 +105,17 @@
   <div class="form-group {{if model.errors.ticketLimitLower 'has-error'}}">
     <label for="inputTicketLimitLower" class="col-sm-2 control-label">Minst antal biljetter per bokning</label>
     <div class="col-sm-10">
-      {{input value=model.ticketLimitLower type='number' min='0' class="form-control"}}
+      {{input value=model.ticketLimitLower type='number' min='0' class="form-control" placeholder="Ingen begränsning"}}
       {{#each model.errors.ticketLimitLower as |error|}}
+        <span class="help-block" id="helpBlockName">{{error.message}}</span>
+      {{/each}}
+    </div>
+  </div>
+  <div class="form-group {{if model.errors.ticketLimitLowerMsg 'has-error'}}">
+    <label for="inputTicketLimitLowerMsg" class="col-sm-2 control-label">Meddelande vid för få biljetter</label>
+    <div class="col-sm-10">
+      {{textarea value=model.ticketLimitLowerMsg class="form-control" placeholder="Standardtext används"}}
+      {{#each model.errors.ticketLimitLowerMsg as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}
     </div>

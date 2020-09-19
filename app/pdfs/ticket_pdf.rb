@@ -32,7 +32,10 @@ class TicketPdf < Prawn::Document
     #text "i priset ingår Show, trerätters meny och kaffe.", align: :center, size: 9
     text "Betalning sker mot faktura", align: :center, size: 9
     move_down 20
-    text "Dryck tillkommer och köpes i baren", align: :center
+    text "Dryck tillkommer och köpes i baren.", align: :center
+    move_down 10
+    text "Har du förbeställt dryck kommer mousserande att finnas vid ert bord när ni anländer.", align: :center
+    text "Ni blir också tilldelade dryckesbiljetter för resterande del av paket som sedan inbytes i baren.", align: :center
     move_down 20
     font_size 9
     font "Helvetica"
