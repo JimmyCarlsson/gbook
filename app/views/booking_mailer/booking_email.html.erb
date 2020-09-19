@@ -7,19 +7,29 @@
     <h1>Bokningsbekräftelse: Grebbans Nöjesrestaurang</h1>
     <p>
     Du har bokat platser till följande evenemang hos Grebbans Nöjesrestaurang:<br/><br/>
-      Evenemang: <%= @booking.event.name %><br/>
-      Datum: <%= @booking.event.date.strftime('%F %R')%><br/>
-      Antal biljetter: <%= @booking.tickets %><br/>
-      Namn: <%= @booking.name %><br/>
-      <% if @booking.booking_type == 'business'%>Kontaktperson: <%= @booking.contact_person %><br/><% end %>
-      Gatuadress: <%= @booking.address_street %><br/>
-      Postnummer: <%= @booking.address_zip %><br/>
-      Ort: <%= @booking.address_city %><br/>
-      Telefon: <%= @booking.phone_nr %><br/>
-      Meddelande: <%= @booking.message %><br/>
-      <b>Totalkostnad: <%= '%.2f' % @booking.total_price %>:- (inkl. moms)</b><br/>
+    Evenemang: <%= @booking.event.name %><br/>
+    Datum: <%= @booking.event.date.strftime('%F %R')%><br/>
+    Antal biljetter: <%= @booking.tickets.to_s + " st á " + @booking.price_actual.to_s + ":-" %><br/>
+    <% if @booking.order_rows.present? %>
+      Tillval: 
+      <ul>
+        <% @booking.order_rows.each do |order_row| %>
+          <li>
+            <%= order_row.amount.to_s + " st " + order_row.name + "(" + order_row.price.to_s + ":-), totalt: " + order_row.total_price.to_s + ":-" %>
+          </li>
+        <% end %><br/>
+      </ul>
+    <% end %>
+    Namn: <%= @booking.name %><br/>
+    <% if @booking.booking_type == 'business'%>Kontaktperson: <%= @booking.contact_person %><br/><% end %>
+    Gatuadress: <%= @booking.address_street %><br/>
+    Postnummer: <%= @booking.address_zip %><br/>
+    Ort: <%= @booking.address_city %><br/>
+    Telefon: <%= @booking.phone_nr %><br/>
+    Meddelande: <%= @booking.message %><br/>
+    <b>Totalkostnad: <%= '%.2f' % @booking.total_price %>:- (inkl. moms)</b><br/>
 
-      </p>
+    </p>
       <p>
       Observera att denna bokning är bindande, och att fakturan betalas innan dess förfallodatum.
       <br/>

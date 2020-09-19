@@ -54,7 +54,21 @@
   </tr>
   <tr>
     <td><strong>Antal biljetter</strong></td>
-    <td>{{model.tickets}}</td>
+    <td>{{model.tickets}} st</td>
+  </tr>
+  <tr>
+    <td><strong>Tillval</strong></td>
+    <td>
+      {{#if model.orderRows}}
+        <ul>
+        {{#each model.orderRows as |orderRow|}}
+          <li>
+          {{orderRow.amount}} st {{orderRow.name}} ({{orderRow.price}}:-), totalt: {{orderRow.totalPrice}}:-
+          </li>
+        {{/each}}
+        </ul>
+      {{/if}}
+    </td>
   </tr>
   <tr>
     <td><strong>{{if model.isPrivate 'Namn'}}{{if model.isBusiness 'Företagsnamn'}}</strong></td>
