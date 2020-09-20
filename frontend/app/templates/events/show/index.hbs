@@ -30,6 +30,7 @@
     <tr>
       <th>Id</th>
       <th style="text-align:center">Antal</th>
+      <th style="text-align:center">Tillval</th>
       <th style="text-align:center">Registrerades</th>
       <th style="text-align:center">Betalad</th>
       <th style="text-align:center">Förfallodatum</th>
@@ -43,6 +44,11 @@
           <strong>Namn:</strong> {{booking.name}}<br/>
           <strong>E-post:</strong> {{booking.email}}</td>
       <td style="text-align:center">{{booking.tickets}}</td>
+      <td style="text-align:center">
+        {{#each booking.orderRows as |orderRow|}}
+          {{orderRow.amount}} st <span title="{{orderRow.description}}">{{orderRow.name}}</span> <strong>{{orderRow.totalPrice}}:-</strong><br/>
+        {{/each}}
+      </td>
       <td style="text-align:center">{{moment-format booking.createdAt 'LL'}}</td>
       <td style="text-align:center">{{#if booking.paid}}{{fa-icon 'check' class="text-success" size="lg" }}{{else}}{{fa-icon 'exclamation' class="text-danger" size="lg"}}{{/if}}</td>
       <td style="text-align:center">{{moment-format booking.dueDate 'LL'}} <br/><span style="color:{{if booking.overDue 'red' '#999'}}">({{booking.daysLeftUntilDue}})</span></td>
