@@ -22,6 +22,7 @@ export default Model.extend({
   ticketLimitLower: attr('number', {defaultValue: null}),
   ticketLimitLowerMsg: attr('string', {defaultValue: null}),
   ticketLimitHigherMsg: attr('string', {defaultValue: null}),
+  uniqueTicket: attr('boolean', {defaultValue: false}),
 
   ticketsArray: Ember.computed.mapBy('bookings', 'tickets'),
   totalTickets: Ember.computed.sum('ticketsArray'),

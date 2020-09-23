@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_18_153944) do
+ActiveRecord::Schema.define(version: 2020_09_23_090031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2020_09_18_153944) do
     t.integer "ticket_limit_higher"
     t.text "ticket_limit_lower_msg"
     t.text "ticket_limit_higher_msg"
+    t.boolean "unique_ticket"
   end
 
   create_table "items", id: :serial, force: :cascade do |t|

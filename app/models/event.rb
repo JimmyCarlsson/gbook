@@ -60,6 +60,13 @@ class Event < ActiveRecord::Base
 
   def availability_string
     i = seats_left
+    if self.unique_ticket
+      if i > 0
+        return "plenty"
+      else
+        return "none"
+      end
+    end
   
     if i > 25
       return "plenty"

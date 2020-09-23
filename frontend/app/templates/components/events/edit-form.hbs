@@ -62,7 +62,7 @@
   <div class="form-group {{if model.errors.seats 'has-error'}}">
     <label for="inputEventSeats" class="col-sm-2 control-label">Antal platser</label>
     <div class="col-sm-10">
-      {{input value=model.seats type='number' min='0' class="form-control"}}
+      {{input value=model.seats type='number' min='0' class="form-control" disabled=model.uniqueTicket}}
       {{#each model.errors.seats as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}
@@ -87,7 +87,7 @@
   <div class="form-group {{if model.errors.ticketLimitHigher 'has-error'}}">
     <label for="inputTicketLimitHigher" class="col-sm-2 control-label">Max antal biljetter per bokning</label>
     <div class="col-sm-10">
-      {{input value=model.ticketLimitHigher type='number' min='0' class="form-control" placeholder="Ingen begränsning"}}
+      {{input value=model.ticketLimitHigher type='number' min='0' class="form-control" placeholder="Ingen begränsning" disabled=model.uniqueTicket}}
       {{#each model.errors.ticketLimitHigher as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}
@@ -105,7 +105,7 @@
   <div class="form-group {{if model.errors.ticketLimitLower 'has-error'}}">
     <label for="inputTicketLimitLower" class="col-sm-2 control-label">Minst antal biljetter per bokning</label>
     <div class="col-sm-10">
-      {{input value=model.ticketLimitLower type='number' min='0' class="form-control" placeholder="Ingen begränsning"}}
+      {{input value=model.ticketLimitLower type='number' min='0' class="form-control" placeholder="Ingen begränsning" disabled=model.uniqueTicket}}
       {{#each model.errors.ticketLimitLower as |error|}}
         <span class="help-block" id="helpBlockName">{{error.message}}</span>
       {{/each}}
@@ -126,6 +126,15 @@
       <div class="material-switch pull-left">
         {{input id="hiddenSwitch" type="checkbox" checked=model.hidden }}
         <label for="hiddenSwitch" class="label-success"></label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">Detta event beskriver en unik biljett</label>
+    <div class="col-sm-10 material-switch">
+      <div class="material-switch pull-left">
+        {{input id="uniqueTicketSwitch" type="checkbox" checked=model.uniqueTicket input=uniqueTicketChanged}}
+        <label for="uniqueTicketSwitch" class="label-success"></label>
       </div>
     </div>
   </div>

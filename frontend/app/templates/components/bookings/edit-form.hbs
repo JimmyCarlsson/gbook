@@ -7,8 +7,8 @@
     <div class="form-group {{if model.errors.tickets 'has-error'}} {{if tooManyTickets 'has-error'}}{{if tooFewTickets 'has-error'}} text-center">
       <div class="col-sm-offset-2 col-sm-4 text-center">
         <div class="input-group">
-          <span class="input-group-addon input-lg" id="basic-addon1">Antal biljetter</span>
-          {{input type="number" min=1 value=model.tickets class="form-control input-lg" }}
+          <span class="input-group-addon input-lg" id="basic-addon1">{{#if model.event.uniqueTicket}}{{model.event.name}}{{else}}Antal biljetter{{/if}}</span>
+          {{input type="number" min=1 value=model.tickets class="form-control input-lg" disabled=model.event.uniqueTicket}}
         </div>
       </div>
       <div class="col-sm-4">
@@ -54,7 +54,7 @@
 {{#if itemRows}}
   <hr/>
   <div class="row">
-    <p class="form-control-static input-lg text-center">3-rätters meny samt kaffe ingår. Utöver detta vill jag köpa till följande valbara paket...</p>
+    <p class="form-control-static input-lg text-center">{{#if model.event.uniqueTicket}}Ishink med mousserande vin, {{/if}}3-rätters meny samt kaffe ingår. Utöver detta vill jag köpa till följande valbara paket...</p>
     {{#each itemRows as |itemRow|}}
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
@@ -310,7 +310,7 @@
         <hr/>
         <div class="form-group">
           <div class="col-sm-9">
-            <label for="termsCheckbox"> {{input type="checkbox" checked=model.termsAccepted id="termsCheckbox" class="inline-form-control"}} Jag bekräftar att jag har läst och accepterar <a href="#" data-toggle="modal" data-target="#termsModal">köpvillkoren</a></label>
+            <label for="termsCheckbox"> {{input type="checkbox" checked=model.termsAccepted id="termsCheckbox" class="inline-form-control"}} Jag bekräftar att jag har läst och accepterar <a href="https://grebbans.se/grebbans/k-pevillkor.html" target="_blank">köpvillkoren</a></label>
           </div>
         </div>
       </div>

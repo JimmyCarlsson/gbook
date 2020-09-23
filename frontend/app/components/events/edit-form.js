@@ -45,6 +45,18 @@ export default Ember.Component.extend({
     return (part / whole) * 100
   },
 
+  uniqueTicketChanged: Ember.observer('model.uniqueTicket', function() {
+    if (this.get('model.uniqueTicket') == true) {
+      this.setSingleTicketLevel(1)
+    }
+  }),
+
+  setSingleTicketLevel (ticketLevel) {
+    this.set('model.ticketLimitHigher', ticketLevel)
+    this.set('model.ticketLimitLower', ticketLevel)
+    this.set('model.seats', ticketLevel)
+  },
+
   actions: {
     save() {
       var that = this;
@@ -58,5 +70,6 @@ export default Ember.Component.extend({
         return this.save(response);
       });
     }
+
   }
 });

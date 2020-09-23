@@ -225,7 +225,8 @@ def reference
     order_rows_count = self.order_rows.count
     string = ""
     self.order_rows.each_with_index do |order_row, index|
-      string = string + "[Rad #{index+1} av #{order_rows_count}] #{order_row.amount}st #{order_row.name}(#{order_row.price}:-/st) - #{order_row.description} - Totalkostnad: #{order_row.total_price}:- ||| "
+      #string = string + "[Rad #{index+1} av #{order_rows_count}] #{order_row.amount}st #{order_row.name}(#{order_row.price}:-/st) - #{order_row.description} - Totalkostnad: #{order_row.total_price}:- ||| "
+      string = string + "#{order_row.amount}st #{order_row.name} | "
     end
     return string
   end
