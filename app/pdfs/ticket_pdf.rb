@@ -5,8 +5,8 @@ class TicketPdf < Prawn::Document
   def initialize(booking)
     super(margin: [0,0,0,0])
     background
-    logopath = "#{Rails.root}/app/assets/images/logga_utan.png"
-    image logopath, at: [230,720],height: 50
+    logopath = "#{Rails.root}/app/assets/images/grebbans.png"
+    image logopath, at: [255,720],height: 50
     @booking = booking
     move_down 50
     font "Times-Italic"
@@ -34,7 +34,7 @@ class TicketPdf < Prawn::Document
     move_down 20
     text "Dryck tillkommer och köpes i baren.", align: :center
     move_down 10
-    text "Har du förbeställt dryck kommer mousserande att finnas vid ert bord när ni anländer.", align: :center
+    text "Har du förköpt dryck kommer mousserande att finnas vid ert bord när ni anländer.", align: :center
     text "Ni blir också tilldelade dryckesbiljetter för resterande del av paket som sedan inbytes i baren.", align: :center
     move_down 20
     font_size 9
