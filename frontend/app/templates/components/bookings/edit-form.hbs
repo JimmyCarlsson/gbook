@@ -1,5 +1,5 @@
-<h2>Köp biljetter till {{model.event.name}} <small>{{moment-format model.event.date 'LLLL'}}</small></h2>
-<h4>{{model.event.price}}:-/pers. inkl. moms</h4>
+<h2>Köp {{#unless model.event.uniqueTicket}}biljetter till {{/unless}}{{model.event.name}} <small>{{moment-format model.event.date 'LLLL'}}</small></h2>
+<h4>{{model.event.price}}:- inkl. moms</h4>
 <div class="form" style="margin-top:30px;">
   <hr/>
   <div class="row">
@@ -54,7 +54,11 @@
 {{#if itemRows}}
   <hr/>
   <div class="row">
-    <p class="form-control-static input-lg text-center">{{#if model.event.uniqueTicket}}Ishink med mousserande vin, {{/if}}3-rätters meny samt kaffe ingår. Utöver detta vill jag köpa till följande valbara paket...</p>
+    {{#if model.event.uniqueTicket}}
+    <p class="form-control-static input-lg text-center">Ishink med mousserande vin, 3-rätters meny samt kaffe ingår för 12 personer. Utöver detta vill jag köpa till följande valbara paket...</p>
+    {{else}}
+    <p class="form-control-static input-lg text-center">3-rätters meny samt kaffe ingår. Utöver detta vill jag köpa till följande valbara paket...</p>
+    {{/if}}
     {{#each itemRows as |itemRow|}}
       <div class="col-sm-6 col-md-4">
         <div class="thumbnail">
