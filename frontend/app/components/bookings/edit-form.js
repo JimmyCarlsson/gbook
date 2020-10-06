@@ -80,7 +80,10 @@ export default Ember.Component.extend({
     }
   }),
 
-  saveDisabled: Ember.computed('tooManyTickets', 'tooFewTickets', 'emailConfirmed','model.termsAccepted', function(){
+  saveDisabled: Ember.computed('tooManyTickets', 'tooFewTickets', 'emailConfirmed','model.termsAccepted', 'isAdmin', function(){
+    if (this.get('isAdmin')) {
+      return null;
+    }
     if (!this.get('emailConfirmed')) {
       return true;
     }
