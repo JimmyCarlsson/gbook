@@ -90,6 +90,9 @@ export default Ember.Component.extend({
     if (this.get('tooManyTickets')) {
       return true;
     }
+    if (this.get('tooFewTickets')) {
+      return true;
+    }
     return null;
   }),
 

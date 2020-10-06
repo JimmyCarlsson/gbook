@@ -19,6 +19,7 @@ class Booking < ActiveRecord::Base
   validates :token, presence: true
   before_validation :ensure_token
   validate :enough_tickets_available
+  validate :ticket_limits_ok
   validate :validate_discount
   validates :discount, numericality: {only_integer: true, greater_than_or_equal_to: 0, message: "Rabatt måste vara ett heltal", allow_nil: true}
   validates :due_date, presence: true
@@ -58,6 +59,16 @@ class Booking < ActiveRecord::Base
       errors.add(:tickets, "Det finns inte tillräckligt många platser kvar.")
     end
   end
+
+  def ticket_limits_ok
+    if event.present? && tickets.present? && event.ticket_limit_lower && tickets < event.ticket_limit_lower
+      errors.add(:tickets, "Minsta antal biljetter är: #{event.ticket_limit_lower}st")
+    end
+    if event.present? && tickets.present? && event.ticket_limit_higher && tickets > event.ticket_limit_higher
+      errors.add(:tickets, "Högsta antal biljetter är: #{event.ticket_limit_higher}st")
+    end
+  end
+
 
   def generate_token
     loop do
