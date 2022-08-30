@@ -48,7 +48,7 @@
     "eonasdan-bootstrap-datetimepicker-npm": "4.17.37",
     "loader.js": "^4.0.1",
     "moment": "2.14.1",
-    "moment-timezone": "0.5.5"
+    "moment-timezone": "0.5.35"
   },
   "dependencies": {
     "bower": "^1.8.4",
