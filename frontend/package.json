@@ -21,7 +21,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "~2.5.0",
     "ember-ajax": "^2.0.1",
-    "ember-cli": "2.6.2",
+    "ember-cli": "2.18.2",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-babel": "6.8.1",
     "ember-cli-bootstrap-datetimepicker": "0.1.8",
@@ -36,7 +36,7 @@
     "ember-cli-release": "^0.2.9",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
-    "ember-data": "2.14.10",
+    "ember-data": "2.18.5",
     "ember-export-application-global": "^1.0.5",
     "ember-font-awesome": "2.1.1",
     "ember-load-initializers": "^0.5.1",
@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "bower": "^1.8.4",
-    "ember-data": "2.14.10",
+    "ember-data": "2.18.5",
     "moment": "2.14.1"
   }
 }
